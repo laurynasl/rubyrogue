@@ -1,0 +1,27 @@
+short sword:
+  damage: 5
+  accuracy: 0
+  skills:
+    - slashing
+    - sword
+
+long sword:
+  damage: 7
+  accuracy: -1
+  skills:
+    - slashing
+    - sword
+
+dagger:
+  damage: 4
+  accuracy: 3
+  skills:
+    - piercing
+    - dagger
+
+knife:
+  damage: 2
+  accuracy: 0
+  skills:
+    - piercing
+    - dagger

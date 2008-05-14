@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>subwin (Curses::Window)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* def subwin(height, width, top, left) */
+static VALUE
+window_subwin(obj, height, width, top, left)
+    VALUE obj;
+    VALUE height;
+    VALUE width;
+    VALUE top;
+    VALUE left;
+{
+    struct windata *winp;
+    WINDOW *window;
+    VALUE win;
+    int h, w, t, l;
+
+    h = NUM2INT(height);
+    w = NUM2INT(width);
+    t = NUM2INT(top);
+    l = NUM2INT(left);
+    GetWINDOW(obj, winp);
+    window = subwin(winp-&gt;window, h, w, t, l);
+    win = prep_window(rb_obj_class(obj), window);
+
+    return win;
+}</pre>
+</body>
+</html>

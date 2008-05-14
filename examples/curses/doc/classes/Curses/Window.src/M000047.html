@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>maxx (Curses::Window)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* def maxx */
+static VALUE
+window_maxx(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+#if defined(getmaxx)
+    return INT2FIX(getmaxx(winp-&gt;window));
+#elif defined(getmaxyx)
+    {
+        int x, y;
+        getmaxyx(winp-&gt;window, y, x);
+        return INT2FIX(x);
+    }
+#else
+    return INT2FIX(winp-&gt;window-&gt;_maxx+1);
+#endif
+}</pre>
+</body>
+</html>

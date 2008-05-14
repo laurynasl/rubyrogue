@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>new (Curses::Window)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* def initialize(h, w, top, left) */
+static VALUE
+window_initialize(obj, h, w, top, left)
+    VALUE obj;
+    VALUE h;
+    VALUE w;
+    VALUE top;
+    VALUE left;
+{
+    struct windata *winp;
+    WINDOW *window;
+
+    rb_secure(4);
+    curses_init_screen();
+    Data_Get_Struct(obj, struct windata, winp);
+    if (winp-&gt;window) delwin(winp-&gt;window);
+    window = newwin(NUM2INT(h), NUM2INT(w), NUM2INT(top), NUM2INT(left));
+    wclear(window);
+    winp-&gt;window = window;
+
+    return obj;
+}</pre>
+</body>
+</html>

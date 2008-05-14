@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Curses::Key</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Curses::Key</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/curses_c.html">
+                curses.c
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MOUSE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_MOUSE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MIN</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_MIN)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BREAK</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_BREAK)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DOWN</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_DOWN)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">UP</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_UP)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">LEFT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_LEFT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RIGHT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_RIGHT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HOME</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_HOME)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BACKSPACE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_BACKSPACE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DL</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_DL)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">IL</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_IL)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DC</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_DC)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">IC</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_IC)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EIC</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_EIC)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CLEAR</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_CLEAR)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EOS</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_EOS)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EOL</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_EOL)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SF</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SF)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SR</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SR)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NPAGE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_NPAGE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PPAGE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_PPAGE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">STAB</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_STAB)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CTAB</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_CTAB)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CATAB</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_CATAB)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ENTER</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_ENTER)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SRESET</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SRESET)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RESET</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_RESET)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PRINT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_PRINT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">LL</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_LL)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">A1</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_A1)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">A3</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_A3)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">B2</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_B2)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">C1</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_C1)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">C3</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_C3)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BTAB</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_BTAB)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BEG</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_BEG)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CANCEL</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_CANCEL)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CLOSE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_CLOSE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMMAND</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_COMMAND)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COPY</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_COPY)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CREATE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_CREATE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">END</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_END)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EXIT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_EXIT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FIND</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_FIND)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HELP</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_HELP)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MARK</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_MARK)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MESSAGE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_MESSAGE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MOVE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_MOVE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NEXT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_NEXT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">OPEN</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_OPEN)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">OPTIONS</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_OPTIONS)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PREVIOUS</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_PREVIOUS)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">REDO</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_REDO)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">REFERENCE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_REFERENCE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">REFRESH</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_REFRESH)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">REPLACE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_REPLACE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RESTART</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_RESTART)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RESUME</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_RESUME)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SAVE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SAVE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SBEG</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SBEG)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SCANCEL</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SCANCEL)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SCOMMAND</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SCOMMAND)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SCOPY</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SCOPY)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SCREATE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SCREATE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SDC</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SDC)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SDL</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SDL)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SELECT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SELECT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SEND</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SEND)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SEOL</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SEOL)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SEXIT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SEXIT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SFIND</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SFIND)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SHELP</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SHELP)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SHOME</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SHOME)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SIC</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SIC)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SLEFT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SLEFT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SMESSAGE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SMESSAGE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SMOVE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SMOVE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SNEXT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SNEXT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SOPTIONS</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SOPTIONS)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SPREVIOUS</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SPREVIOUS)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SPRINT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SPRINT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SREDO</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SREDO)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SREPLACE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SREPLACE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SRIGHT</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SRIGHT)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SRSUME</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SRSUME)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SSAVE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SSAVE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SSUSPEND</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SSUSPEND)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SUNDO</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SUNDO)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SUSPEND</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_SUSPEND)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">UNDO</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_UNDO)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RESIZE</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_RESIZE)</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MAX</td>
+          <td>=</td>
+          <td class="context-item-value">INT2NUM(KEY_MAX)</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>getstr (Curses::Window)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* def getstr */
+static VALUE
+window_getstr(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    char rtn[1024]; /* This should be big enough.. I hope */
+    
+    GetWINDOW(obj, winp);
+    rb_read_check(stdin);
+#if defined(HAVE_WGETNSTR)
+    wgetnstr(winp-&gt;window, rtn, 1023);
+#else
+    wgetstr(winp-&gt;window, rtn);
+#endif
+    return rb_tainted_str_new2(rtn);
+}</pre>
+</body>
+</html>

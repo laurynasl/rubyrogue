@@ -1,0 +1,18 @@
+#type: map
+name: Testmap
+width: 40
+height: 20
+tiles: maps/testmap.tile
+#tiles: filename.tile.gz (future...)
+#tiles: <some generator>
+squares:
+- x: 1
+  y: 1
+  items:
+  - short_sword
+- x: 2
+  y: 23
+  items:
+  - dagger
+  - long_sword
+---

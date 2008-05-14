@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>move (Curses::Window)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* def move(y, x) */
+static VALUE
+window_move(obj, y, x)
+    VALUE obj;
+    VALUE y;
+    VALUE x;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    mvwin(winp-&gt;window, NUM2INT(y), NUM2INT(x));
+
+    return Qnil;
+}</pre>
+</body>
+</html>

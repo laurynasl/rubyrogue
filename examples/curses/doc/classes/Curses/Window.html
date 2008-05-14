@@ -1,0 +1,1217 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Curses::Window</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Curses::Window</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/curses_c.html">
+                curses.c
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Data
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000056">&lt;&lt;</a>&nbsp;&nbsp;
+      <a href="#M000053">addch</a>&nbsp;&nbsp;
+      <a href="#M000055">addstr</a>&nbsp;&nbsp;
+      <a href="#M000049">begx</a>&nbsp;&nbsp;
+      <a href="#M000048">begy</a>&nbsp;&nbsp;
+      <a href="#M000041">box</a>&nbsp;&nbsp;
+      <a href="#M000037">clear</a>&nbsp;&nbsp;
+      <a href="#M000036">close</a>&nbsp;&nbsp;
+      <a href="#M000038">clrtoeol</a>&nbsp;&nbsp;
+      <a href="#M000045">curx</a>&nbsp;&nbsp;
+      <a href="#M000044">cury</a>&nbsp;&nbsp;
+      <a href="#M000059">delch</a>&nbsp;&nbsp;
+      <a href="#M000060">deleteln</a>&nbsp;&nbsp;
+      <a href="#M000057">getch</a>&nbsp;&nbsp;
+      <a href="#M000058">getstr</a>&nbsp;&nbsp;
+      <a href="#M000052">inch</a>&nbsp;&nbsp;
+      <a href="#M000054">insch</a>&nbsp;&nbsp;
+      <a href="#M000061">insertln</a>&nbsp;&nbsp;
+      <a href="#M000047">maxx</a>&nbsp;&nbsp;
+      <a href="#M000046">maxy</a>&nbsp;&nbsp;
+      <a href="#M000042">move</a>&nbsp;&nbsp;
+      <a href="#M000034">new</a>&nbsp;&nbsp;
+      <a href="#M000040">noutrefresh</a>&nbsp;&nbsp;
+      <a href="#M000039">refresh</a>&nbsp;&nbsp;
+      <a href="#M000062">scroll</a>&nbsp;&nbsp;
+      <a href="#M000043">setpos</a>&nbsp;&nbsp;
+      <a href="#M000051">standend</a>&nbsp;&nbsp;
+      <a href="#M000050">standout</a>&nbsp;&nbsp;
+      <a href="#M000035">subwin</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="#M000034" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(p1, p2, p3, p4)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def initialize(h, w, top, left)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
+<pre>
+/* def initialize(h, w, top, left) */
+static VALUE
+window_initialize(obj, h, w, top, left)
+    VALUE obj;
+    VALUE h;
+    VALUE w;
+    VALUE top;
+    VALUE left;
+{
+    struct windata *winp;
+    WINDOW *window;
+
+    rb_secure(4);
+    curses_init_screen();
+    Data_Get_Struct(obj, struct windata, winp);
+    if (winp-&gt;window) delwin(winp-&gt;window);
+    window = newwin(NUM2INT(h), NUM2INT(w), NUM2INT(top), NUM2INT(left));
+    wclear(window);
+    winp-&gt;window = window;
+
+    return obj;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
+
+        <div class="method-heading">
+          <a href="#M000056" class="method-signature">
+          <span class="method-name">&lt;&lt;</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def &lt;&lt;(str)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000056-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000056-source">
+<pre>
+/* def &lt;&lt;(str) */
+static VALUE
+window_addstr2(obj, str)
+    VALUE obj;
+    VALUE str;
+{
+    window_addstr(obj, str);
+    return obj;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <a href="#M000053" class="method-signature">
+          <span class="method-name">addch</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000053">addch</a>(ch)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000053-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000053-source">
+<pre>
+/* def addch(ch) */
+static VALUE
+window_addch(obj, ch)
+    VALUE obj;
+    VALUE ch;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    waddch(winp-&gt;window, NUM2CH(ch));
+    
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
+
+        <div class="method-heading">
+          <a href="#M000055" class="method-signature">
+          <span class="method-name">addstr</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000055">addstr</a>(str)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000055-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000055-source">
+<pre>
+/* def addstr(str) */
+static VALUE
+window_addstr(obj, str)
+    VALUE obj;
+    VALUE str;
+{
+    if (!NIL_P(str)) {
+        struct windata *winp;
+
+        GetWINDOW(obj, winp);
+        waddstr(winp-&gt;window, STR2CSTR(str));
+    }
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+          <a href="#M000049" class="method-signature">
+          <span class="method-name">begx</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000049">begx</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000049-source">
+<pre>
+/* def begx */
+static VALUE
+window_begx(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    int x, y;
+
+    GetWINDOW(obj, winp);
+#ifdef getbegyx
+    getbegyx(winp-&gt;window, y, x);
+    return INT2FIX(x);
+#else
+    return INT2FIX(winp-&gt;window-&gt;_begx);
+#endif
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
+
+        <div class="method-heading">
+          <a href="#M000048" class="method-signature">
+          <span class="method-name">begy</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000048">begy</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000048-source">
+<pre>
+/* def begy */
+static VALUE
+window_begy(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    int x, y;
+
+    GetWINDOW(obj, winp);
+#ifdef getbegyx
+    getbegyx(winp-&gt;window, y, x);
+    return INT2FIX(y);
+#else
+    return INT2FIX(winp-&gt;window-&gt;_begy);
+#endif
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+          <a href="#M000041" class="method-signature">
+          <span class="method-name">box</span><span class="method-args">(...)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000041">box</a>(vert, hor)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
+<pre>
+/* def box(vert, hor) */
+static VALUE
+window_box(argc, argv, self)
+    int argc;
+    VALUE argv[], self;
+{
+    struct windata *winp; 
+    VALUE vert, hor, corn;
+
+    rb_scan_args(argc, argv, &quot;21&quot;, &amp;vert, &amp;hor, &amp;corn);
+
+    GetWINDOW(self, winp);
+    box(winp-&gt;window, NUM2CH(vert), NUM2CH(hor));
+
+    if (!NIL_P(corn)) {
+      int cur_x, cur_y, x, y;
+      chtype c;
+
+      c = NUM2CH(corn);
+      getyx(winp-&gt;window, cur_y, cur_x);
+      x = NUM2INT(window_maxx(self)) - 1;
+      y = NUM2INT(window_maxy(self)) - 1;
+      wmove(winp-&gt;window, 0, 0);
+      waddch(winp-&gt;window, c);
+      wmove(winp-&gt;window, y, 0);
+      waddch(winp-&gt;window, c);
+      wmove(winp-&gt;window, y, x);
+      waddch(winp-&gt;window, c);
+      wmove(winp-&gt;window, 0, x);
+      waddch(winp-&gt;window, c);
+      wmove(winp-&gt;window, cur_y, cur_x);
+    }
+    
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="#M000037" class="method-signature">
+          <span class="method-name">clear</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000037">clear</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
+<pre>
+/* def clear */
+static VALUE
+window_clear(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    wclear(winp-&gt;window);
+    
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">close</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000036">close</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+/* def close */
+static VALUE
+window_close(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    delwin(winp-&gt;window);
+    winp-&gt;window = 0;
+
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="#M000038" class="method-signature">
+          <span class="method-name">clrtoeol</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000038">clrtoeol</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
+<pre>
+/* def clrtoeol */
+static VALUE
+window_clrtoeol(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    wclrtoeol(winp-&gt;window);
+    
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="#M000045" class="method-signature">
+          <span class="method-name">curx</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000045">curx</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
+<pre>
+/* def curx */
+static VALUE
+window_curx(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    int x, y;
+
+    GetWINDOW(obj, winp);
+    getyx(winp-&gt;window, y, x);
+    return INT2FIX(x);
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="#M000044" class="method-signature">
+          <span class="method-name">cury</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000044">cury</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
+<pre>
+/* def cury */
+static VALUE
+window_cury(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    int x, y;
+
+    GetWINDOW(obj, winp);
+    getyx(winp-&gt;window, y, x);
+    return INT2FIX(y);
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
+
+        <div class="method-heading">
+          <a href="#M000059" class="method-signature">
+          <span class="method-name">delch</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000059">delch</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000059-source">
+<pre>
+/* def delch */
+static VALUE
+window_delch(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    wdelch(winp-&gt;window);
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
+
+        <div class="method-heading">
+          <a href="#M000060" class="method-signature">
+          <span class="method-name">deleteln</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def delelteln
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000060-source">
+<pre>
+/* def delelteln */
+static VALUE
+window_deleteln(obj)
+    VALUE obj;
+{
+#if defined(HAVE_WDELETELN) || defined(wdeleteln)
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    wdeleteln(winp-&gt;window);
+#endif
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
+
+        <div class="method-heading">
+          <a href="#M000057" class="method-signature">
+          <span class="method-name">getch</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000057">getch</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000057-source">
+<pre>
+/* def getch */
+static VALUE
+window_getch(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    
+    rb_read_check(stdin);
+    GetWINDOW(obj, winp);
+    return UINT2NUM(wgetch(winp-&gt;window));
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
+
+        <div class="method-heading">
+          <a href="#M000058" class="method-signature">
+          <span class="method-name">getstr</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000058">getstr</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000058-source">
+<pre>
+/* def getstr */
+static VALUE
+window_getstr(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    char rtn[1024]; /* This should be big enough.. I hope */
+    
+    GetWINDOW(obj, winp);
+    rb_read_check(stdin);
+#if defined(HAVE_WGETNSTR)
+    wgetnstr(winp-&gt;window, rtn, 1023);
+#else
+    wgetstr(winp-&gt;window, rtn);
+#endif
+    return rb_tainted_str_new2(rtn);
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <a href="#M000052" class="method-signature">
+          <span class="method-name">inch</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000052">inch</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000052-source">
+<pre>
+/* def inch */
+static VALUE
+window_inch(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    return CH2FIX(winch(winp-&gt;window));
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
+
+        <div class="method-heading">
+          <a href="#M000054" class="method-signature">
+          <span class="method-name">insch</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000054">insch</a>(ch)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000054-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000054-source">
+<pre>
+/* def insch(ch) */
+static VALUE
+window_insch(obj, ch)
+    VALUE obj;
+    VALUE ch;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    winsch(winp-&gt;window, NUM2CH(ch));
+    
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <a href="#M000061" class="method-signature">
+          <span class="method-name">insertln</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000061">insertln</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000061-source">
+<pre>
+/* def insertln */
+static VALUE
+window_insertln(obj)
+    VALUE obj;
+{
+#if defined(HAVE_WINSERTLN) || defined(winsertln)
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    winsertln(winp-&gt;window);
+#endif
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="#M000047" class="method-signature">
+          <span class="method-name">maxx</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000047">maxx</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
+<pre>
+/* def maxx */
+static VALUE
+window_maxx(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+#if defined(getmaxx)
+    return INT2FIX(getmaxx(winp-&gt;window));
+#elif defined(getmaxyx)
+    {
+        int x, y;
+        getmaxyx(winp-&gt;window, y, x);
+        return INT2FIX(x);
+    }
+#else
+    return INT2FIX(winp-&gt;window-&gt;_maxx+1);
+#endif
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="#M000046" class="method-signature">
+          <span class="method-name">maxy</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000046">maxy</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000046-source">
+<pre>
+/* def maxy */
+static VALUE
+window_maxy(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+#if defined(getmaxy)
+    return INT2FIX(getmaxy(winp-&gt;window));
+#elif defined(getmaxyx)
+    {
+        int x, y;
+        getmaxyx(winp-&gt;window, y, x);
+        return INT2FIX(y);
+    }
+#else
+    return INT2FIX(winp-&gt;window-&gt;_maxy+1);
+#endif
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <a href="#M000042" class="method-signature">
+          <span class="method-name">move</span><span class="method-args">(p1, p2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000042">move</a>(y, x)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000042-source">
+<pre>
+/* def move(y, x) */
+static VALUE
+window_move(obj, y, x)
+    VALUE obj;
+    VALUE y;
+    VALUE x;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    mvwin(winp-&gt;window, NUM2INT(y), NUM2INT(x));
+
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="#M000040" class="method-signature">
+          <span class="method-name">noutrefresh</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000040">noutrefresh</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
+<pre>
+/* def noutrefresh */
+static VALUE
+window_noutrefresh(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+#ifdef HAVE_DOUPDATE
+    wnoutrefresh(winp-&gt;window);
+#else
+    wrefresh(winp-&gt;window);
+#endif
+
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+          <a href="#M000039" class="method-signature">
+          <span class="method-name">refresh</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000039">refresh</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
+<pre>
+/* def refresh */
+static VALUE
+window_refresh(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    wrefresh(winp-&gt;window);
+    
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <a href="#M000062" class="method-signature">
+          <span class="method-name">scroll</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+USE_COLOR
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
+<pre>
+/* USE_COLOR */
+
+static VALUE
+window_scroll(VALUE obj)
+{
+  struct windata *winp;
+
+  GetWINDOW(obj, winp);
+  /* may have to raise exception on ERR */
+  return (scroll(winp-&gt;window) == OK) ? Qtrue : Qfalse;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="#M000043" class="method-signature">
+          <span class="method-name">setpos</span><span class="method-args">(p1, p2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000043">setpos</a>(y, x)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000043-source">
+<pre>
+/* def setpos(y, x) */
+static VALUE
+window_setpos(obj, y, x)
+    VALUE obj;
+    VALUE y;
+    VALUE x;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    wmove(winp-&gt;window, NUM2INT(y), NUM2INT(x));
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+          <a href="#M000051" class="method-signature">
+          <span class="method-name">standend</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000051">standend</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000051-source">
+<pre>
+/* def standend */
+static VALUE
+window_standend(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    wstandend(winp-&gt;window);
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000050" class="method-detail">
+        <a name="M000050"></a>
+
+        <div class="method-heading">
+          <a href="#M000050" class="method-signature">
+          <span class="method-name">standout</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000050">standout</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000050-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000050-source">
+<pre>
+/* def standout */
+static VALUE
+window_standout(obj)
+    VALUE obj;
+{
+    struct windata *winp;
+    
+    GetWINDOW(obj, winp);
+    wstandout(winp-&gt;window);
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="#M000035" class="method-signature">
+          <span class="method-name">subwin</span><span class="method-args">(p1, p2, p3, p4)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Window.html#M000035">subwin</a>(height, width, top, left)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
+<pre>
+/* def subwin(height, width, top, left) */
+static VALUE
+window_subwin(obj, height, width, top, left)
+    VALUE obj;
+    VALUE height;
+    VALUE width;
+    VALUE top;
+    VALUE left;
+{
+    struct windata *winp;
+    WINDOW *window;
+    VALUE win;
+    int h, w, t, l;
+
+    h = NUM2INT(height);
+    w = NUM2INT(width);
+    t = NUM2INT(top);
+    l = NUM2INT(left);
+    GetWINDOW(obj, winp);
+    window = subwin(winp-&gt;window, h, w, t, l);
+    win = prep_window(rb_obj_class(obj), window);
+
+    return win;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

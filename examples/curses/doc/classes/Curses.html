@@ -1,0 +1,1258 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Curses</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Curses</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/curses_c.html">
+                curses.c
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;- Initialization
+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000024">addch</a>&nbsp;&nbsp;
+      <a href="#M000026">addstr</a>&nbsp;&nbsp;
+      <a href="#M000017">beep</a>&nbsp;&nbsp;
+      <a href="#M000013">cbreak</a>&nbsp;&nbsp;
+      <a href="#M000007">clear</a>&nbsp;&nbsp;
+      <a href="#M000002">close_screen</a>&nbsp;&nbsp;
+      <a href="#M000003">closed?</a>&nbsp;&nbsp;
+      <a href="#M000008">clrtoeol</a>&nbsp;&nbsp;
+      <a href="#M000029">delch</a>&nbsp;&nbsp;
+      <a href="#M000030">deleteln</a>&nbsp;&nbsp;
+      <a href="#M000006">doupdate</a>&nbsp;&nbsp;
+      <a href="#M000009">echo</a>&nbsp;&nbsp;
+      <a href="#M000018">flash</a>&nbsp;&nbsp;
+      <a href="#M000027">getch</a>&nbsp;&nbsp;
+      <a href="#M000028">getstr</a>&nbsp;&nbsp;
+      <a href="#M000023">inch</a>&nbsp;&nbsp;
+      <a href="#M000001">init_screen</a>&nbsp;&nbsp;
+      <a href="#M000025">insch</a>&nbsp;&nbsp;
+      <a href="#M000031">insertln</a>&nbsp;&nbsp;
+      <a href="#M000032">keyname</a>&nbsp;&nbsp;
+      <a href="#M000015">nl</a>&nbsp;&nbsp;
+      <a href="#M000014">nocbreak</a>&nbsp;&nbsp;
+      <a href="#M000010">noecho</a>&nbsp;&nbsp;
+      <a href="#M000016">nonl</a>&nbsp;&nbsp;
+      <a href="#M000012">noraw</a>&nbsp;&nbsp;
+      <a href="#M000011">raw</a>&nbsp;&nbsp;
+      <a href="#M000005">refresh</a>&nbsp;&nbsp;
+      <a href="#M000020">setpos</a>&nbsp;&nbsp;
+      <a href="#M000022">standend</a>&nbsp;&nbsp;
+      <a href="#M000021">standout</a>&nbsp;&nbsp;
+      <a href="#M000004">stdscr</a>&nbsp;&nbsp;
+      <a href="#M000033">timeout=</a>&nbsp;&nbsp;
+      <a href="#M000019">ungetch</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Curses/Key.html" class="link">Curses::Key</a><br />
+Class <a href="Curses/MouseEvent.html" class="link">Curses::MouseEvent</a><br />
+Class <a href="Curses/Window.html" class="link">Curses::Window</a><br />
+
+    </div>
+
+
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
+
+      <div class="name-list">
+                        <table summary="aliases">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">cbreak</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">crmode</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">nocbreak</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">nocrmode</td>
+        </tr>
+                        </table>
+      </div>
+    </div>
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+          <a href="#M000024" class="method-signature">
+          <span class="method-name">addch</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000024">addch</a>(ch)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000024-source">
+<pre>
+/* def addch(ch) */
+static VALUE
+curses_addch(obj, ch)
+    VALUE obj;
+    VALUE ch;
+{
+    curses_stdscr();
+    addch(NUM2CH(ch));
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
+
+        <div class="method-heading">
+          <a href="#M000026" class="method-signature">
+          <span class="method-name">addstr</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000026">addstr</a>(str)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000026-source">
+<pre>
+/* def addstr(str) */
+static VALUE
+curses_addstr(obj, str)
+    VALUE obj;
+    VALUE str;
+{
+    curses_stdscr();
+    if (!NIL_P(str)) {
+        addstr(STR2CSTR(str));
+    }
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="#M000017" class="method-signature">
+          <span class="method-name">beep</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000017">beep</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000017-source">
+<pre>
+/* def beep */
+static VALUE
+curses_beep(obj)
+    VALUE obj;
+{
+#ifdef HAVE_BEEP
+    curses_stdscr();
+    beep();
+#endif
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="#M000013" class="method-signature">
+          <span class="method-name">cbreak</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000013">cbreak</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
+<pre>
+/* def cbreak */
+static VALUE
+curses_cbreak(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    cbreak();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">clear</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000007">clear</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+/* def clear */
+static VALUE
+curses_clear(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    wclear(stdscr);
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">close_screen</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000002">close_screen</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
+<pre>
+/* def close_screen */
+static VALUE
+curses_close_screen()
+{
+#ifdef HAVE_ISENDWIN
+    if (!isendwin())
+#endif
+        endwin();
+    rb_stdscr = 0;
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">closed?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000003">closed?</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+/* def closed? */
+static VALUE
+curses_closed()
+{
+#ifdef HAVE_ISENDWIN
+    if (isendwin()) {
+        return Qtrue;
+    }
+    return Qfalse;
+#else
+    rb_notimplement();
+#endif
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
+          <span class="method-name">clrtoeol</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000008">clrtoeol</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+/* def clrtoeol */
+static VALUE
+curses_clrtoeol()
+{
+    curses_stdscr();
+    clrtoeol();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
+
+        <div class="method-heading">
+          <a href="#M000029" class="method-signature">
+          <span class="method-name">delch</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000029">delch</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000029-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000029-source">
+<pre>
+/* def delch */
+static VALUE
+curses_delch(obj)
+    VALUE obj;
+{
+    delch();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+          <a href="#M000030" class="method-signature">
+          <span class="method-name">deleteln</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def delelteln
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000030-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000030-source">
+<pre>
+/* def delelteln */
+static VALUE
+curses_deleteln(obj)
+    VALUE obj;
+{
+#if defined(HAVE_DELETELN) || defined(deleteln)
+    deleteln();
+#endif
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">doupdate</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000006">doupdate</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+/* def doupdate */
+static VALUE
+curses_doupdate(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+#ifdef HAVE_DOUPDATE
+    doupdate();
+#else
+    refresh();
+#endif
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
+          <span class="method-name">echo</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000009">echo</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+/* def echo */
+static VALUE
+curses_echo(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    echo();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="#M000018" class="method-signature">
+          <span class="method-name">flash</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000018">flash</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000018-source">
+<pre>
+/* def flash */
+static VALUE
+curses_flash(obj)
+    VALUE obj;
+{
+#ifdef HAVE_FLASH
+    curses_stdscr();
+    flash();
+#endif
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
+
+        <div class="method-heading">
+          <a href="#M000027" class="method-signature">
+          <span class="method-name">getch</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000027">getch</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000027-source">
+<pre>
+/* def getch */
+static VALUE
+curses_getch(obj)
+    VALUE obj;
+{
+    rb_read_check(stdin);
+    curses_stdscr();
+    return UINT2NUM(getch());
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
+
+        <div class="method-heading">
+          <a href="#M000028" class="method-signature">
+          <span class="method-name">getstr</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000028">getstr</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000028-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000028-source">
+<pre>
+/* def getstr */
+static VALUE
+curses_getstr(obj)
+    VALUE obj;
+{
+    char rtn[1024]; /* This should be big enough.. I hope */
+
+    rb_read_check(stdin);
+#if defined(HAVE_GETNSTR)
+    getnstr(rtn,1023);
+#else
+    getstr(rtn);
+#endif
+    return rb_tainted_str_new2(rtn);
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+          <a href="#M000023" class="method-signature">
+          <span class="method-name">inch</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000023">inch</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000023-source">
+<pre>
+/* def inch */
+static VALUE
+curses_inch(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    return CH2FIX(inch());
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">init_screen</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000001">init_screen</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+/* def init_screen */
+static VALUE
+curses_init_screen()
+{
+    rb_secure(4);
+    if (rb_stdscr) return rb_stdscr;
+    initscr();
+    if (stdscr == 0) {
+        rb_raise(rb_eRuntimeError, &quot;can't initialize curses&quot;);
+    }
+    clear();
+    rb_stdscr = prep_window(cWindow, stdscr);
+    return rb_stdscr;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="#M000025" class="method-signature">
+          <span class="method-name">insch</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000025">insch</a>(ch)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000025-source">
+<pre>
+/* def insch(ch) */
+static VALUE
+curses_insch(obj, ch)
+    VALUE obj;
+    VALUE ch;
+{
+    curses_stdscr();
+    insch(NUM2CH(ch));
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
+
+        <div class="method-heading">
+          <a href="#M000031" class="method-signature">
+          <span class="method-name">insertln</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000031">insertln</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000031-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000031-source">
+<pre>
+/* def insertln */
+static VALUE
+curses_insertln(obj)
+    VALUE obj;
+{
+#if defined(HAVE_INSERTLN) || defined(insertln)
+    insertln();
+#endif
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
+
+        <div class="method-heading">
+          <a href="#M000032" class="method-signature">
+          <span class="method-name">keyname</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000032">keyname</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000032-source">
+<pre>
+/* def keyname */
+static VALUE
+curses_keyname(obj, c)
+    VALUE obj;
+    VALUE c;
+{
+#ifdef HAVE_KEYNAME
+  const char *name;
+
+  name = keyname(NUM2INT(c));
+  if (name) {
+    return rb_str_new2(name);
+  } else {
+    return Qnil;
+  }
+#else
+  return Qnil;
+#endif
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="#M000015" class="method-signature">
+          <span class="method-name">nl</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000015">nl</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
+<pre>
+/* def nl */
+static VALUE
+curses_nl(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    nl();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="#M000014" class="method-signature">
+          <span class="method-name">nocbreak</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000014">nocbreak</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
+<pre>
+/* def nocbreak */
+static VALUE
+curses_nocbreak(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    nocbreak();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="#M000010" class="method-signature">
+          <span class="method-name">noecho</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000010">noecho</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+/* def noecho */
+static VALUE
+curses_noecho(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    noecho();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="#M000016" class="method-signature">
+          <span class="method-name">nonl</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000016">nonl</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000016-source">
+<pre>
+/* def nonl */
+static VALUE
+curses_nonl(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    nonl();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="#M000012" class="method-signature">
+          <span class="method-name">noraw</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000012">noraw</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
+<pre>
+/* def noraw */
+static VALUE
+curses_noraw(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    noraw();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">raw</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000011">raw</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+/* def raw */
+static VALUE
+curses_raw(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    raw();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">refresh</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000005">refresh</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+/* def refresh */
+static VALUE
+curses_refresh(obj)
+    VALUE obj;
+{
+    curses_stdscr();
+    refresh();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
+
+        <div class="method-heading">
+          <a href="#M000020" class="method-signature">
+          <span class="method-name">setpos</span><span class="method-args">(p1, p2)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000020">setpos</a>(y, x)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000020-source">
+<pre>
+/* def setpos(y, x) */
+static VALUE
+curses_setpos(obj, y, x)
+    VALUE obj;
+    VALUE y;
+    VALUE x;
+{
+    curses_stdscr();
+    move(NUM2INT(y), NUM2INT(x));
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
+
+        <div class="method-heading">
+          <a href="#M000022" class="method-signature">
+          <span class="method-name">standend</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000022">standend</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000022-source">
+<pre>
+/* def standend */
+static VALUE
+curses_standend(obj)
+    VALUE obj;
+{
+    standend();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
+
+        <div class="method-heading">
+          <a href="#M000021" class="method-signature">
+          <span class="method-name">standout</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000021">standout</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000021-source">
+<pre>
+/* def standout */
+static VALUE
+curses_standout(obj)
+    VALUE obj;
+{
+    standout();
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">stdscr</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000004">stdscr</a> def <a
+href="Curses.html#M000001">init_screen</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+/* def init_screen */
+static VALUE
+curses_init_screen()
+{
+    rb_secure(4);
+    if (rb_stdscr) return rb_stdscr;
+    initscr();
+    if (stdscr == 0) {
+        rb_raise(rb_eRuntimeError, &quot;can't initialize curses&quot;);
+    }
+    clear();
+    rb_stdscr = prep_window(cWindow, stdscr);
+    return rb_stdscr;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="#M000033" class="method-signature">
+          <span class="method-name">timeout=</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+USE_MOUSE
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
+<pre>
+/* USE_MOUSE */
+
+static VALUE
+curses_timeout(VALUE obj, VALUE delay)
+{
+#ifdef HAVE_TIMEOUT
+  timeout(NUM2INT(delay));
+  return Qnil;
+#else
+    rb_notimplement();
+#endif
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
+
+        <div class="method-heading">
+          <a href="#M000019" class="method-signature">
+          <span class="method-name">ungetch</span><span class="method-args">(p1)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a href="Curses.html#M000019">ungetch</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000019-source">
+<pre>
+/* def ungetch */
+static VALUE
+curses_ungetch(obj, ch)
+    VALUE obj;
+    VALUE ch;
+{
+#ifdef HAVE_UNGETCH
+    curses_stdscr();
+    ungetch(NUM2INT(ch));
+#else
+    rb_notimplement();
+#endif
+    return Qnil;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
