@@ -1,6 +1,7 @@
 maps:
 - testmap
 player:
+  name: Kudlius
   x: 2
   y: 1
   map: testmap

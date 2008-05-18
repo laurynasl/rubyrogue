@@ -20,5 +20,6 @@ describe Game, 'load' do
   it "should load game from file" do
     game = Game.new('maps/testgame.yaml')
     game.map.name.should == 'testmap'
+    game.player.name.should == 'Kudlius'
   end
 end

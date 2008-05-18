@@ -2,6 +2,7 @@ require 'yaml'
 
 class Game
   attr_reader :map
+  attr_accessor :player
 
   def initialize(filename = nil)
     @messages = []
@@ -11,6 +12,7 @@ class Game
       @data = YAML::load(f)
       f.close
       @map = Map.load('maps/' + @data['maps'].first + '.yaml')
+      @player = Player.new(@data['player'])
     end
   end
 
