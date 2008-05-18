@@ -10,7 +10,8 @@ class CursesUI
     init_actions
 
     # Init game
-    @game = Game.new
+    puts $*.inspect
+    @game = Game.new($*[0])
 
     # Draws the windows
     draw_windows

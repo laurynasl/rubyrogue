@@ -1,5 +1,6 @@
 class Map
   attr_reader :data, :tiles
+  attr_accessor :name
 
   def initialize
   end
@@ -7,6 +8,7 @@ class Map
   def self.load(filename)
     map = self.new
     map.load(filename)
+    map.name = File.basename(filename, '.yaml')
     map
   end
 
