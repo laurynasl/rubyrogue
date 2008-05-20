@@ -32,4 +32,9 @@ class Game
   def output(data)
     @messages << data
   end
+
+  def move_by(dx, dy)
+    player.x += dx
+    player.y += dy
+  end
 end

@@ -3,3 +3,7 @@ require 'spec'
 
 Spec::Runner.configure do |config|
 end
+
+def testgame
+  Game.new('maps/testgame.yaml')
+end

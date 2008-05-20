@@ -131,7 +131,14 @@ class CursesUI
       draw_windows
     else
       begin
-        @game.output keyname(key) || key
+        case key
+        when KEY_UP: @game.move_by(0, -1)
+        when KEY_DOWN: @game.move_by(0, 1)
+        when KEY_LEFT: @game.move_by(-1, 0)
+        when KEY_RIGHT: @game.move_by(1, 0)
+        else
+          @game.output keyname(key) || key
+        end
       rescue
         #@game.output $!.to_s + key.to_s
       end
