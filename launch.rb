@@ -20,7 +20,8 @@ require 'boot.rb'
 def puts(text)
   $logfile ||= File.new('log/stdout.log', 'a')
   $logfile << text.to_s + "\n"
+  $logfile.flush
 end
 
 
-CursesUI.new().game_loop
+CursesUI.new($*[0]).game_loop

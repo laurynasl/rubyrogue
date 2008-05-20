@@ -2,7 +2,7 @@ require 'yaml'
 
 class Game
   attr_reader :map
-  attr_accessor :player
+  attr_accessor :player, :ui
 
   def initialize(filename = nil)
     @messages = []
@@ -36,5 +36,7 @@ class Game
   def move_by(dx, dy)
     player.x += dx
     player.y += dy
+
+    ui.move_player
   end
 end

@@ -3,18 +3,16 @@ require 'curses'
 include Curses
 
 class CursesUI
+  attr_accessor :game
   MESS_HEIGHT = 6
   ATT_WIDTH = 18
-  def initialize(debug=false)
+  def initialize(filename = nil)
     # Init the action map
     init_actions
 
     # Init game
-    puts $*.inspect
-    @game = Game.new($*[0])
-
-    # Draws the windows
-    draw_windows
+    @game = Game.new(filename)
+    @game.ui = self
   end
 
   ##
@@ -90,6 +88,9 @@ class CursesUI
   # Does the game loop (including key reading and dispatching)
   #
   def game_loop
+    # Draws the windows
+    draw_windows
+
     # Loop controller
     playing = true
 
@@ -132,15 +133,21 @@ class CursesUI
     else
       begin
         case key
-        when KEY_UP: @game.move_by(0, -1)
-        when KEY_DOWN: @game.move_by(0, 1)
-        when KEY_LEFT: @game.move_by(-1, 0)
-        when KEY_RIGHT: @game.move_by(1, 0)
+        when KEY_UP: 
+          @game.move_by(0, -1)
+        when KEY_DOWN: 
+          @game.move_by(0, 1)
+        when KEY_LEFT: 
+          @game.move_by(-1, 0)
+        when KEY_RIGHT: 
+          @game.move_by(1, 0)
         else
           @game.output keyname(key) || key
         end
       rescue
-        #@game.output $!.to_s + key.to_s
+        puts $!.to_s
+        puts $!.backtrace.join("\n")
+        @game.output $!.to_s
       end
     end
     return keep_playing
@@ -176,5 +183,9 @@ class CursesUI
     win.scroll if win.cury == win.maxy
   end
 
-
+  def move_player
+    @map_win.setpos @game.player.y, @game.player.x
+    @map_win.addch '@'[0]
+    @map_win.refresh
+  end
 end
