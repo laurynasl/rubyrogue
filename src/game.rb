@@ -34,10 +34,15 @@ class Game
   end
 
   def move_by(dx, dy)
-    ui.hide_player
-    player.x += dx
-    player.y += dy
-
-    ui.move_player
+    x = player.x + dx
+    y = player.y + dy
+    if @map.tiles[y][x] == '.'[0]
+      ui.hide_player
+      player.x = x
+      player.y = y
+      ui.move_player
+    else
+      output "Ouch. You bump into a wall."
+    end
   end
 end

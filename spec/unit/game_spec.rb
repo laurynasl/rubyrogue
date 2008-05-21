@@ -50,4 +50,11 @@ describe Game, 'move_by' do
     @game.player.x.should == 1
     @game.player.y.should == 2
   end
+
+  it "should forbid moving into wall" do
+    @ui.should_not_receive(:hide_player)
+    @ui.should_not_receive(:move_player)
+    @game.move_by(1, 1)
+    @game.instance_variable_get(:@messages).should == ["Ouch. You bump into a wall."]
+  end
 end
