@@ -34,6 +34,7 @@ describe Game, 'move_by' do
 
   it "should move player to right" do
     @game.player.x.should == 2
+    @ui.should_receive(:hide_player)
     @ui.should_receive(:move_player)
 
     @game.move_by(1, 0)
@@ -42,6 +43,7 @@ describe Game, 'move_by' do
   end
 
   it "should move player to bottom left" do
+    @ui.should_receive(:hide_player)
     @ui.should_receive(:move_player)
     @game.move_by(-1, 1)
 

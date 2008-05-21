@@ -188,4 +188,10 @@ class CursesUI
     @map_win.addch '@'[0]
     @map_win.refresh
   end
+
+  def hide_player
+    @map_win.setpos @game.player.y, @game.player.x
+    @map_win.addch '.'[0]
+    @map_win.refresh
+  end
 end

@@ -34,6 +34,7 @@ class Game
   end
 
   def move_by(dx, dy)
+    ui.hide_player
     player.x += dx
     player.y += dy
 
