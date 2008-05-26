@@ -51,6 +51,7 @@ class CursesUI
       redraw_map
     end
     @map_win.refresh
+    move_player
 
     # Attributes window
     border_win = Window.new(att_h, att_w, 0, 0)
@@ -71,7 +72,7 @@ class CursesUI
   end
 
   def redraw_map
-    @game.output 'maxx: ' + @map_win.maxx.to_s
+    @game.output @map_win.maxx.to_s + 'x' + @map_win.maxy.to_s
     @map_win.setpos 0, 0
     @map_win.maxy.times do |y|
       @map_win.maxx.times do |x|
