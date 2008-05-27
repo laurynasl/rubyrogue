@@ -3,12 +3,13 @@ require 'curses'
 include Curses
 
 class CursesUI
-  attr_accessor :game
+  attr_accessor :game, :offset
   MESS_HEIGHT = 6
   ATT_WIDTH = 18
   def initialize(filename = nil)
     # Init the action map
     init_actions
+    @offset = {:x => 0, :y => 0}
 
     # Init game
     @game = Game.new(filename)
@@ -161,19 +162,6 @@ class CursesUI
     # These are the keys whose only purpose is
     # to terminate the game.
     @@show_stoppers = [KEY_F2, 'q'[0]]
-
-    # Special handling for arrow keys
-    dirs = {KEY_UP => :up,
-      KEY_LEFT => :left,
-      KEY_RIGHT => :right,
-      KEY_DOWN => :down}
-
-    dirs.each do |key, dir|
-      # Specify it here if arrow
-      # keys need to be given another meaning
-      #@@actions[key] = [ChatAction.new(dir),
-      #                  MoveAction.new(dir)]
-    end
   end
 
   ##
@@ -185,7 +173,13 @@ class CursesUI
   end
 
   def move_player
-    @map_win.setpos @game.player.y, @game.player.x
+    if @game.player.y == 12
+      @offset[:y] = 4
+    end
+    if @game.player.y == 8
+      @offset[:y] = 0
+    end
+    @map_win.setpos @game.player.y - @offset[:y], @game.player.x
     @map_win.addch '@'[0]
     @map_win.refresh
   end
