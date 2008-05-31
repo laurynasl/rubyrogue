@@ -1,5 +1,5 @@
 width: 40
-height: 20
+height: 21
 tiles: maps/testmap.tile
 #tiles: filename.tile.gz (future...)
 #tiles: <some generator>

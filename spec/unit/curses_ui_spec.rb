@@ -50,9 +50,31 @@ describe CursesUI, "move_player" do
     @ui.offset.should == {:x => 0, :y => 5}
   end
 
+  it "should move down only every 4 squares, so not now when offset is 4 and position is 13" do
+    map_at 0, 4
+    player_at 1, 13
+    @map_win.should_receive(:setpos).with(13-4, 1)
+    @ui.should_not_receive(:redraw_map)
+
+    @ui.move_player
+  end
+
+  it "should scroll down not more that till bottom" do
+    map_at 0, 4
+    player_at 1, 16
+    @map_win.should_receive(:setpos).with(16-5, 1)
+    @ui.should_receive(:redraw_map)
+
+    @ui.move_player
+    @ui.offset.should == {:x => 0, :y => 5}
+  end
+
   def map_at(x, y)
     @ui = CursesUI.new('maps/testgame.yaml')
     @ui.offset = {:x => x, :y => y}
+
+    #@map = Map.load('maps/testmap.yaml')
+    #@ui.instance_variable_set
 
     @map_win = mock('map_win', :maxx => 60, :maxy => 16)
     @ui.instance_variable_set :@map_win, @map_win
@@ -74,6 +96,19 @@ describe CursesUI, "hide_player" do
     @ui.instance_variable_set :@map_win, @map_win
 
     @map_win.should_receive(:setpos).with(1, 2)
+    @map_win.should_receive(:addch).with('.'[0])
+    @map_win.should_receive(:refresh)
+    @ui.hide_player
+  end
+
+  it "should unpaint player when ui has offset" do
+    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui.offset = {:x => 2, :y => 1}
+
+    @map_win = mock('map_win')
+    @ui.instance_variable_set :@map_win, @map_win
+
+    @map_win.should_receive(:setpos).with(0, 0)
     @map_win.should_receive(:addch).with('.'[0])
     @map_win.should_receive(:refresh)
     @ui.hide_player

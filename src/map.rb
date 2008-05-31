@@ -1,6 +1,6 @@
 class Map
   attr_reader :data, :tiles
-  attr_accessor :name
+  attr_accessor :name, :width, :height
 
   def initialize
   end
@@ -20,5 +20,7 @@ class Map
     f = File.open(@data["tiles"])
     @tiles = f.readlines
     f.close
+    @width = @data['width']
+    @height = @data['height']
   end
 end
