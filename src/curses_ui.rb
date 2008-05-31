@@ -78,7 +78,7 @@ class CursesUI
     @map_win.maxy.times do |y|
       @map_win.maxx.times do |x|
         begin
-          @map_win.addch @game.map.tiles[y][x]
+          @map_win.addch @game.map.tiles[@offset[:y]+y][@offset[:x]+x]
         rescue
 #           @game.output('Error: ' + $!.to_s)
         end
@@ -173,11 +173,13 @@ class CursesUI
   end
 
   def move_player
-    if @game.player.y == 12
-      @offset[:y] = 4
+    if @game.player.y >= 12
+      @offset[:y] = @game.player.y - 8
+      redraw_map
     end
     if @game.player.y == 8
       @offset[:y] = 0
+      redraw_map
     end
     @map_win.setpos @game.player.y - @offset[:y], @game.player.x
     @map_win.addch '@'[0]

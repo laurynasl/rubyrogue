@@ -20,6 +20,7 @@ describe CursesUI, "move_player" do
     map_at 0, 0
     player_at 1, 12
     @map_win.should_receive(:setpos).with(12-4, 1)
+    @ui.should_receive(:redraw_map)
 
     @ui.move_player
 
@@ -31,6 +32,7 @@ describe CursesUI, "move_player" do
     map_at 0, 4
     player_at 1, 8
     @map_win.should_receive(:setpos).with(8, 1)
+    @ui.should_receive(:redraw_map)
 
     @ui.move_player
 
@@ -41,6 +43,7 @@ describe CursesUI, "move_player" do
     map_at 0, 1
     player_at 1, 13
     @map_win.should_receive(:setpos).with(13-5, 1)
+    @ui.should_receive(:redraw_map)
 
     @ui.move_player
 
