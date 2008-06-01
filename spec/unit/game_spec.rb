@@ -21,6 +21,9 @@ describe Game, 'load' do
     game = testgame
     game.map.name.should == 'testmap'
     game.player.name.should == 'Kudlius'
+
+    short_sword = game.item_classes['short sword']
+    short_sword.should be_instance_of(ItemClass)
   end
 end
 

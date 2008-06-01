@@ -114,3 +114,17 @@ describe CursesUI, "hide_player" do
     @ui.hide_player
   end
 end
+
+describe CursesUI, "draw_items (currently just items)" do
+  it "should draw item" do
+    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui.offset = {:x => 1, :y => 5}
+
+    @map_win = mock('map_win', :maxx => 60, :maxy => 16)
+    @ui.instance_variable_set :@map_win, @map_win
+    @map_win.should_receive(:setpos).with(14-5, 2-1)
+    @map_win.should_receive(:addch).with('('[0])
+
+    @ui.draw_items({"items" => ["dagger", "long sword"], "x" => 2, "y" => 14})
+  end
+end

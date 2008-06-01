@@ -7,10 +7,10 @@ squares:
 - x: 1
   y: 1
   items:
-  - short_sword
+  - short sword
 - x: 2
-  y: 23
+  y: 14
   items:
   - dagger
-  - long_sword
+  - long sword
 ---

@@ -84,6 +84,9 @@ class CursesUI
         end
       end
     end
+    @game.map.data['squares'].each do |square|
+      draw_items square
+    end
   end
 
   ##
@@ -190,5 +193,10 @@ class CursesUI
     @map_win.setpos @game.player.y - @offset[:y], @game.player.x - offset[:x]
     @map_win.addch '.'[0]
     @map_win.refresh
+  end
+
+  def draw_items(stack)
+    @map_win.setpos stack['y'] - @offset[:y], stack['x'] - @offset[:x]
+    @map_win.addch('('[0])
   end
 end

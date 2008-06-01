@@ -1,12 +1,12 @@
 require 'yaml'
 
 class Game
-  attr_reader :map
+  attr_reader :map, :item_classes
   attr_accessor :player, :ui
 
   def initialize(filename = nil)
     @messages = []
-    #load_datafiles
+    load_datafiles
     if filename
       f = File.open(filename)
       @data = YAML::load(f)
@@ -16,14 +16,15 @@ class Game
     end
   end
 
-  #def load_datafiles
-    #f = File.open('data/items.yaml')
-    #@items = YAML::load(f)
-    #@messages << @items.to_yaml
-    #@messages << 'va'
-    #@messages << $*.join(',')
-    #f.close
-  #end
+  def load_datafiles
+    f = File.open('data/items.yaml')
+    items_data = YAML::load(f)
+    @item_classes = {}
+    items_data.each do |key, value|
+      @item_classes[key] = ItemClass.new(key, value)
+    end
+    f.close
+  end
 
   def read_message
     @messages.delete_at 0
