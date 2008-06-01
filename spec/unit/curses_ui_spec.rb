@@ -113,10 +113,38 @@ describe CursesUI, "hide_player" do
     @map_win.should_receive(:refresh)
     @ui.hide_player
   end
+
+  it "should unpaint player and show short sword which was under him" do
+    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui.game.player.x = 1
+    @ui.game.player.y = 1
+
+    @map_win = mock('map_win')
+    @ui.instance_variable_set :@map_win, @map_win
+
+    @map_win.should_receive(:setpos).with(1, 1)
+    @map_win.should_receive(:addch).with('('[0])
+    @map_win.should_receive(:refresh)
+    @ui.hide_player
+  end
+
+  it "should unpaint player and show leather armor which was under him" do
+    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui.game.player.x = 10
+    @ui.game.player.y = 1
+
+    @map_win = mock('map_win')
+    @ui.instance_variable_set :@map_win, @map_win
+
+    @map_win.should_receive(:setpos).with(1, 10)
+    @map_win.should_receive(:addch).with('['[0])
+    @map_win.should_receive(:refresh)
+    @ui.hide_player
+  end
 end
 
 describe CursesUI, "draw_items (currently just items)" do
-  it "should draw item" do
+  it "should draw item (with offset)" do
     @ui = CursesUI.new('maps/testgame.yaml')
     @ui.offset = {:x => 1, :y => 5}
 
@@ -126,5 +154,16 @@ describe CursesUI, "draw_items (currently just items)" do
     @map_win.should_receive(:addch).with('('[0])
 
     @ui.draw_items({"items" => ["dagger", "long sword"], "x" => 2, "y" => 14})
+  end
+
+  it "should draw leather armor" do
+    @ui = CursesUI.new('maps/testgame.yaml')
+
+    @map_win = mock('map_win', :maxx => 60, :maxy => 16)
+    @ui.instance_variable_set :@map_win, @map_win
+    @map_win.should_receive(:setpos).with(1, 10)
+    @map_win.should_receive(:addch).with('['[0])
+
+    @ui.draw_items({"items" => ["leather armor"], "x" => 10, "y" => 1})
   end
 end

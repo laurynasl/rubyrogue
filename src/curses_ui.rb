@@ -191,12 +191,23 @@ class CursesUI
 
   def hide_player
     @map_win.setpos @game.player.y - @offset[:y], @game.player.x - offset[:x]
-    @map_win.addch '.'[0]
+    found_square = false
+    @game.map.data['squares'].each do |square|
+      if square['x'] == @game.player.x && square['y'] == @game.player.y
+        found_square = true
+        @map_win.addch items_symbol(square)
+      end
+    end
+    @map_win.addch '.'[0] unless found_square
     @map_win.refresh
   end
 
   def draw_items(stack)
     @map_win.setpos stack['y'] - @offset[:y], stack['x'] - @offset[:x]
-    @map_win.addch('('[0])
+    @map_win.addch items_symbol(stack)
+  end
+
+  def items_symbol(square)
+    @game.item_classes[square['items'].first].symbol[0]
   end
 end

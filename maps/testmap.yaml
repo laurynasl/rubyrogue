@@ -13,4 +13,8 @@ squares:
   items:
   - dagger
   - long sword
+- x: 10
+  y: 1
+  items:
+  - leather armor
 ---
