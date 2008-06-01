@@ -29,3 +29,18 @@ knife:
   skills:
     - piercing
     - dagger
+
+leather armor:
+  armor: 3
+  evasion: 1
+  symbol: '['
+  skills:
+    - stealth
+    - evasion
+
+chain mail:
+  armor: 6
+  evasion: -2
+  symbol: '['
+  skills:
+    - armor
