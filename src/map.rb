@@ -23,4 +23,10 @@ class Map
     @width = @data['width']
     @height = @data['height']
   end
+
+  def find_square(x, y)
+    data['squares'].find do |square|
+      square['x'] == x && square['y'] == y
+    end
+  end
 end

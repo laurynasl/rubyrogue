@@ -11,3 +11,9 @@ describe Map, 'load' do
   end
 end
 
+describe Map, 'find_square' do
+  it "should find square" do
+    @map = Map.load('maps/testmap.yaml')
+    @map.find_square(1, 1).should == {'x' => 1, 'y' => 1, 'items' => ['short sword']}
+  end
+end
