@@ -166,4 +166,15 @@ describe CursesUI, "draw_items (currently just items)" do
 
     @ui.draw_items({"items" => ["leather armor"], "x" => 10, "y" => 1})
   end
+
+  it "should not draw item when it is outside of viewport" do
+    @ui = CursesUI.new('maps/testgame.yaml')
+
+    @map_win = mock('map_win', :maxx => 60, :maxy => 16)
+    @ui.instance_variable_set :@map_win, @map_win
+    @map_win.should_not_receive(:setpos)
+    @map_win.should_not_receive(:addch)
+
+    @ui.draw_items({"items" => ["chain mail"], "x" => 2, "y" => 16})
+  end
 end

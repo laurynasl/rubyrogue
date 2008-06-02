@@ -203,11 +203,22 @@ class CursesUI
   end
 
   def draw_items(stack)
+    return unless in_viewport?(stack)
     @map_win.setpos stack['y'] - @offset[:y], stack['x'] - @offset[:x]
     @map_win.addch items_symbol(stack)
   end
 
   def items_symbol(square)
     @game.item_classes[square['items'].first].symbol[0]
+  end
+
+  def in_viewport?(square)
+    x = square['x']
+    y = square['y']
+    return false if x >= @map_win.maxx + @offset[:x]
+    return false if y >= @map_win.maxy + @offset[:y]
+    return false if x < @offset[:x]
+    return false if y < @offset[:y]
+    true
   end
 end
