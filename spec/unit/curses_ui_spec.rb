@@ -69,6 +69,17 @@ describe CursesUI, "move_player" do
     @ui.offset.should == {:x => 0, :y => 5}
   end
 
+  it "should list items on the ground" do
+    map_at 0, 0
+    player_at 2, 14
+    @map_win.should_receive(:setpos)#.with(9, 2) # I don't care about numbers at thuis test
+    @ui.should_receive(:redraw_map)
+
+    @ui.move_player
+    #@ui.offset.should == {:x => 0, :y => 5}
+    @ui.game.instance_variable_get(:@messages).should == ['you see here: dagger, long sword']
+  end
+
   def map_at(x, y)
     @ui = CursesUI.new('maps/testgame.yaml')
     @ui.offset = {:x => x, :y => y}
