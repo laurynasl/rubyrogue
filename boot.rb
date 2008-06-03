@@ -1,4 +1,4 @@
-$: << 'src'
+$: << 'app'
 require 'rubygems'
 #require 'active_support'
 #require 'curses_ui'

@@ -11,5 +11,6 @@ describe Player do
     player.name.should == 'Kudlius'
     player.x.should == 2
     player.y.should == 1
+    player.inventory.should == []
   end
 end

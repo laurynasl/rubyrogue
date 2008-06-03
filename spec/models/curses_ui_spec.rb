@@ -189,3 +189,15 @@ describe CursesUI, "draw_items (currently just items)" do
     @ui.draw_items({"items" => ["chain mail"], "x" => 2, "y" => 16})
   end
 end
+
+describe CursesUI, "handle_input" do
+  # mostly not tested...
+
+  it "should take item from ground when clicked ','" do
+    @ui = CursesUI.new('maps/testgame.yaml')
+
+    scr = mock('scr', :getch => ','[0])
+    @ui.game.should_receive(:pickup)
+    @ui.handle_input(scr)
+  end
+end

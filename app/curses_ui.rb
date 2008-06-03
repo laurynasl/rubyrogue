@@ -146,6 +146,8 @@ class CursesUI
           @game.move_by(-1, 0)
         when KEY_RIGHT: 
           @game.move_by(1, 0)
+        when ','[0]
+          @game.pickup
         else
           @game.output keyname(key) || key
         end

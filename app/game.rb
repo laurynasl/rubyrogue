@@ -46,4 +46,16 @@ class Game
       output "Ouch. You bump into a wall."
     end
   end
+
+  def pickup
+    if square = map.find_square(player.x, player.y)
+      output 'You pick up ' + square['items'].join(', ')
+      for item in square['items']
+        player.inventory << item
+      end
+      map.data['squares'].delete square
+    else
+      output 'There is nothing to pick up'
+    end
+  end
 end

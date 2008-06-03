@@ -4,11 +4,11 @@ puts 'I am inside of autotest!'
 
 Autotest.add_hook :initialize do |autotest|
   puts '*************** at initialize'
-  autotest.add_mapping %r{src/(\w+).rb$} do |filename, matchdata|
+  autotest.add_mapping %r{app/(\w+).rb$} do |filename, matchdata|
     #puts "\n****** matched"
     #puts filename.inspect
     #puts matchdata.inspect
     name =  matchdata.captures[0]
-    autotest.files_matching %r{spec/unit/#{name}_spec.rb}
+    autotest.files_matching %r{spec/models/#{name}_spec.rb}
   end
 end
