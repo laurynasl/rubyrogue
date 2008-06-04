@@ -50,9 +50,8 @@ class CursesUI
     @map_win = Window.new(@height - mess_h, @width - att_w, 0, att_w)
     if @game.map
       redraw_map
+      move_player
     end
-    @map_win.refresh
-    move_player
 
     # Attributes window
     border_win = Window.new(att_h, att_w, 0, 0)
@@ -87,6 +86,7 @@ class CursesUI
     @game.map.data['squares'].each do |square|
       draw_items square
     end
+    @map_win.refresh
   end
 
   ##
@@ -148,6 +148,8 @@ class CursesUI
           @game.move_by(1, 0)
         when ','[0]
           @game.pickup
+        when 'i'[0]
+          show_inventory scr
         else
           @game.output keyname(key) || key
         end
@@ -222,5 +224,21 @@ class CursesUI
     return false if x < @offset[:x]
     return false if y < @offset[:y]
     true
+  end
+
+  def show_inventory(scr)
+    @map_win.setpos 0, 0
+    @map_win.clear
+    @map_win.addstr "Inventory\n"
+    @map_win.addstr "Press 'z' to exit\n\n"
+    for item in @game.player.inventory
+      @map_win.addstr item + "\n"
+    end
+    @map_win.refresh
+    while scr.getch != 'z'[0]
+    end
+    redraw_map
+    move_player
+    @map_win.refresh
   end
 end

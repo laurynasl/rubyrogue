@@ -200,4 +200,35 @@ describe CursesUI, "handle_input" do
     @ui.game.should_receive(:pickup)
     @ui.handle_input(scr)
   end
+
+  it "should show inventory when clicked 'i'" do
+    @ui = CursesUI.new('maps/testgame.yaml')
+
+    scr = mock('scr', :getch => 'i'[0])
+    @ui.should_receive(:show_inventory).with(scr)
+    @ui.handle_input(scr)
+  end
+end
+
+describe CursesUI, "show_inventory" do
+  it "should show items in inventory" do
+    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui.game.player.inventory << 'short sword' << 'leather armor'
+
+    scr = mock('scr')
+    map_win = mock('map_win')
+    @ui.instance_variable_set :@map_win, map_win
+    map_win.should_receive(:clear)
+    map_win.should_receive(:setpos).with(0, 0)
+    map_win.should_receive(:addstr).with("Inventory\n")
+    map_win.should_receive(:addstr).with("Press 'z' to exit\n\n")
+    map_win.should_receive(:addstr).with("short sword\n")
+    map_win.should_receive(:addstr).with("leather armor\n")
+    map_win.should_receive(:refresh).exactly(2)
+    scr.should_receive(:getch).and_return('a'[0], 'z'[0])
+    @ui.should_receive(:redraw_map)
+    @ui.should_receive(:move_player)
+
+    @ui.show_inventory(scr)
+  end
 end
