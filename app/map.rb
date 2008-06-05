@@ -17,7 +17,7 @@ class Map
     @data = YAML::load(f)
     f.close
 
-    f = File.open(@data["tiles"])
+    f = File.open(filename.gsub(/\.yaml$/, '.tile'))
     @tiles = f.readlines
     f.close
     @width = @data['width']

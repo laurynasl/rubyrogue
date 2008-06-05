@@ -11,7 +11,7 @@ class Game
       f = File.open(filename)
       @data = YAML::load(f)
       f.close
-      @map = Map.load('maps/' + @data['maps'].first + '.yaml')
+      @map = Map.load(File.dirname(filename) + '/' + @data['maps'].first + '.yaml')
       @player = Player.new(@data['player'])
     end
   end

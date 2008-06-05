@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe CursesUI, "move_player" do
   it "should print '@' at current player location" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
     @ui.game.ui.should == @ui
     @ui.game.player.x = 3
 
@@ -81,7 +81,7 @@ describe CursesUI, "move_player" do
   end
 
   def map_at(x, y)
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
     @ui.offset = {:x => x, :y => y}
 
     #@map = Map.load('maps/testmap.yaml')
@@ -101,7 +101,7 @@ end
 
 describe CursesUI, "hide_player" do
   it "should unpaint player" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
 
     @map_win = mock('map_win')
     @ui.instance_variable_set :@map_win, @map_win
@@ -113,7 +113,7 @@ describe CursesUI, "hide_player" do
   end
 
   it "should unpaint player when ui has offset" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
     @ui.offset = {:x => 2, :y => 1}
 
     @map_win = mock('map_win')
@@ -126,7 +126,7 @@ describe CursesUI, "hide_player" do
   end
 
   it "should unpaint player and show short sword which was under him" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
     @ui.game.player.x = 1
     @ui.game.player.y = 1
 
@@ -140,7 +140,7 @@ describe CursesUI, "hide_player" do
   end
 
   it "should unpaint player and show leather armor which was under him" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
     @ui.game.player.x = 10
     @ui.game.player.y = 1
 
@@ -156,7 +156,7 @@ end
 
 describe CursesUI, "draw_items (currently just items)" do
   it "should draw item (with offset)" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
     @ui.offset = {:x => 1, :y => 5}
 
     @map_win = mock('map_win', :maxx => 60, :maxy => 16)
@@ -168,7 +168,7 @@ describe CursesUI, "draw_items (currently just items)" do
   end
 
   it "should draw leather armor" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
 
     @map_win = mock('map_win', :maxx => 60, :maxy => 16)
     @ui.instance_variable_set :@map_win, @map_win
@@ -179,7 +179,7 @@ describe CursesUI, "draw_items (currently just items)" do
   end
 
   it "should not draw item when it is outside of viewport" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
 
     @map_win = mock('map_win', :maxx => 60, :maxy => 16)
     @ui.instance_variable_set :@map_win, @map_win
@@ -194,7 +194,7 @@ describe CursesUI, "handle_input" do
   # mostly not tested...
 
   it "should take item from ground when clicked ','" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
 
     scr = mock('scr', :getch => ','[0])
     @ui.game.should_receive(:pickup)
@@ -202,7 +202,7 @@ describe CursesUI, "handle_input" do
   end
 
   it "should show inventory when clicked 'i'" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
 
     scr = mock('scr', :getch => 'i'[0])
     @ui.should_receive(:show_inventory).with(scr)
@@ -212,7 +212,7 @@ end
 
 describe CursesUI, "show_inventory" do
   it "should show items in inventory" do
-    @ui = CursesUI.new('maps/testgame.yaml')
+    @ui = CursesUI.new(TESTGAME)
     @ui.game.player.inventory << 'short sword' << 'leather armor'
 
     scr = mock('scr')

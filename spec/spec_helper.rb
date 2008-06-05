@@ -5,5 +5,8 @@ Spec::Runner.configure do |config|
 end
 
 def testgame
-  Game.new('maps/testgame.yaml')
+  Game.new('games/test/game.yaml')
 end
+
+TESTGAME = 'games/test/game.yaml'
+TESTMAP = 'games/test/testmap.yaml'
