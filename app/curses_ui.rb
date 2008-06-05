@@ -232,7 +232,7 @@ class CursesUI
     @map_win.addstr "Inventory\n"
     @map_win.addstr "Press 'z' to exit\n\n"
     for item in @game.player.inventory
-      @map_win.addstr item + "\n"
+      @map_win.addstr item.to_s + "\n"
     end
     @map_win.refresh
     while scr.getch != 'z'[0]

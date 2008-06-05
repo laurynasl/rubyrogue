@@ -5,6 +5,6 @@ class Player
     @name = data['name']
     @x = data['x'].to_i
     @y = data['y'].to_i
-    @inventory = []
+    @inventory = Inventory.new
   end
 end
