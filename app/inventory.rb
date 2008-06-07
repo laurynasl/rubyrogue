@@ -1,6 +1,8 @@
 class Inventory
   include Enumerable
 
+  attr_accessor :items
+
   def initialize
     @items = []
   end
@@ -12,7 +14,7 @@ class Inventory
   end
 
   def <<(item)
-    @items << Item.new(item)
+    @items << (item.is_a?(Item) ? item : Item.new(item))
     self
   end
 

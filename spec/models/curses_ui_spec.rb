@@ -152,41 +152,19 @@ describe CursesUI, "hide_player" do
     @map_win.should_receive(:refresh)
     @ui.hide_player
   end
-end
 
-describe CursesUI, "draw_items (currently just items)" do
-  it "should draw item (with offset)" do
+  it "should unpaint player and show staircase (no items at square)" do
     @ui = CursesUI.new(TESTGAME)
-    @ui.offset = {:x => 1, :y => 5}
+    @ui.game.player.x = 26
+    @ui.game.player.y = 2
 
-    @map_win = mock('map_win', :maxx => 60, :maxy => 16)
+    @map_win = mock('map_win')
     @ui.instance_variable_set :@map_win, @map_win
-    @map_win.should_receive(:setpos).with(14-5, 2-1)
-    @map_win.should_receive(:addch).with('('[0])
 
-    @ui.draw_items({"items" => ["dagger", "long sword"], "x" => 2, "y" => 14})
-  end
-
-  it "should draw leather armor" do
-    @ui = CursesUI.new(TESTGAME)
-
-    @map_win = mock('map_win', :maxx => 60, :maxy => 16)
-    @ui.instance_variable_set :@map_win, @map_win
-    @map_win.should_receive(:setpos).with(1, 10)
-    @map_win.should_receive(:addch).with('['[0])
-
-    @ui.draw_items({"items" => ["leather armor"], "x" => 10, "y" => 1})
-  end
-
-  it "should not draw item when it is outside of viewport" do
-    @ui = CursesUI.new(TESTGAME)
-
-    @map_win = mock('map_win', :maxx => 60, :maxy => 16)
-    @ui.instance_variable_set :@map_win, @map_win
-    @map_win.should_not_receive(:setpos)
-    @map_win.should_not_receive(:addch)
-
-    @ui.draw_items({"items" => ["chain mail"], "x" => 2, "y" => 16})
+    @map_win.should_receive(:setpos).with(2, 26)
+    @map_win.should_receive(:addch).with('>'[0])
+    @map_win.should_receive(:refresh)
+    @ui.hide_player
   end
 end
 
@@ -230,5 +208,15 @@ describe CursesUI, "show_inventory" do
     @ui.should_receive(:move_player)
 
     @ui.show_inventory(scr)
+  end
+end
+
+describe CursesUI, "redraw_map" do
+  it "should at least not fail" do
+    @ui = CursesUI.new(TESTGAME)
+    map_win = mock('map_win', :maxx => 60, :maxy => 16, :setpos => nil, :refresh => nil, :addch => nil)
+    @ui.instance_variable_set :@map_win, map_win
+
+    @ui.redraw_map
   end
 end

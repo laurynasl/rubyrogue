@@ -77,14 +77,15 @@ class CursesUI
     @map_win.maxy.times do |y|
       @map_win.maxx.times do |x|
         begin
-          @map_win.addch @game.map.tiles[@offset[:y]+y][@offset[:x]+x]
-        rescue
-#           @game.output('Error: ' + $!.to_s)
+          @map_win.addch @game.map.square_symbol_at(x + @offset[:x], y + @offset[:y])
+        #rescue
+          #$error_id ||= 0
+          #$error_id += 1
+          #msg = "#{$error_id} Error: " + $!.to_s
+          #puts msg
+          #@game.output(msg)
         end
       end
-    end
-    @game.map.data['squares'].each do |square|
-      draw_items square
     end
     @map_win.refresh
   end
@@ -151,12 +152,12 @@ class CursesUI
         when 'i'[0]
           show_inventory scr
         else
-          @game.output keyname(key) || key
+          @game.output (key.is_a?(Fixnum) ? keyname(key) : key.to_s) || key.to_s
         end
-      rescue
-        puts $!.to_s
-        puts $!.backtrace.join("\n")
-        @game.output $!.to_s
+      #rescue
+        #puts $!.to_s
+        #puts $!.backtrace.join("\n")
+        #@game.output $!.to_s
       end
     end
     return keep_playing
@@ -191,34 +192,20 @@ class CursesUI
     @map_win.setpos @game.player.y - @offset[:y], @game.player.x
     @map_win.addch '@'[0]
     if square = @game.map.find_square(@game.player.x, @game.player.y)
-      @game.output "you see here: " + square['items'].join(', ')
+      @game.output "you see here: " + square.item_names.join(', ')
     end
     @map_win.refresh
   end
 
   def hide_player
     @map_win.setpos @game.player.y - @offset[:y], @game.player.x - offset[:x]
-    if square = @game.map.find_square(@game.player.x, @game.player.y)
-      @map_win.addch items_symbol(square)
-    else
-      @map_win.addch '.'[0] #unless found_square
-    end
+    @map_win.addch @game.map.square_symbol_at(@game.player.x, @game.player.y)
     @map_win.refresh
   end
 
-  def draw_items(stack)
-    return unless in_viewport?(stack)
-    @map_win.setpos stack['y'] - @offset[:y], stack['x'] - @offset[:x]
-    @map_win.addch items_symbol(stack)
-  end
-
-  def items_symbol(square)
-    @game.item_classes[square['items'].first].symbol[0]
-  end
-
   def in_viewport?(square)
-    x = square['x']
-    y = square['y']
+    x = square.x
+    y = square.y
     return false if x >= @map_win.maxx + @offset[:x]
     return false if y >= @map_win.maxy + @offset[:y]
     return false if x < @offset[:x]

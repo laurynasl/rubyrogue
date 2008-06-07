@@ -20,6 +20,7 @@ describe Game, 'load' do
   it "should load game from file" do
     game = testgame
     game.map.name.should == 'cave-1'
+    game.map.game.should === game
     game.player.name.should == 'Kudlius'
 
     short_sword = game.item_classes['short sword']
@@ -75,7 +76,7 @@ describe Game, "pickup" do
     @game.pickup
     @game.player.inventory.should include('short sword')
     #@game.map.find_square(1, 1)['items'].should == [] # possibly this is better, but... YAGNI
-    @game.map.find_square(1, 1).should be_nil
+    @game.map.find_square(1, 1).items.should be_empty
     @game.read_message.should == 'You pick up short sword'
   end
 

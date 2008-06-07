@@ -15,6 +15,12 @@ describe Inventory do
     end
   end
 
+  it "should accept not only item's name, but item also. and don't copy it" do
+    item = Item.new('short sword')
+    @inventory << item
+    @inventory.items.first.object_id.should == item.object_id
+  end
+
   it "should implement includes?" do
     @inventory.should_not include('short sword')
     @inventory << 'short sword'

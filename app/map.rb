@@ -1,6 +1,6 @@
 class Map
-  attr_reader :data, :tiles
-  attr_accessor :name, :width, :height
+  attr_reader :tiles
+  attr_accessor :name, :width, :height, :squares, :game
 
   def initialize
   end
@@ -14,19 +14,37 @@ class Map
 
   def load(filename)
     f = File.open(filename)
-    @data = YAML::load(f)
+    data = YAML::load(f)
     f.close
 
     f = File.open(filename.gsub(/\.yaml$/, '.tile'))
     @tiles = f.readlines
     f.close
-    @width = @data['width']
-    @height = @data['height']
+    @width = data['width']
+    @height = data['height']
+    @squares = []
+    for value in data['squares']
+      square = Square.new(value)
+      @squares[square.y * width + square.x] = square
+    end
   end
 
   def find_square(x, y)
-    data['squares'].find do |square|
-      square['x'] == x && square['y'] == y
+    @squares[y * width + x]
+  end
+
+  def square_symbol_at(x, y)
+    return ' '[0] if x >= @width || y >= @height
+    if square = find_square(x, y)
+      if !square.items.empty?
+        game.item_classes[square.items.first.name].symbol[0]
+      else
+        '>'[0]
+      end
+    else
+      tiles[y][x]
     end
+  rescue
+    raise $!.class.new($!.to_s + " and x = #{x}, y = #{y}")
   end
 end

@@ -12,6 +12,7 @@ class Game
       @data = YAML::load(f)
       f.close
       @map = Map.load(File.dirname(filename) + '/' + @data['maps'].first + '.yaml')
+      @map.game = self
       @player = Player.new(@data['player'])
     end
   end
@@ -49,11 +50,11 @@ class Game
 
   def pickup
     if square = map.find_square(player.x, player.y)
-      output 'You pick up ' + square['items'].join(', ')
-      for item in square['items']
+      output 'You pick up ' + square.items.collect{|item| item.name}.join(', ')
+      for item in square.items
         player.inventory << item
       end
-      map.data['squares'].delete square
+      square.items.clear
     else
       output 'There is nothing to pick up'
     end
