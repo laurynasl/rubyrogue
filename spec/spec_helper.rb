@@ -9,4 +9,4 @@ def testgame
 end
 
 TESTGAME = 'games/test/game.yaml'
-TESTMAP = 'games/test/testmap.yaml'
+TESTMAP = 'games/test/cave-1.yaml'

@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Map, 'load' do
   it "should load map from file" do
     @map = Map.load(TESTMAP)
-    @map.name.should == 'testmap'
+    @map.name.should == 'cave-1'
     @map.tiles.size.should == 21
     @map.tiles[1].should == "#...........................############\n"
     @map.width.should == 40

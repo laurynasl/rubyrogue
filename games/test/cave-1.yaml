@@ -16,4 +16,11 @@ squares:
   y: 1
   items:
   - leather armor
+- x: 26
+  y: 2
+  stair:
+    map: cave-2
+    x: 3
+    y: 2
+    down: true
 ---

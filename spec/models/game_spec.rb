@@ -19,7 +19,7 @@ end
 describe Game, 'load' do
   it "should load game from file" do
     game = testgame
-    game.map.name.should == 'testmap'
+    game.map.name.should == 'cave-1'
     game.player.name.should == 'Kudlius'
 
     short_sword = game.item_classes['short sword']

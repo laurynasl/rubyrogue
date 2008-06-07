@@ -1,0 +1,10 @@
+width: 50
+height: 30
+squares:
+- x: 3
+  y: 2
+  stair:
+    map: cave-1
+    x: 26
+    y: 2
+    down: false
