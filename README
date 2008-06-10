@@ -1,0 +1,12 @@
+======== Starting ==========
+
+./run
+
+If that fails, probably $COLORTERM is not set in environment. Try running:
+
+./launch games/test/game.yaml
+
+
+======== Crashes ============
+
+Yes, game is crashing. That is because I commented out all rescue's, because I want to find all exceptions. It is far from alpha and non-playable.
