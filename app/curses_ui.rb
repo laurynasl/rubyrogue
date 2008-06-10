@@ -181,7 +181,7 @@ class CursesUI
   end
 
   def move_player
-    if (@game.player.y - @offset[:y]) >= 12
+    if (@game.player.y - @offset[:y]) >= (@map_win.maxy - 4)
       @offset[:y] = min(@game.player.y - 8, @game.map.height - @map_win.maxy)
       redraw_map
     end

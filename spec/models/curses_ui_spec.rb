@@ -6,7 +6,7 @@ describe CursesUI, "move_player" do
     @ui.game.ui.should == @ui
     @ui.game.player.x = 3
 
-    @map_win = mock('map_win')
+    @map_win = mock('map_win', :maxx => 60, :maxy => 16)
     @ui.instance_variable_set :@map_win, @map_win
 
     @map_win.should_receive(:setpos).with(1, 3)
@@ -80,14 +80,22 @@ describe CursesUI, "move_player" do
     @ui.game.instance_variable_get(:@messages).should == ['you see here: dagger, long sword']
   end
 
-  def map_at(x, y)
+  it "should not crash, nor move map when map is quite big" do
+    map_at 0, 0, 137, 46
+    player_at 2, 12
+    @map_win.should_receive(:setpos)
+
+    @ui.move_player
+  end
+
+  def map_at(x, y, maxx = 60, maxy = 16)
     @ui = CursesUI.new(TESTGAME)
     @ui.offset = {:x => x, :y => y}
 
     #@map = Map.load('maps/testmap.yaml')
     #@ui.instance_variable_set
 
-    @map_win = mock('map_win', :maxx => 60, :maxy => 16)
+    @map_win = mock('map_win', :maxx => maxx, :maxy => maxy)
     @ui.instance_variable_set :@map_win, @map_win
     @map_win.should_receive(:addch).with('@'[0])
     @map_win.should_receive(:refresh)
