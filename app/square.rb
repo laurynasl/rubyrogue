@@ -17,4 +17,12 @@ class Square
   def item_names
     items.collect{|item| item.name}
   end
+
+  def look
+    if stair
+      "you see here: " + {true => "downstairs", false => "upstairs"}[stair['down']]
+    else
+      "you see here: " + items.join(', ')
+    end
+  end
 end

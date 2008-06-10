@@ -192,7 +192,7 @@ class CursesUI
     @map_win.setpos @game.player.y - @offset[:y], @game.player.x
     @map_win.addch '@'[0]
     if square = @game.map.find_square(@game.player.x, @game.player.y)
-      @game.output "you see here: " + square.item_names.join(', ')
+      @game.output square.look # + square.item_names.join(', ')
     end
     @map_win.refresh
   end
