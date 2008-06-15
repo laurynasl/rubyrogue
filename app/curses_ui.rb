@@ -152,9 +152,11 @@ class CursesUI
         when 'i'[0]
           show_inventory scr
         when '>'[0]
-          game.go_downstairs
+          game.go_stairs(true)
+        when '<'[0]
+          game.go_stairs(false)
         else
-          @game.output (key.is_a?(Fixnum) ? keyname(key) : key.to_s) || key.to_s
+          @game.output((key.is_a?(Fixnum) ? keyname(key) : key.to_s) || key.to_s)
         end
       #rescue
         #puts $!.to_s

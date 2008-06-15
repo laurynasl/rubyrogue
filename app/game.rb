@@ -69,16 +69,16 @@ class Game
     map.find_square player.x, player.y
   end
 
-  def go_downstairs
-    if (square = player_square) && (stair = square.stair) && (stair['down'])
+  def go_stairs(down)
+    if (square = player_square) && (stair = square.stair) && (stair['down'] == down)
       load_map stair['map']
       player.x = stair['x']
       player.y = stair['y']
-      output 'You go downstairs'
+      output "You go #{down ? 'down' : 'up'}stairs"
       ui.redraw_map
       ui.move_player
     else
-      output 'You see no downstair here'
+      output "You see no #{down ? 'down' : 'up'}stairs here"
     end
   end
 end

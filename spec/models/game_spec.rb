@@ -115,7 +115,7 @@ describe Game, 'player_square' do
   end
 end
 
-describe Game, 'go_downstairs' do
+describe Game, 'go_stairs' do
   before(:each) do
     @game = testgame
     @ui = mock('ui')
@@ -128,7 +128,7 @@ describe Game, 'go_downstairs' do
     @ui.should_receive(:redraw_map)
     @ui.should_receive(:move_player)
 
-    @game.go_downstairs
+    @game.go_stairs(true)
 
     @game.map.name.should == 'cave-2'
     @game.player.x.should == 3
@@ -137,21 +137,36 @@ describe Game, 'go_downstairs' do
   end
 
   it "should display failure message when there are no square" do
-    @game.go_downstairs
-    @game.read_message.should == 'You see no downstair here'
+    @game.go_stairs(true)
+    @game.read_message.should == 'You see no downstairs here'
   end
 
   it "should display failure message when square has no stairs" do
     @game.player.x = 1
-    @game.go_downstairs
-    @game.read_message.should == 'You see no downstair here'
+    @game.go_stairs(true)
+    @game.read_message.should == 'You see no downstairs here'
   end
 
   it "should display failure message when stair is not downstair" do
     @game.player.x = 26
     @game.player.y = 2
     @game.player_square.stair['down'] = false
-    @game.go_downstairs
-    @game.read_message.should == 'You see no downstair here'
+    @game.go_stairs(true)
+    @game.read_message.should == 'You see no downstairs here'
+  end
+
+  it "should go upstairs" do
+    @game.player.x = 26
+    @game.player.y = 2
+    @game.player_square.stair['down'] = false
+    @ui.should_receive(:redraw_map)
+    @ui.should_receive(:move_player)
+    @game.go_stairs(false)
+    @game.read_message.should == 'You go upstairs'
+  end
+
+  it "should display failure message when there are no square for upstairs" do
+    @game.go_stairs(false)
+    @game.read_message.should == 'You see no upstairs here'
   end
 end

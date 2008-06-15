@@ -38,8 +38,14 @@ class Map
     if square = find_square(x, y)
       if !square.items.empty?
         game.item_classes[square.items.first.name].symbol[0]
+      elsif square.stair
+        if square.stair['down']
+          '>'[0]
+        else
+          '<'[0]
+        end
       else
-        '>'[0]
+        tiles[y][x]
       end
     else
       tiles[y][x]

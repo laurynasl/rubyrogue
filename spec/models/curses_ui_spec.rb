@@ -199,8 +199,16 @@ describe CursesUI, "handle_input" do
     @ui = CursesUI.new(TESTGAME)
     scr = mock('scr', :getch => '>'[0])
 
+    @ui.game.should_receive(:go_stairs).with(true)
 
-    @ui.game.should_receive(:go_downstairs)
+    @ui.handle_input(scr)
+  end
+
+  it "should go upstairs when clicked '<'" do
+    @ui = CursesUI.new(TESTGAME)
+    scr = mock('scr', :getch => '<'[0])
+
+    @ui.game.should_receive(:go_stairs).with(false)
 
     @ui.handle_input(scr)
   end

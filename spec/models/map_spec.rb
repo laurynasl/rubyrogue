@@ -35,7 +35,13 @@ describe Map, "square_symbol_at" do
     #@map.square_symbol_at(2, 1).should be_char('@')
     @map.square_symbol_at(2, 14).should be_char('(')
     @map.square_symbol_at(10, 1).should be_char('[')
+
+    @map.find_square(10, 1).items = []
+    @map.square_symbol_at(10, 1).should be_char('.')
+
     @map.square_symbol_at(26, 2).should be_char('>')
+    @map.find_square(26, 2).stair['down'] = false
+    @map.square_symbol_at(26, 2).should be_char('<')
   end
 
   it "should return space when square is outside of map" do
