@@ -194,6 +194,16 @@ describe CursesUI, "handle_input" do
     @ui.should_receive(:show_inventory).with(scr)
     @ui.handle_input(scr)
   end
+
+  it "should go downstairs when clicked '>'" do
+    @ui = CursesUI.new(TESTGAME)
+    scr = mock('scr', :getch => '>'[0])
+
+
+    @ui.game.should_receive(:go_downstairs)
+
+    @ui.handle_input(scr)
+  end
 end
 
 describe CursesUI, "show_inventory" do

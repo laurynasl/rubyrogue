@@ -151,6 +151,8 @@ class CursesUI
           @game.pickup
         when 'i'[0]
           show_inventory scr
+        when '>'[0]
+          game.go_downstairs
         else
           @game.output (key.is_a?(Fixnum) ? keyname(key) : key.to_s) || key.to_s
         end

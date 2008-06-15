@@ -2,17 +2,17 @@ require 'yaml'
 
 class Game
   attr_reader :map, :item_classes
-  attr_accessor :player, :ui
+  attr_accessor :player, :ui, :filename
 
   def initialize(filename = nil)
     @messages = []
     load_datafiles
     if filename
+      @filename = filename
       f = File.open(filename)
       @data = YAML::load(f)
       f.close
-      @map = Map.load(File.dirname(filename) + '/' + @data['maps'].first + '.yaml')
-      @map.game = self
+      load_map @data['maps'].first
       @player = Player.new(@data['player'])
     end
   end
@@ -25,6 +25,11 @@ class Game
       @item_classes[key] = ItemClass.new(key, value)
     end
     f.close
+  end
+
+  def load_map(name)
+    @map = Map.load(File.dirname(filename) + '/' + name + '.yaml')
+    @map.game = self
   end
 
   def read_message
@@ -57,6 +62,23 @@ class Game
       square.items.clear
     else
       output 'There is nothing to pick up'
+    end
+  end
+
+  def player_square
+    map.find_square player.x, player.y
+  end
+
+  def go_downstairs
+    if (square = player_square) && (stair = square.stair) && (stair['down'])
+      load_map stair['map']
+      player.x = stair['x']
+      player.y = stair['y']
+      output 'You go downstairs'
+      ui.redraw_map
+      ui.move_player
+    else
+      output 'You see no downstair here'
     end
   end
 end

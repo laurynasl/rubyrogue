@@ -19,12 +19,22 @@ end
 describe Game, 'load' do
   it "should load game from file" do
     game = testgame
+    game.filename.should == 'games/test/game.yaml'
     game.map.name.should == 'cave-1'
     game.map.game.should === game
     game.player.name.should == 'Kudlius'
 
     short_sword = game.item_classes['short sword']
     short_sword.should be_instance_of(ItemClass)
+  end
+end
+
+describe Game, 'load_map' do
+  it "should load map by name" do
+    game = testgame
+    game.load_map('cave-2')
+    game.map.name.should == 'cave-2'
+    game.map.game.should == game
   end
 end
 
@@ -93,5 +103,55 @@ describe Game, "pickup" do
   it "should not pick up anything, because there is nothing..." do
     @game.pickup
     @game.read_message.should == 'There is nothing to pick up'
+  end
+end
+
+describe Game, 'player_square' do
+  it "should be a simple shortcut to Map#find_square" do
+    @game = testgame
+    @game.player.x = 1
+    @game.player.y = 1
+    @game.player_square.items.first.name.should == 'short sword'
+  end
+end
+
+describe Game, 'go_downstairs' do
+  before(:each) do
+    @game = testgame
+    @ui = mock('ui')
+    @game.ui = @ui
+  end
+
+  it "should go downstairs" do
+    @game.player.x = 26
+    @game.player.y = 2
+    @ui.should_receive(:redraw_map)
+    @ui.should_receive(:move_player)
+
+    @game.go_downstairs
+
+    @game.map.name.should == 'cave-2'
+    @game.player.x.should == 3
+    @game.player.y.should == 2
+    @game.read_message.should == 'You go downstairs'
+  end
+
+  it "should display failure message when there are no square" do
+    @game.go_downstairs
+    @game.read_message.should == 'You see no downstair here'
+  end
+
+  it "should display failure message when square has no stairs" do
+    @game.player.x = 1
+    @game.go_downstairs
+    @game.read_message.should == 'You see no downstair here'
+  end
+
+  it "should display failure message when stair is not downstair" do
+    @game.player.x = 26
+    @game.player.y = 2
+    @game.player_square.stair['down'] = false
+    @game.go_downstairs
+    @game.read_message.should == 'You see no downstair here'
   end
 end
