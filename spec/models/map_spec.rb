@@ -9,6 +9,7 @@ describe Map, 'load' do
     @map.width.should == 40
     @map.height.should == 21
     @map.squares.should_not be_nil
+    @map.monsters.first.should be_instance_of(Monster)
   end
 end
 

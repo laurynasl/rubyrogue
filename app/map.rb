@@ -1,9 +1,6 @@
 class Map
   attr_reader :tiles
-  attr_accessor :name, :width, :height, :squares, :game
-
-  def initialize
-  end
+  attr_accessor :name, :width, :height, :squares, :game, :monsters
 
   def self.load(filename)
     map = self.new
@@ -27,6 +24,7 @@ class Map
       square = Square.new(value)
       @squares[square.y * width + square.x] = square
     end
+    @monsters = (data['monsters'] || []).collect{|monster| Monster.new monster}
   end
 
   def find_square(x, y)

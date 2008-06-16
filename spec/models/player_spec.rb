@@ -4,8 +4,8 @@ describe Player do
   it "should load player" do
     player = Player.new({
       'name' => 'Kudlius',
-      'x' => '2',
-      'y' => '1',
+      'x' => 2,
+      'y' => 1,
       'map' => 'testmap'
     })
     player.name.should == 'Kudlius'

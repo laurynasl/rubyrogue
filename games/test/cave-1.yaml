@@ -23,4 +23,11 @@ squares:
     x: 3
     y: 2
     down: true
+monsters:
+- x: 10
+  y: 1
+  monster_type: kobold
+  maxhp: 5
+  hp: 5
+
 ---
