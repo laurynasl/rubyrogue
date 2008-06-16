@@ -49,4 +49,8 @@ describe Map, "square_symbol_at" do
     @map.square_symbol_at(100, 1).should be_char(' ')
     @map.square_symbol_at(1, 100).should be_char(' ')
   end
+
+  it "should display monster" do
+    @map.square_symbol_at(11, 1).should be_char('k')
+  end
 end

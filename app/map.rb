@@ -33,15 +33,14 @@ class Map
 
   def square_symbol_at(x, y)
     return ' '[0] if x >= @width || y >= @height
+    if monster = monsters.find{|m| m.x == x && m.y == y}
+      return 'k'[0]
+    end
     if square = find_square(x, y)
       if !square.items.empty?
         game.item_classes[square.items.first.name].symbol[0]
       elsif square.stair
-        if square.stair['down']
-          '>'[0]
-        else
-          '<'[0]
-        end
+        return (square.stair['down'] ? '>' : '<')[0]
       else
         tiles[y][x]
       end
