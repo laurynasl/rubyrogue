@@ -43,7 +43,9 @@ class Game
   def move_by(dx, dy)
     x = player.x + dx
     y = player.y + dy
-    if @map.tiles[y][x] == '.'[0]
+    if monster = map.find_monster(x, y)
+      output player.attack monster
+    elsif map.tiles[y][x] == '.'[0]
       ui.hide_player
       player.x = x
       player.y = y

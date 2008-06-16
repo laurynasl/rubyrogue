@@ -24,6 +24,17 @@ describe Map, 'find_square' do
   end
 end
 
+describe Map, 'find_monster' do
+  it "should find monster" do
+    @map = Map.load(TESTMAP)
+    monster = @map.find_monster(11, 1)
+    monster.should be_instance_of(Monster)
+    monster.x.should == 11
+    monster.y.should == 1
+    monster.monster_type.should == 'kobold'
+  end
+end
+
 describe Map, "square_symbol_at" do
   before(:each) do
     @game = testgame

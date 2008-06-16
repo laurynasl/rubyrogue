@@ -31,9 +31,13 @@ class Map
     @squares[y * width + x]
   end
 
+  def find_monster(x, y)
+    monsters.find{|m| m.x == x && m.y == y}
+  end
+
   def square_symbol_at(x, y)
     return ' '[0] if x >= @width || y >= @height
-    if monster = monsters.find{|m| m.x == x && m.y == y}
+    if monster = find_monster(x, y)
       return 'k'[0]
     end
     if square = find_square(x, y)

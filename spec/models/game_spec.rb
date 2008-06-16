@@ -71,6 +71,15 @@ describe Game, 'move_by' do
     @game.move_by(1, 1)
     @game.instance_variable_get(:@messages).should == ["Ouch. You bump into a wall."]
   end
+
+  it "should attack monster" do
+    @game.player.x = 10
+    @game.player.should_receive(:attack).with(@game.map.find_monster(11, 1)).and_return('Kudlius misses kobold')
+
+    @game.move_by(1, 0)
+
+    @game.read_message.should == 'Kudlius misses kobold'
+  end
 end
 
 describe Game, "pickup" do
