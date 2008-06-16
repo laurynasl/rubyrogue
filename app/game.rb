@@ -44,7 +44,7 @@ class Game
     x = player.x + dx
     y = player.y + dy
     if monster = map.find_monster(x, y)
-      output player.attack monster
+      output player.attack(monster)
     elsif map.tiles[y][x] == '.'[0]
       ui.hide_player
       player.x = x

@@ -29,5 +29,5 @@ monsters:
   monster_type: kobold
   maxhp: 5
   hp: 5
-
+  dexterity: 7
 ---

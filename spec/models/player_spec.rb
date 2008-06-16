@@ -6,7 +6,10 @@ describe Player do
       'name' => 'Kudlius',
       'x' => 2,
       'y' => 1,
-      'map' => 'testmap'
+      'map' => 'testmap',
+      'hp' => 10,
+      'maxhp' => 10,
+      'dexterity' => 11
     })
     player.name.should == 'Kudlius'
     player.x.should == 2
