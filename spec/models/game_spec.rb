@@ -191,3 +191,23 @@ describe Game, 'go_stairs' do
     @game.read_message.should == 'You see no upstairs here'
   end
 end
+
+describe Game, "iterate" do
+  it "should increase energy for player and monsters until player's energy reaches zero" do
+    @game = testgame
+    @game.player.energy = -2
+    @game.map.find_monster(11, 1).should_receive(:wait)
+    @game.iterate
+
+    @game.player.energy.should == 9 #player's dexterity is 11
+  end
+
+  it "should iterate twice" do
+    @game = testgame
+    @game.player.energy = -22
+    @game.iterate
+
+    @game.player.energy.should == 0
+    @game.map.find_monster(11, 1).energy.should == -86
+  end
+end

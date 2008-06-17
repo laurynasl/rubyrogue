@@ -11,11 +11,13 @@ describe Monster do
       'dexterity' => 7
     })
   end
+
   it "should load monster" do
     @monster.x.should == 10
     @monster.y.should == 1
     @monster.maxhp.should == 5
     @monster.hp.should == 4
+    @monster.energy.should == 0
     @monster.inventory.should be_an_instance_of(Inventory)
   end
 
@@ -86,5 +88,18 @@ describe Monster, "alive?" do
     @orc.should_not be_alive
     @orc.hp = -1
     @orc.should_not be_alive
+  end
+end
+
+describe Monster, "wait" do
+  it "should decrease energy by 100" do
+    orc
+    @orc.energy.should be_zero
+    @orc.wait
+    @orc.energy.should == -100
+
+    @orc.energy = 2
+    @orc.wait
+    @orc.energy.should == -98
   end
 end

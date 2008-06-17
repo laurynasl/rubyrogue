@@ -106,11 +106,6 @@ class CursesUI
     # Loop controller
     playing = true
 
-    # Draw the screen first time
-    #x = @game.player.x
-    #y = @game.player.y
-    #draw_all(@map_win, x, y)
-
     # Real game loop
     while playing do
       # First, we show all queued messages
@@ -122,11 +117,7 @@ class CursesUI
       playing = handle_input(@scr)
 
       # Launches the game logics
-      #@game.iterate
-
-      #x = @game.player.x
-      #y = @game.player.y
-      #draw_all(@map_win, x, y)
+      @game.iterate
     end
   ensure
     close_screen

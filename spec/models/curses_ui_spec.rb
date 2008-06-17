@@ -271,3 +271,17 @@ describe CursesUI, "repaint_square" do
     @ui.repaint_square(10, 1)
   end
 end
+
+describe CursesUI, 'game_loop' do
+  it "should call game.iterate after handling input" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.should_receive(:draw_windows)
+    @ui.should_receive(:handle_input).and_return(false)
+    @ui.game.should_receive(:iterate)
+    mess_win = mock('mess_win')
+    @ui.instance_variable_set(:@mess_win, mess_win)
+    mess_win.should_receive(:refresh)
+
+    @ui.game_loop
+  end
+end

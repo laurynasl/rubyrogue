@@ -87,4 +87,14 @@ class Game
       output "You see no #{down ? 'down' : 'up'}stairs here"
     end
   end
+
+  def iterate
+    while player.energy < 0
+      player.energy += player.dexterity
+      map.monsters.each do |monster|
+        monster.energy += monster.dexterity
+        monster.wait if monster.energy >= 0
+      end
+    end
+  end
 end

@@ -1,10 +1,11 @@
 class Monster
   attr_accessor :name, :x, :y, :inventory, :monster_type
-  attr_accessor :maxhp, :hp
+  attr_accessor :maxhp, :hp, :energy
   attr_accessor :dexterity
 
   def initialize(attributes)
     @inventory = Inventory.new
+    @energy = 0
     attributes.each do |key, value|
       send("#{key}=", value)
     end
@@ -33,5 +34,9 @@ class Monster
 
   def alive?
     hp > 0
+  end
+
+  def wait
+    @energy -= 100
   end
 end
