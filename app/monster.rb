@@ -40,4 +40,10 @@ class Monster
   def wait
     @energy -= 100
   end
+
+  def square_range_to(monster)
+    dx = x - monster.x
+    dy = y - monster.y
+    dx * dx + dy * dy
+  end
 end

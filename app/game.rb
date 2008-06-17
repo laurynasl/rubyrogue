@@ -100,7 +100,7 @@ class Game
   end
 
   def move_monster(monster)
-    if (monster.x - player.x) == 1
+    if monster.square_range_to(player) == 1
       output monster.attack(player)
     else
       monster.wait

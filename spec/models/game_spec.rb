@@ -226,10 +226,12 @@ describe Game, "move_monster" do
     @game.move_monster(@monster)
   end
 
-  it "should attack player when it is near" do
-    @game.player.x = 10
-    @monster.should_receive(:attack).with(@game.player).and_return('kobold misses Kudlius')
-    @game.move_monster(@monster)
-    @game.read_message.should == 'kobold misses Kudlius'
+  [-1, 1].each do |dx|
+    it "should attack player when it is near (at #{11+dx})" do
+      @game.player.x = 11 + dx
+      @monster.should_receive(:attack).with(@game.player).and_return('kobold misses Kudlius')
+      @game.move_monster(@monster)
+      @game.read_message.should == 'kobold misses Kudlius'
+    end
   end
 end

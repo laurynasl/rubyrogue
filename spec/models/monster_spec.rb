@@ -104,3 +104,18 @@ describe Monster, "wait" do
     @orc.energy.should == -98
   end
 end
+
+describe Monster, "square_range_to" do
+  before(:each) do
+    orc
+    kobold
+  end
+
+  it "should return sum of squares of diffs" do
+    @orc.x = 7
+    @orc.y = 13
+    @kobold.x = 19
+    @kobold.y = 2
+    @orc.square_range_to(@kobold).should == 265
+  end
+end
