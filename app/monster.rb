@@ -13,6 +13,7 @@ class Monster
   end
 
   def attack(defender)
+    wait
     chance = dexterity / (dexterity + defender.dexterity).to_f
     if rand < chance
       defender.hp -= rand(2) + 1

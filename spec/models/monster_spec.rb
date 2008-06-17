@@ -63,6 +63,7 @@ describe Monster, "attack" do
   it "should attack and miss" do
     @orc.should_receive(:rand).and_return(0.5625)
     @orc.attack(@kobold).should == "orc misses kobold"
+    @orc.energy.should == -100
   end
 
   it "should attack and hit" do

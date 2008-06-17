@@ -50,6 +50,7 @@ class Game
         ui.repaint_square(x, y)
       end
     elsif map.tiles[y][x] == '.'[0]
+      player.wait
       ui.hide_player
       player.x = x
       player.y = y
@@ -93,8 +94,16 @@ class Game
       player.energy += player.dexterity
       map.monsters.each do |monster|
         monster.energy += monster.dexterity
-        monster.wait if monster.energy >= 0
+        move_monster(monster) if monster.energy >= 0
       end
+    end
+  end
+
+  def move_monster(monster)
+    if (monster.x - player.x) == 1
+      output monster.attack(player)
+    else
+      monster.wait
     end
   end
 end

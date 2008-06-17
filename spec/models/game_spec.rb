@@ -54,6 +54,7 @@ describe Game, 'move_by' do
     @game.move_by(1, 0)
     @game.player.x.should == 3
     @game.player.y.should == 1
+    @game.player.energy.should == -100
   end
 
   it "should move player to bottom left" do
@@ -70,6 +71,7 @@ describe Game, 'move_by' do
     @ui.should_not_receive(:move_player)
     @game.move_by(1, 1)
     @game.instance_variable_get(:@messages).should == ["Ouch. You bump into a wall."]
+    @game.player.energy.should == 0
   end
 
   it "should attack monster" do
@@ -196,7 +198,8 @@ describe Game, "iterate" do
   it "should increase energy for player and monsters until player's energy reaches zero" do
     @game = testgame
     @game.player.energy = -2
-    @game.map.find_monster(11, 1).should_receive(:wait)
+    monster = @game.map.find_monster(11, 1)
+    @game.should_receive(:move_monster).with(monster)
     @game.iterate
 
     @game.player.energy.should == 9 #player's dexterity is 11
@@ -209,5 +212,24 @@ describe Game, "iterate" do
 
     @game.player.energy.should == 0
     @game.map.find_monster(11, 1).energy.should == -86
+  end
+end
+
+describe Game, "move_monster" do
+  before(:each) do
+    @game = testgame
+    @monster = @game.map.find_monster(11, 1)
+  end
+
+  it "should wait if there's nothing else to do" do
+    @monster.should_receive(:wait)
+    @game.move_monster(@monster)
+  end
+
+  it "should attack player when it is near" do
+    @game.player.x = 10
+    @monster.should_receive(:attack).with(@game.player).and_return('kobold misses Kudlius')
+    @game.move_monster(@monster)
+    @game.read_message.should == 'kobold misses Kudlius'
   end
 end
