@@ -14,7 +14,8 @@ class Monster
   def attack(defender)
     chance = dexterity / (dexterity + defender.dexterity).to_f
     if rand < chance
-      "%s hits %s" % [fullname, defender.fullname]
+      defender.hp -= rand(2) + 1
+      (defender.alive? ? "%s hits %s" : "%s kills %s") % [fullname, defender.fullname]
     else
       "%s misses %s" % [fullname, defender.fullname]
     end
@@ -28,5 +29,9 @@ class Monster
     ['hp', 'maxhp', 'dexterity'].each do |attribute|
       raise "#{attribute} is required!" unless send(attribute)
     end
+  end
+
+  def alive?
+    hp > 0
   end
 end

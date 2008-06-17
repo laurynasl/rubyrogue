@@ -71,6 +71,12 @@ class CursesUI
     @mess_win.refresh
   end
 
+  def repaint_square(x, y)
+    @map_win.setpos(y- @offset[:y], x - @offset[:x])
+    @map_win.addch(@game.map.square_symbol_at(x, y))
+    @map_win.refresh
+  end
+
   def redraw_map
     @game.output @map_win.maxx.to_s + 'x' + @map_win.maxy.to_s
     @map_win.setpos 0, 0

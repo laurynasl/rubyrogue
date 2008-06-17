@@ -54,27 +54,37 @@ end
 
 describe Monster, "attack" do
   before(:each) do
-    @attacker = Monster.new(
-      'hp' => 9,
-      'maxhp' => 9,
-      'dexterity' => 9,
-      'monster_type' => 'orc'
-    )
-    @defender = Monster.new(
-      'hp' => 4,
-      'maxhp' => 4,
-      'dexterity' => 7,
-      'monster_type' => 'kobold'
-    )
+    orc
+    kobold
   end
 
   it "should attack and miss" do
-    @attacker.should_receive(:rand).and_return(0.5625)
-    @attacker.attack(@defender).should == "orc misses kobold"
+    @orc.should_receive(:rand).and_return(0.5625)
+    @orc.attack(@kobold).should == "orc misses kobold"
   end
 
   it "should attack and hit" do
-    @attacker.should_receive(:rand).and_return(0.5624)
-    @attacker.attack(@defender).should == "orc hits kobold"
+    @orc.should_receive(:rand).and_return(0.5624, 1)
+    #@orc.should_receive(:rand).with(2).and_return(1)
+    @orc.attack(@kobold).should == "orc hits kobold"
+    @kobold.hp.should == 2
+  end
+
+  it "should attack and kill" do
+    @kobold.hp = 2
+    @orc.should_receive(:rand).and_return(0.5624, 1)
+    @orc.attack(@kobold).should == "orc kills kobold"
+    @kobold.hp.should == 0
+  end
+end
+
+describe Monster, "alive?" do
+  it "should be alive when hp is at least 1" do
+    orc
+    @orc.should be_alive
+    @orc.hp = 0
+    @orc.should_not be_alive
+    @orc.hp = -1
+    @orc.should_not be_alive
   end
 end

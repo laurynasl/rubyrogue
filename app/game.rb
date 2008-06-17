@@ -45,6 +45,10 @@ class Game
     y = player.y + dy
     if monster = map.find_monster(x, y)
       output player.attack(monster)
+      unless monster.alive?
+        map.monsters.delete(monster) 
+        ui.repaint_square(x, y)
+      end
     elsif map.tiles[y][x] == '.'[0]
       ui.hide_player
       player.x = x

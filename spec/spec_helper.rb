@@ -23,3 +23,21 @@ def it_should_have_fields(object_name, *attributes)
     end
   end
 end
+
+def orc
+  @orc = Monster.new(
+    'hp' => 9,
+    'maxhp' => 9,
+    'dexterity' => 9,
+    'monster_type' => 'orc'
+  )
+end
+
+def kobold
+  @kobold = Monster.new(
+    'hp' => 4,
+    'maxhp' => 4,
+    'dexterity' => 7,
+    'monster_type' => 'kobold'
+  )
+end

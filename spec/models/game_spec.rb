@@ -80,6 +80,18 @@ describe Game, 'move_by' do
 
     @game.read_message.should == 'Kudlius misses kobold'
   end
+
+  it "should kill monster and remove it from map" do
+    @game.player.x = 10
+    @game.map.find_monster(11, 1).hp = 2
+    @game.player.should_receive(:rand).and_return(0, 1) # hit and do damage 2 (1 + 1)
+    @ui.should_receive(:repaint_square).with(11, 1)
+
+    @game.move_by(1, 0)
+
+    @game.read_message.should == 'Kudlius kills kobold'
+    @game.map.find_monster(11, 1).should be_nil
+  end
 end
 
 describe Game, "pickup" do
