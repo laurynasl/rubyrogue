@@ -290,7 +290,25 @@ describe CursesUI, 'game_loop' do
     mess_win = mock('mess_win')
     @ui.instance_variable_set(:@mess_win, mess_win)
     mess_win.should_receive(:refresh)
+    @ui.should_receive(:draw_attributes)
 
     @ui.game_loop
+  end
+end
+
+describe CursesUI, "draw_attributes" do
+  it "should draw_attributes" do
+    @ui = CursesUI.new(TESTGAME)
+    @att_win = mock('att_win')
+    @ui.instance_variable_set(:@att_win, @att_win)
+
+    @att_win.should_receive(:clear)
+    @att_win.should_receive(:setpos).with(0, 0)
+    @att_win.should_receive(:addstr).with("Health 10/10\n")
+    @att_win.should_receive(:addstr).with("Dexterity 11\n")
+    @att_win.should_receive(:addstr).with("Perception 7\n")
+    @att_win.should_receive(:refresh)
+
+    @ui.draw_attributes
   end
 end

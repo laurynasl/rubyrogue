@@ -69,6 +69,7 @@ class CursesUI
     @mess_win = Window.new(mess_h-2, mess_w-2, att_h+1, 1)
     @mess_win.scrollok(true)
     @mess_win.refresh
+    draw_attributes
   end
 
   def repaint_square(x, y)
@@ -109,15 +110,18 @@ class CursesUI
     # Real game loop
     while playing do
       # First, we show all queued messages
+      messages  = ''
       while m = @game.read_message do
-        draw_message(@mess_win, m)
+        messages << m << '. '
       end
+      draw_message(@mess_win, messages) unless messages.empty?
       @mess_win.refresh
 
       playing = handle_input(@scr)
 
       # Launches the game logics
       @game.iterate
+      draw_attributes
     end
   ensure
     close_screen
@@ -230,5 +234,14 @@ class CursesUI
     redraw_map
     move_player
     @map_win.refresh
+  end
+
+  def draw_attributes
+    @att_win.clear
+    @att_win.setpos 0, 0
+    @att_win.addstr("Health %d/%d\n" % [game.player.hp, game.player.maxhp])
+    @att_win.addstr("Dexterity %d\n" % game.player.dexterity)
+    @att_win.addstr("Perception %d\n" % game.player.perception)
+    @att_win.refresh
   end
 end
