@@ -65,3 +65,14 @@ describe Map, "square_symbol_at" do
     @map.square_symbol_at(11, 1).should be_char('k')
   end
 end
+
+describe Map, "passable_at?" do
+  it "should return true when square is passable" do
+    @game = testgame
+    @map = @game.map
+
+    @map.passable_at?(0, 0).should be_false # #
+    @map.passable_at?(1, 1).should be_true  # .
+    @map.passable_at?(11, 1).should be_false# k
+  end
+end

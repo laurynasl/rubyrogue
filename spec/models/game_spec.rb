@@ -260,12 +260,20 @@ describe Game, "move_monster (just move)" do
     @monster.x = 23
     @monster.y = 1
 
-
     @ui.should_receive(:repaint_square).with(23, 1)
     @ui.should_receive(:repaint_square).with(23, 2)
     @game.move_monster(@monster)
     @monster.y.should == 2
-    @monster.energy.should == -100
   end
 
+  it "should not move into a wall" do
+    @game.player.x = 1
+    @game.player.y = 4
+    @monster.x = 2
+    @monster.y = 1
+
+    @ui.should_receive(:repaint_square).with(2, 1)
+    @ui.should_receive(:repaint_square).with(1, 1)
+    @game.move_monster(@monster)
+  end
 end

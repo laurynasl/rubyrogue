@@ -54,4 +54,8 @@ class Map
   rescue
     raise $!.class.new($!.to_s + " and x = #{x}, y = #{y}")
   end
+
+  def passable_at?(x, y)
+    tiles[y][x] == '.'[0] && !find_monster(x, y)
+  end
 end

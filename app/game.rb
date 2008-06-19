@@ -49,7 +49,7 @@ class Game
         map.monsters.delete(monster) 
         ui.repaint_square(x, y)
       end
-    elsif map.tiles[y][x] == '.'[0]
+    elsif map.passable_at?(x, y)
       player.wait
       ui.hide_player
       player.x = x
@@ -108,7 +108,7 @@ class Game
       pair = nil
       [[1, 0], [0, 1], [-1, 0], [0, -1]].each do |dx, dy|
         r = player.square_range_to([monster.x + dx, monster.y + dy])
-        if r < range
+        if r < range && map.passable_at?(monster.x + dx, monster.y + dy)
           range = r
           pair = [dx, dy]
         end
