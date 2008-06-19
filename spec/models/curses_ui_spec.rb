@@ -212,6 +212,15 @@ describe CursesUI, "handle_input" do
 
     @ui.handle_input(scr)
   end
+
+  it "should print coordinates when clicked 'c'" do
+    @ui = CursesUI.new(TESTGAME)
+    scr = mock('scr', :getch => 'c'[0])
+
+    @ui.game.should_receive(:output).with('Kudlius is at 2, 1')
+
+    @ui.handle_input(scr)
+  end
 end
 
 describe CursesUI, "show_inventory" do

@@ -8,6 +8,7 @@ describe Monster do
       'monster_type' => 'kobold',
       'maxhp' => 5,
       'hp' => 4,
+      'perception' => 6,
       'dexterity' => 7
     })
   end
@@ -31,7 +32,7 @@ describe Monster do
     @monster.validate!
   end
 
-  it_should_have_fields :monster, 'dexterity', 'hp', 'maxhp'
+  it_should_have_fields :monster, 'dexterity', 'perception', 'hp', 'maxhp'
 end
 
 describe Monster, "fullname" do
@@ -40,6 +41,7 @@ describe Monster, "fullname" do
       'hp' => 9,
       'maxhp' => 9,
       'dexterity' => 9,
+      'perception' => 6,
       'monster_type' => 'orc'
     )
   end
@@ -117,5 +119,11 @@ describe Monster, "square_range_to" do
     @kobold.x = 19
     @kobold.y = 2
     @orc.square_range_to(@kobold).should == 265
+  end
+
+  it "should accept array of coordinates instead of monster" do
+    @orc.x = 7
+    @orc.y = 13
+    @orc.square_range_to([19, 2]).should == 265
   end
 end

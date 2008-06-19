@@ -30,4 +30,5 @@ monsters:
   maxhp: 5
   hp: 5
   dexterity: 7
+  perception: 5
 ---

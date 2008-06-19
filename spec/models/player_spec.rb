@@ -9,7 +9,8 @@ describe Player do
       'map' => 'testmap',
       'hp' => 10,
       'maxhp' => 10,
-      'dexterity' => 11
+      'dexterity' => 11,
+      'perception' => 7
     })
     player.name.should == 'Kudlius'
     player.x.should == 2

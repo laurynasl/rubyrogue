@@ -152,6 +152,8 @@ class CursesUI
           game.go_stairs(true)
         when '<'[0]
           game.go_stairs(false)
+        when 'c'[0]
+          game.output("%s is at %d, %d" % [game.player.fullname, game.player.x, game.player.y])
         else
           @game.output((key.is_a?(Fixnum) ? keyname(key) : key.to_s) || key.to_s)
         end

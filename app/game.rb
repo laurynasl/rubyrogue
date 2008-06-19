@@ -102,6 +102,24 @@ class Game
   def move_monster(monster)
     if monster.square_range_to(player) == 1
       output monster.attack(player)
+    elsif monster.perception * monster.perception >= (range = monster.square_range_to(player))
+      old = [monster.x, monster.y]
+      
+      pair = nil
+      [[1, 0], [0, 1], [-1, 0], [0, -1]].each do |dx, dy|
+        r = player.square_range_to([monster.x + dx, monster.y + dy])
+        if r < range
+          range = r
+          pair = [dx, dy]
+        end
+      end
+
+      monster.x += pair.first
+      monster.y += pair.last
+
+      ui.repaint_square(*old)
+      ui.repaint_square(monster.x, monster.y)
+      monster.wait
     else
       monster.wait
     end

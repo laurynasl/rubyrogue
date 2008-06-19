@@ -1,7 +1,7 @@
 class Monster
   attr_accessor :name, :x, :y, :inventory, :monster_type
   attr_accessor :maxhp, :hp, :energy
-  attr_accessor :dexterity
+  attr_accessor :dexterity, :perception
 
   def initialize(attributes)
     @inventory = Inventory.new
@@ -28,7 +28,7 @@ class Monster
   end
 
   def validate!
-    ['hp', 'maxhp', 'dexterity'].each do |attribute|
+    ['hp', 'maxhp', 'dexterity', 'perception'].each do |attribute|
       raise "#{attribute} is required!" unless send(attribute)
     end
   end
@@ -42,8 +42,8 @@ class Monster
   end
 
   def square_range_to(monster)
-    dx = x - monster.x
-    dy = y - monster.y
+    dx = x - (monster.is_a?(Monster) ? monster.x : monster.first)
+    dy = y - (monster.is_a?(Monster) ? monster.y : monster.last)
     dx * dx + dy * dy
   end
 end

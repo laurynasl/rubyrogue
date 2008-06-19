@@ -235,3 +235,37 @@ describe Game, "move_monster" do
     end
   end
 end
+
+describe Game, "move_monster (just move)" do
+  before(:each) do
+    @game = testgame
+    @monster = @game.map.find_monster(11, 1)
+    @ui = mock('ui')
+    @game.ui = @ui
+  end
+
+  it "should move monster one square right when it sees player" do
+    @game.player.x = 16
+
+    @ui.should_receive(:repaint_square).with(11, 1)
+    @ui.should_receive(:repaint_square).with(12, 1)
+    @game.move_monster(@monster)
+    @monster.x.should == 12
+    @monster.energy.should == -100
+  end
+
+  it "should move monster one square right when it sees player" do
+    @game.player.x = 24
+    @game.player.y = 4
+    @monster.x = 23
+    @monster.y = 1
+
+
+    @ui.should_receive(:repaint_square).with(23, 1)
+    @ui.should_receive(:repaint_square).with(23, 2)
+    @game.move_monster(@monster)
+    @monster.y.should == 2
+    @monster.energy.should == -100
+  end
+
+end

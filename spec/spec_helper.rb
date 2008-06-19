@@ -29,6 +29,7 @@ def orc
     'hp' => 9,
     'maxhp' => 9,
     'dexterity' => 9,
+    'perception' => 6,
     'monster_type' => 'orc'
   )
 end
@@ -38,6 +39,7 @@ def kobold
     'hp' => 4,
     'maxhp' => 4,
     'dexterity' => 7,
+    'perception' => 6,
     'monster_type' => 'kobold'
   )
 end
