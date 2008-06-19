@@ -1,7 +1,7 @@
 class Monster
   attr_accessor :name, :x, :y, :inventory, :monster_type
   attr_accessor :maxhp, :hp, :energy
-  attr_accessor :dexterity, :perception
+  attr_accessor :dexterity, :perception, :health
 
   def initialize(attributes)
     @inventory = Inventory.new
@@ -28,7 +28,7 @@ class Monster
   end
 
   def validate!
-    ['hp', 'maxhp', 'dexterity', 'perception'].each do |attribute|
+    ['hp', 'maxhp', 'dexterity', 'perception', 'health'].each do |attribute|
       raise "#{attribute} is required!" unless send(attribute)
     end
   end

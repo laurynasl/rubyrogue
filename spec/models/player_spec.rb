@@ -9,6 +9,7 @@ describe Player do
       'map' => 'testmap',
       'hp' => 10,
       'maxhp' => 10,
+      'health' => 10,
       'dexterity' => 11,
       'perception' => 7
     })

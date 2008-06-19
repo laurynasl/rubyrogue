@@ -242,6 +242,7 @@ class CursesUI
     @att_win.addstr("Health %d/%d\n" % [game.player.hp, game.player.maxhp])
     @att_win.addstr("Dexterity %d\n" % game.player.dexterity)
     @att_win.addstr("Perception %d\n" % game.player.perception)
+    @att_win.addstr("Health %d\n" % game.player.health)
     @att_win.refresh
   end
 end

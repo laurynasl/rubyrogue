@@ -9,3 +9,4 @@ player:
   maxhp: 10
   dexterity: 11
   perception: 7
+  health: 10

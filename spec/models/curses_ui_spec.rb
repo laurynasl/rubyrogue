@@ -307,6 +307,7 @@ describe CursesUI, "draw_attributes" do
     @att_win.should_receive(:addstr).with("Health 10/10\n")
     @att_win.should_receive(:addstr).with("Dexterity 11\n")
     @att_win.should_receive(:addstr).with("Perception 7\n")
+    @att_win.should_receive(:addstr).with("Health 10\n")
     @att_win.should_receive(:refresh)
 
     @ui.draw_attributes

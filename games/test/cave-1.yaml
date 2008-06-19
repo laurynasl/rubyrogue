@@ -31,4 +31,5 @@ monsters:
   hp: 5
   dexterity: 7
   perception: 5
+  health: 5
 ---

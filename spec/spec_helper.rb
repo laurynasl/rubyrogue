@@ -28,6 +28,7 @@ def orc
   @orc = Monster.new(
     'hp' => 9,
     'maxhp' => 9,
+    'health' => 9,
     'dexterity' => 9,
     'perception' => 6,
     'monster_type' => 'orc'
@@ -36,8 +37,11 @@ end
 
 def kobold
   @kobold = Monster.new(
+    'x' => 10,
+    'y' => 1,
     'hp' => 4,
     'maxhp' => 4,
+    'health' => 4,
     'dexterity' => 7,
     'perception' => 6,
     'monster_type' => 'kobold'

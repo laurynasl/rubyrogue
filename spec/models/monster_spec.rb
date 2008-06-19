@@ -2,24 +2,25 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Monster do
   before(:each) do
-    @monster = Monster.new({
-      'x' => 10,
-      'y' => 1,
-      'monster_type' => 'kobold',
-      'maxhp' => 5,
-      'hp' => 4,
-      'perception' => 6,
-      'dexterity' => 7
-    })
+    #@monster = Monster.new({
+      #'x' => 10,
+      #'y' => 1,
+      #'monster_type' => 'kobold',
+      #'maxhp' => 5,
+      #'hp' => 4,
+      #'perception' => 6,
+      #'dexterity' => 7
+    #})
+    kobold
   end
 
   it "should load monster" do
-    @monster.x.should == 10
-    @monster.y.should == 1
-    @monster.maxhp.should == 5
-    @monster.hp.should == 4
-    @monster.energy.should == 0
-    @monster.inventory.should be_an_instance_of(Inventory)
+    @kobold.x.should == 10
+    @kobold.y.should == 1
+    @kobold.maxhp.should == 4
+    @kobold.hp.should == 4
+    @kobold.energy.should == 0
+    @kobold.inventory.should be_an_instance_of(Inventory)
   end
 
   it "should fail to create monster without hp" do
@@ -29,30 +30,24 @@ describe Monster do
   end
 
   it "should be valid" do
-    @monster.validate!
+    @kobold.validate!
   end
 
-  it_should_have_fields :monster, 'dexterity', 'perception', 'hp', 'maxhp'
+  it_should_have_fields :kobold, 'dexterity', 'perception', 'health', 'hp', 'maxhp'
 end
 
 describe Monster, "fullname" do
   before(:each) do
-    @monster = Monster.new(
-      'hp' => 9,
-      'maxhp' => 9,
-      'dexterity' => 9,
-      'perception' => 6,
-      'monster_type' => 'orc'
-    )
+    orc
   end
 
   it "should return monster_type" do
-    @monster.fullname.should == 'orc'
+    @orc.fullname.should == 'orc'
   end
 
   it "should return name when it is present" do
-    @monster.name = 'Sigmund'
-    @monster.fullname.should == 'Sigmund'
+    @orc.name = 'Sigmund'
+    @orc.fullname.should == 'Sigmund'
   end
 end
 
