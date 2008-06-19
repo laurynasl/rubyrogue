@@ -114,11 +114,13 @@ class Game
         end
       end
 
-      monster.x += pair.first
-      monster.y += pair.last
+      if pair
+        monster.x += pair.first
+        monster.y += pair.last
 
-      ui.repaint_square(*old)
-      ui.repaint_square(monster.x, monster.y)
+        ui.repaint_square(*old)
+        ui.repaint_square(monster.x, monster.y)
+      end
       monster.wait
     else
       monster.wait

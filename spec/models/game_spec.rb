@@ -276,4 +276,12 @@ describe Game, "move_monster (just move)" do
     @ui.should_receive(:repaint_square).with(1, 1)
     @game.move_monster(@monster)
   end
+
+  it "should not move, just wait if monster cannot move anywhere" do
+    @game.player.x = 9
+    @game.map.tiles[1][10] = '#'[0]
+
+    @game.move_monster(@monster)
+    @monster.energy.should == -100
+  end
 end
