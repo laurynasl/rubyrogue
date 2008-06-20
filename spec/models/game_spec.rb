@@ -195,11 +195,15 @@ describe Game, 'go_stairs' do
 end
 
 describe Game, "iterate" do
-  it "should increase energy for player and monsters until player's energy reaches zero" do
+  it "should increase energy for player and monsters until player's energy reaches zero and regenerate all monsters and player" do
     @game = testgame
     @game.player.energy = -2
     monster = @game.map.find_monster(11, 1)
     @game.should_receive(:move_monster).with(monster)
+
+    @game.player.should_receive(:regenerate)
+    monster.should_receive(:regenerate)
+
     @game.iterate
 
     @game.player.energy.should == 9 #player's dexterity is 11

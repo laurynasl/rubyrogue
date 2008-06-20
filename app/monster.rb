@@ -1,11 +1,12 @@
 class Monster
   attr_accessor :name, :x, :y, :inventory, :monster_type
-  attr_accessor :maxhp, :hp, :energy
+  attr_accessor :maxhp, :hp, :energy, :hpfrac
   attr_accessor :dexterity, :perception, :health
 
   def initialize(attributes)
     @inventory = Inventory.new
     @energy = 0
+    @hpfrac = 0
     attributes.each do |key, value|
       send("#{key}=", value)
     end
@@ -45,5 +46,14 @@ class Monster
     dx = x - (monster.is_a?(Monster) ? monster.x : monster.first)
     dy = y - (monster.is_a?(Monster) ? monster.y : monster.last)
     dx * dx + dy * dy
+  end
+
+  def regenerate
+    return if @hp == @maxhp
+    @hpfrac += @health
+    if @hpfrac >= 1000
+      @hpfrac -= 1000
+      @hp += 1
+    end
   end
 end

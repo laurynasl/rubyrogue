@@ -20,6 +20,7 @@ describe Monster do
     @kobold.maxhp.should == 4
     @kobold.hp.should == 4
     @kobold.energy.should == 0
+    @kobold.hpfrac.should == 0
     @kobold.inventory.should be_an_instance_of(Inventory)
   end
 
@@ -120,5 +121,30 @@ describe Monster, "square_range_to" do
     @orc.x = 7
     @orc.y = 13
     @orc.square_range_to([19, 2]).should == 265
+  end
+end
+
+describe Monster, "regenerate" do
+  it "should increase hpfrac by health attribute value" do
+    orc
+    @orc.hp = 7
+    @orc.hpfrac = 15
+    @orc.regenerate
+    @orc.hpfrac.should == 24
+  end
+
+  it "should increase health when hpfrac reaches 1000" do
+    orc
+    @orc.hp = 7
+    @orc.hpfrac = 995
+    @orc.regenerate
+    @orc.hpfrac.should == 4
+    @orc.hp.should == 8
+  end
+
+  it "should not regenerate when hp is full" do
+    orc
+    @orc.regenerate
+    @orc.hpfrac.should == 0
   end
 end

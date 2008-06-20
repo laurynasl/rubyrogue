@@ -92,7 +92,9 @@ class Game
   def iterate
     while player.energy < 0
       player.energy += player.dexterity
+      player.regenerate
       map.monsters.each do |monster|
+        monster.regenerate
         monster.energy += monster.dexterity
         move_monster(monster) if monster.energy >= 0
       end
