@@ -32,9 +32,18 @@ end
 describe Game, 'load_map' do
   it "should load map by name" do
     game = testgame
+    game.maps['cave-1'].name.should == 'cave-1'
     game.load_map('cave-2')
     game.map.name.should == 'cave-2'
     game.map.game.should == game
+  end
+
+  it "should just switch map if it is already loaded" do
+    game = testgame
+    fake_map = mock('fake_map')
+    game.maps['fake_map'] = fake_map
+    game.load_map('fake_map')
+    game.map.should == fake_map
   end
 end
 

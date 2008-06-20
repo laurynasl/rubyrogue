@@ -2,10 +2,11 @@ require 'yaml'
 
 class Game
   attr_reader :map, :item_classes
-  attr_accessor :player, :ui, :filename
+  attr_accessor :player, :ui, :filename, :maps
 
   def initialize(filename = nil)
     @messages = []
+    @maps = {}
     load_datafiles
     if filename
       @filename = filename
@@ -28,8 +29,11 @@ class Game
   end
 
   def load_map(name)
-    @map = Map.load(File.dirname(filename) + '/' + name + '.yaml')
-    @map.game = self
+    unless @map = @maps[name]
+      @map = Map.load(File.dirname(filename) + '/' + name + '.yaml')
+      @maps[name] = @map
+      @map.game = self
+    end
   end
 
   def read_message
