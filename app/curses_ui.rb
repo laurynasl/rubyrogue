@@ -1,5 +1,9 @@
 require 'curses'
 
+Dir['app/*.rb'].each do |f|
+  require f
+end
+
 include Curses
 
 class CursesUI
@@ -11,8 +15,12 @@ class CursesUI
     init_actions
     @offset = {:x => 0, :y => 0}
 
-    # Init game
-    @game = Game.new(filename)
+    if /savegames\/.+\.yaml/ === filename
+      @game = Game.restore(filename)
+    else
+      # Init game
+      @game = Game.new(filename)
+    end
     @game.ui = self
   end
 
@@ -158,6 +166,9 @@ class CursesUI
           game.go_stairs(false)
         when 'c'[0]
           game.output("%s is at %d, %d" % [game.player.fullname, game.player.x, game.player.y])
+        when 'S'[0]
+          game.save(game.player.fullname)
+          keep_playing = false
         else
           @game.output((key.is_a?(Fixnum) ? keyname(key) : key.to_s) || key.to_s)
         end

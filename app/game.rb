@@ -128,4 +128,13 @@ class Game
       monster.wait
     end
   end
+
+  def save(name)
+    #Dir.mkdir('games/' + name)
+    File.open("savegames/#{name}.yaml", 'w') {|f| f.write self.to_yaml}
+  end
+
+  def self.restore(filename)
+    File.open(filename, 'r'){|f| YAML.load(f)}
+  end
 end

@@ -289,3 +289,16 @@ describe Game, "move_monster (just move)" do
     @monster.energy.should == -100
   end
 end
+
+describe Game, "save & restore" do
+  it "should save game so that after loading it would be identic" do
+    @old_game = testgame
+    @old_game.save('test_fork')
+    @new_game = Game.restore('savegames/test_fork.yaml')
+    @new_game.class.should == Game
+  end
+
+  after(:each) do
+    system 'rm savegames/test_fork.yaml'
+  end
+end

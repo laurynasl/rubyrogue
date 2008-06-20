@@ -221,6 +221,16 @@ describe CursesUI, "handle_input" do
 
     @ui.handle_input(scr)
   end
+
+  it "should save game when clicked 'S'" do
+    @ui = CursesUI.new(TESTGAME)
+    scr = mock('scr', :getch => 'S'[0])
+
+    @ui.game.should_receive(:save).with('Kudlius')
+
+    @ui.handle_input(scr).should be_false
+
+  end
 end
 
 describe CursesUI, "show_inventory" do
@@ -311,5 +321,17 @@ describe CursesUI, "draw_attributes" do
     @att_win.should_receive(:refresh)
 
     @ui.draw_attributes
+  end
+end
+
+describe CursesUI, "restore game" do
+  it "should load game using YAML if it is savegame" do
+    @old_game = testgame
+    @old_game.save 'test_for_curses_ui'
+    
+    @ui = CursesUI.new('savegames/test_for_curses_ui.yaml')
+    @ui.game.class.should == Game
+    @ui.game.map.name.should == 'cave-1'
+    @ui.game.ui.should == @ui
   end
 end
