@@ -6,6 +6,7 @@ Spec::Runner.configure do |config|
 end
 
 def testgame
+  ItemClass.load_all
   Game.new('games/test/game.yaml')
 end
 

@@ -2,6 +2,7 @@ class Monster
   attr_accessor :name, :x, :y, :inventory, :monster_type
   attr_accessor :maxhp, :hp, :energy, :hpfrac
   attr_accessor :dexterity, :perception, :health
+  attr_accessor :weapon
 
   def initialize(attributes)
     @inventory = Inventory.new
@@ -17,11 +18,19 @@ class Monster
     wait
     chance = dexterity / (dexterity + defender.dexterity).to_f
     if rand < chance
-      defender.hp -= rand(2) + 1
+      if weapon
+        inflict_damage(defender, ItemClass.all[weapon.name].damage)
+      else
+        inflict_damage(defender, 2)
+      end
       (defender.alive? ? "%s hits %s" : "%s kills %s") % [fullname, defender.fullname]
     else
       "%s misses %s" % [fullname, defender.fullname]
     end
+  end
+
+  def inflict_damage(defender, maxdamage)
+    defender.hp -= rand(maxdamage) + 1
   end
 
   def fullname

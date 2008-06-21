@@ -18,14 +18,13 @@ end
 
 describe Game, 'load' do
   it "should load game from file" do
-    game = testgame
+    game = Game.new('games/test/game.yaml')
     game.filename.should == 'games/test/game.yaml'
     game.map.name.should == 'cave-1'
     game.map.game.should === game
     game.player.name.should == 'Kudlius'
 
-    short_sword = game.item_classes['short sword']
-    short_sword.should be_instance_of(ItemClass)
+    ItemClass.all['short sword'].class.should == ItemClass
   end
 end
 
@@ -303,8 +302,10 @@ describe Game, "save & restore" do
   it "should save game so that after loading it would be identic" do
     @old_game = testgame
     @old_game.save('test_fork')
+    ItemClass.all = nil
     @new_game = Game.restore('savegames/test_fork.yaml')
     @new_game.class.should == Game
+    ItemClass.all['short sword'].class.should == ItemClass
   end
 
   after(:each) do

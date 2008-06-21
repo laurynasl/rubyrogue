@@ -21,9 +21,15 @@ describe ItemClass do
       'symbol' => '[',
       'skills' => ['stealth', 'evasion']
     }
-    #@item.armor.should == 3
-    #@item.evasion.should == 1
-    #@item.symbol.should == '('
-    #@item.skills.should == ['stealth', 'evasion']
+  end
+end
+
+describe ItemClass, 'load_all' do
+
+  it "should load all item classes" do
+    ItemClass.load_all
+
+    short_sword = ItemClass.all['short sword']
+    short_sword.class.should == ItemClass
   end
 end

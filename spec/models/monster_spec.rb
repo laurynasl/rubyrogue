@@ -2,15 +2,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Monster do
   before(:each) do
-    #@monster = Monster.new({
-      #'x' => 10,
-      #'y' => 1,
-      #'monster_type' => 'kobold',
-      #'maxhp' => 5,
-      #'hp' => 4,
-      #'perception' => 6,
-      #'dexterity' => 7
-    #})
     kobold
   end
 
@@ -66,7 +57,6 @@ describe Monster, "attack" do
 
   it "should attack and hit" do
     @orc.should_receive(:rand).and_return(0.5624, 1)
-    #@orc.should_receive(:rand).with(2).and_return(1)
     @orc.attack(@kobold).should == "orc hits kobold"
     @kobold.hp.should == 2
   end
@@ -76,6 +66,30 @@ describe Monster, "attack" do
     @orc.should_receive(:rand).and_return(0.5624, 1)
     @orc.attack(@kobold).should == "orc kills kobold"
     @kobold.hp.should == 0
+  end
+
+  it "should inflict damage of maximum 2 when without a weapon" do
+    @orc.should_receive(:rand).and_return(0.5624)
+    @orc.should_receive(:inflict_damage).with(@kobold, 2).and_return(1)
+    @orc.attack(@kobold)
+  end
+
+  it "should inflict damage of maximum 5 when attacking with short sword" do
+    ItemClass.load_all
+    @orc.weapon = Item.new('short sword')
+    @orc.should_receive(:rand).and_return(0.5624)
+    @orc.should_receive(:inflict_damage).with(@kobold, 5).and_return(3)
+    @orc.attack(@kobold)
+  end
+end
+
+describe Monster, "inflict_damage" do
+  it "should inflict damage of maximum 2 when without a weapon" do
+    orc
+    kobold
+    @orc.should_receive(:rand).with(3).and_return(1)
+    @orc.inflict_damage(@kobold, 3)
+    @kobold.hp.should == 2
   end
 end
 

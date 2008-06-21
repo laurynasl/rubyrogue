@@ -42,7 +42,7 @@ class Map
     end
     if square = find_square(x, y)
       if !square.items.empty?
-        game.item_classes[square.items.first.name].symbol[0]
+        ItemClass.all[square.items.first.name].symbol[0]
       elsif square.stair
         return (square.stair['down'] ? '>' : '<')[0]
       else

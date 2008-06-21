@@ -1,14 +1,14 @@
 require 'yaml'
 
 class Game
-  attr_reader :map, :item_classes
+  attr_reader :map
   attr_accessor :player, :ui, :filename, :maps
 
   def initialize(filename = nil)
     @messages = []
     @maps = {}
-    load_datafiles
     if filename
+      ItemClass.load_all
       @filename = filename
       f = File.open(filename)
       @data = YAML::load(f)
@@ -16,16 +16,6 @@ class Game
       load_map @data['maps'].first
       @player = Player.new(@data['player'])
     end
-  end
-
-  def load_datafiles
-    f = File.open('data/items.yaml')
-    items_data = YAML::load(f)
-    @item_classes = {}
-    items_data.each do |key, value|
-      @item_classes[key] = ItemClass.new(key, value)
-    end
-    f.close
   end
 
   def load_map(name)
@@ -139,6 +129,7 @@ class Game
   end
 
   def self.restore(filename)
+    ItemClass.load_all
     File.open(filename, 'r'){|f| YAML.load(f)}
   end
 end
