@@ -71,6 +71,7 @@ describe Monster, "attack" do
   it "should inflict damage of maximum 2 when without a weapon" do
     @orc.should_receive(:rand).and_return(0.5624)
     @orc.should_receive(:inflict_damage).with(@kobold, 2).and_return(1)
+    @orc.should_receive(:train).with(['unarmed'], 0.5625, 1)
     @orc.attack(@kobold)
   end
 
@@ -79,7 +80,25 @@ describe Monster, "attack" do
     @orc.weapon = Item.new('short sword')
     @orc.should_receive(:rand).and_return(0.5624)
     @orc.should_receive(:inflict_damage).with(@kobold, 5).and_return(3)
+    @orc.should_receive(:train).with(['sword', 'slashing'], 0.5625, 3)
     @orc.attack(@kobold)
+  end
+end
+
+describe Monster, "train" do
+  it "should train new skill" do
+    orc
+    @orc.train(['unarmed'], 0.25, 2)
+    @orc.skills['unarmed'].should == 0.032
+  end
+
+  it "should improve existing skills" do
+    orc
+    @orc.skills['dagger'] = 3.2
+    @orc.skills['piercing'] = 1.5
+    @orc.train(['dagger', 'piercing'], 0.5, 6)
+    @orc.skills['dagger'].should == 3.224
+    @orc.skills['piercing'].should == 1.524
   end
 end
 
@@ -87,9 +106,10 @@ describe Monster, "inflict_damage" do
   it "should inflict damage of maximum 2 when without a weapon" do
     orc
     kobold
+    @kobold.hp = 3
     @orc.should_receive(:rand).with(3).and_return(1)
-    @orc.inflict_damage(@kobold, 3)
-    @kobold.hp.should == 2
+    @orc.inflict_damage(@kobold, 3).should == 2
+    @kobold.hp.should == 1
   end
 end
 

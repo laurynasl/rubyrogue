@@ -1,5 +1,5 @@
 class Monster
-  attr_accessor :name, :x, :y, :inventory, :monster_type
+  attr_accessor :name, :x, :y, :inventory, :monster_type, :skills
   attr_accessor :maxhp, :hp, :energy, :hpfrac
   attr_accessor :dexterity, :perception, :health
   attr_accessor :weapon
@@ -8,6 +8,7 @@ class Monster
     @inventory = Inventory.new
     @energy = 0
     @hpfrac = 0
+    @skills = {}
     attributes.each do |key, value|
       send("#{key}=", value)
     end
@@ -19,9 +20,12 @@ class Monster
     chance = dexterity / (dexterity + defender.dexterity).to_f
     if rand < chance
       if weapon
-        inflict_damage(defender, ItemClass.all[weapon.name].damage)
+        item_class = ItemClass.all[weapon.name]
+        damage = inflict_damage(defender, item_class.damage)
+        train(item_class.skills, chance, damage)
       else
-        inflict_damage(defender, 2)
+        damage = inflict_damage(defender, 2)
+        train(['unarmed'], chance, damage)
       end
       (defender.alive? ? "%s hits %s" : "%s kills %s") % [fullname, defender.fullname]
     else
@@ -29,8 +33,18 @@ class Monster
     end
   end
 
+  def train(skills, chance, amount)
+    skills.each do |skill|
+      @skills[skill] ||= 0.0
+      @skills[skill] += amount / chance / chance / 1000
+    end
+  end
+
+  # returns amount of damage inflicted
   def inflict_damage(defender, maxdamage)
-    defender.hp -= rand(maxdamage) + 1
+    damage = rand(maxdamage) + 1
+    defender.hp -= damage
+    damage
   end
 
   def fullname
