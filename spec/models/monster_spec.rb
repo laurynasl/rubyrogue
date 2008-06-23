@@ -162,3 +162,17 @@ describe Monster, "regenerate" do
     @orc.hpfrac.should == 0
   end
 end
+
+describe Monster, "equip" do
+  it "should equip dagger to weapon slot" do
+    orc
+    @orc.inventory << 'short sword' << 'leather armor' << 'dagger'
+    @orc.equip('weapon', 2) #dagger
+    @orc.weapon.name.should == 'dagger'
+    @orc.inventory.items.size.should == 2
+
+    @orc.equip('weapon', 0) #short sword
+    @orc.weapon.name.should == 'short sword'
+    @orc.inventory.items.size.should == 2
+  end
+end

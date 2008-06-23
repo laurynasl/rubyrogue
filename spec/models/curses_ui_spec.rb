@@ -195,6 +195,14 @@ describe CursesUI, "handle_input" do
     @ui.handle_input(scr)
   end
 
+  it "should let to manage equipment when clicked 'e'" do
+    @ui = CursesUI.new(TESTGAME)
+
+    scr = mock('scr', :getch => 'e'[0])
+    @ui.should_receive(:manage_equipment).with(scr)
+    @ui.handle_input(scr)
+  end
+
   it "should go downstairs when clicked '>'" do
     @ui = CursesUI.new(TESTGAME)
     scr = mock('scr', :getch => '>'[0])
@@ -241,18 +249,81 @@ describe CursesUI, "show_inventory" do
     scr = mock('scr')
     map_win = mock('map_win')
     @ui.instance_variable_set :@map_win, map_win
+    @ui.should_receive(:print_inventory)
+    scr.should_receive(:getch).and_return('a'[0], 'z'[0])
+    @ui.should_receive(:redraw_map)
+    @ui.should_receive(:move_player)
+    map_win.should_receive(:refresh)
+
+    @ui.show_inventory(scr)
+  end
+
+  it "should print inventory" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.inventory << 'short sword' << 'leather armor'
+
+    map_win = mock('map_win')
+    @ui.instance_variable_set :@map_win, map_win
     map_win.should_receive(:clear)
     map_win.should_receive(:setpos).with(0, 0)
     map_win.should_receive(:addstr).with("Inventory\n")
     map_win.should_receive(:addstr).with("Press 'z' to exit\n\n")
-    map_win.should_receive(:addstr).with("short sword\n")
-    map_win.should_receive(:addstr).with("leather armor\n")
-    map_win.should_receive(:refresh).exactly(2)
-    scr.should_receive(:getch).and_return('a'[0], 'z'[0])
+    map_win.should_receive(:addstr).with("A short sword\n")
+    map_win.should_receive(:addstr).with("B leather armor\n")
+    map_win.should_receive(:refresh)
+
+    @ui.print_inventory
+  end
+end
+
+describe CursesUI, "manage_equipment" do
+  it "should show equipped items" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.inventory << 'short sword' << 'leather armor'
+
+    scr = mock('scr')
+    map_win = mock('map_win')
+    @ui.instance_variable_set :@map_win, map_win
+    @ui.should_receive(:print_equipment).exactly(2).times
+    scr.should_receive(:getch).and_return('w'[0], 'z'[0])
+    @ui.should_receive(:select_item).with(scr).and_return(0) # should be short sword
+    @ui.game.player.should_receive(:equip).with('weapon', 0)
     @ui.should_receive(:redraw_map)
     @ui.should_receive(:move_player)
+    map_win.should_receive(:refresh)
 
-    @ui.show_inventory(scr)
+    @ui.manage_equipment(scr)
+  end
+end
+
+describe CursesUI, "print_equipment" do
+  it "should print equipment" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.weapon = Item.new('short sword')
+    map_win = mock('map_win')
+    @ui.instance_variable_set :@map_win, map_win
+
+    map_win.should_receive(:clear)
+    map_win.should_receive(:setpos).with(0, 0)
+    map_win.should_receive(:addstr).with("Equipment\n")
+    map_win.should_receive(:addstr).with("Press 'z' to exit\n\n")
+    map_win.should_receive(:addstr).with("W Weapon: short sword\n")
+    map_win.should_receive(:addstr).with("A Armor: \n")
+    map_win.should_receive(:refresh)
+
+    @ui.print_equipment
+  end
+end
+
+describe CursesUI, "print_equipment" do
+  it "should select item and return it's index" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.inventory << 'short sword' << 'leather armor'
+    @ui.should_receive(:print_inventory)
+    scr = mock('scr')
+    scr.should_receive(:getch).and_return('b'[0])
+
+    @ui.select_item(scr).should == 1
   end
 end
 

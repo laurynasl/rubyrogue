@@ -160,6 +160,8 @@ class CursesUI
           @game.pickup
         when 'i'[0]
           show_inventory scr
+        when 'e'[0]
+          manage_equipment scr
         when '>'[0]
           game.go_stairs(true)
         when '<'[0]
@@ -232,19 +234,51 @@ class CursesUI
   end
 
   def show_inventory(scr)
-    @map_win.setpos 0, 0
-    @map_win.clear
-    @map_win.addstr "Inventory\n"
-    @map_win.addstr "Press 'z' to exit\n\n"
-    for item in @game.player.inventory
-      @map_win.addstr item.to_s + "\n"
-    end
-    @map_win.refresh
+    print_inventory
     while scr.getch != 'z'[0]
     end
     redraw_map
     move_player
     @map_win.refresh
+  end
+
+  def print_inventory
+    @map_win.setpos 0, 0
+    @map_win.clear
+    @map_win.addstr "Inventory\n"
+    @map_win.addstr "Press 'z' to exit\n\n"
+    @game.player.inventory.each_with_index do |item, i|
+      @map_win.addstr "".concat('A'[0] + i) + ' ' + item.to_s + "\n"
+    end
+    @map_win.refresh
+  end
+
+  def manage_equipment(scr)
+    print_equipment
+    while (c = scr.getch) != 'z'[0]
+      if c == 'w'[0]
+        @game.player.equip('weapon', select_item(scr))
+      end
+      print_equipment
+    end
+    redraw_map
+    move_player
+    @map_win.refresh
+  end
+
+  def print_equipment
+    @map_win.setpos 0, 0
+    @map_win.clear
+    @map_win.addstr "Equipment\n"
+    @map_win.addstr "Press 'z' to exit\n\n"
+    @map_win.addstr "W Weapon: #{@game.player.weapon}\n"
+    @map_win.addstr "A Armor: \n"
+    @map_win.refresh
+  end
+
+  def select_item(scr)
+    print_inventory
+    scr.getch - 'a'[0]
   end
 
   def draw_attributes

@@ -65,4 +65,9 @@ class Monster
       @hp += 1
     end
   end
+
+  def equip(slot, id)
+    @inventory << @weapon if @weapon
+    @weapon = inventory.items.delete_at(id)
+  end
 end
