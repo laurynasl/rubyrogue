@@ -258,4 +258,11 @@ describe Monster, "equip" do
     @orc.weapon.name.should == 'short sword'
     @orc.inventory.items.size.should == 2
   end
+
+  it "should equip leather armor to armor slot" do
+    orc
+    @orc.inventory << 'leather armor'
+    @orc.equip('armor', 0)
+    @orc.armor.name.should == 'leather armor'
+  end
 end

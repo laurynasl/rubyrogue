@@ -2,7 +2,7 @@ class Monster
   attr_accessor :name, :x, :y, :inventory, :monster_type, :skills
   attr_accessor :maxhp, :hp, :energy, :hpfrac
   attr_accessor :dexterity, :perception, :health
-  attr_accessor :weapon
+  attr_accessor :weapon, :armor
 
   def initialize(attributes)
     @inventory = Inventory.new
@@ -105,7 +105,7 @@ class Monster
   end
 
   def equip(slot, id)
-    @inventory << @weapon if @weapon
-    @weapon = inventory.items.delete_at(id)
+    @inventory << send(slot) if send(slot)
+    send(slot + '=', inventory.items.delete_at(id))
   end
 end
