@@ -6,20 +6,20 @@ describe ItemClass do
       'damage' => 5,
       'accuracy' => 0,
       'symbol' => '(',
-      'skills' => ['slashing', 'sword']
+      'skill' => 'sword',
+      'damage_type' => 'slashing'
     }
     @item.damage.should == 5
     @item.accuracy.should == 0
     @item.symbol.should == '('
-    @item.skills.should == ['slashing', 'sword']
+    @item.skill.should == 'sword'
   end
 
   it "should create leather armor" do
     @item = ItemClass.new 'short sword', {
       'armor' => 3,
       'evasion' => 1,
-      'symbol' => '[',
-      'skills' => ['stealth', 'evasion']
+      'symbol' => '['
     }
   end
 end

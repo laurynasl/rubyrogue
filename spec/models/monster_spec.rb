@@ -80,7 +80,7 @@ describe Monster, "attack" do
     @orc.weapon = Item.new('short sword')
     @orc.should_receive(:rand).and_return(0.5624)
     @orc.should_receive(:inflict_damage).with(@kobold, 5).and_return(3)
-    @orc.should_receive(:train).with(['sword', 'slashing'], 0.5625, 3)
+    @orc.should_receive(:train).with('sword', 0.5625, 3)
     @orc.attack(@kobold)
   end
 end
@@ -88,17 +88,15 @@ end
 describe Monster, "train" do
   it "should train new skill" do
     orc
-    @orc.train(['unarmed'], 0.25, 2)
+    @orc.train('unarmed', 0.25, 2)
     @orc.skills['unarmed'].should == 0.032
   end
 
   it "should improve existing skills" do
     orc
     @orc.skills['dagger'] = 3.2
-    @orc.skills['piercing'] = 1.5
-    @orc.train(['dagger', 'piercing'], 0.5, 6)
+    @orc.train('dagger', 0.5, 6)
     @orc.skills['dagger'].should == 3.224
-    @orc.skills['piercing'].should == 1.524
   end
 end
 

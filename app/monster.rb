@@ -22,7 +22,7 @@ class Monster
       if weapon
         item_class = ItemClass.all[weapon.name]
         damage = inflict_damage(defender, item_class.damage)
-        train(item_class.skills, chance, damage)
+        train(item_class.skill, chance, damage)
       else
         damage = inflict_damage(defender, 2)
         train(['unarmed'], chance, damage)
@@ -33,11 +33,9 @@ class Monster
     end
   end
 
-  def train(skills, chance, amount)
-    skills.each do |skill|
-      @skills[skill] ||= 0.0
-      @skills[skill] += amount / chance / chance / 1000
-    end
+  def train(skill, chance, amount)
+    @skills[skill] ||= 0.0
+    @skills[skill] += amount / chance / chance / 1000
   end
 
   # returns amount of damage inflicted

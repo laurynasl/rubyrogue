@@ -1,5 +1,5 @@
 class ItemClass
-  attr_accessor :damage, :accuracy, :symbol, :skills, :armor, :evasion
+  attr_accessor :damage, :accuracy, :symbol, :skill, :armor, :evasion, :damage_type
 
   def initialize(name, attributes)
     attributes.each do |key, value|
