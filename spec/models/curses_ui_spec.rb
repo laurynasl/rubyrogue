@@ -277,22 +277,30 @@ describe CursesUI, "show_inventory" do
 end
 
 describe CursesUI, "manage_equipment" do
-  it "should show equipped items" do
-    @ui = CursesUI.new(TESTGAME)
-    @ui.game.player.inventory << 'short sword' << 'leather armor'
+  it "should show equipped items and let to equip weapon" do
+    do_it('short sword', 'weapon', 'w')
+  end
 
-    scr = mock('scr')
+  it "should let to equip armor" do
+    do_it('leather armor', 'armor', 'a')
+  end
+
+  def do_it(item_name, slot, letter)
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.inventory << item_name
+
+    @scr = mock('scr')
     map_win = mock('map_win')
     @ui.instance_variable_set :@map_win, map_win
     @ui.should_receive(:print_equipment).exactly(2).times
-    scr.should_receive(:getch).and_return('w'[0], 'z'[0])
-    @ui.should_receive(:select_item).with(scr).and_return(0) # should be short sword
-    @ui.game.player.should_receive(:equip).with('weapon', 0)
+    @scr.should_receive(:getch).and_return(letter[0], 'z'[0])
+    @ui.should_receive(:select_item).with(@scr).and_return(0) # should be short sword
+    @ui.game.player.should_receive(:equip).with(slot, 0)
     @ui.should_receive(:redraw_map)
     @ui.should_receive(:move_player)
     map_win.should_receive(:refresh)
 
-    @ui.manage_equipment(scr)
+    @ui.manage_equipment(@scr)
   end
 end
 
@@ -300,6 +308,7 @@ describe CursesUI, "print_equipment" do
   it "should print equipment" do
     @ui = CursesUI.new(TESTGAME)
     @ui.game.player.weapon = Item.new('short sword')
+    @ui.game.player.armor = Item.new('leather armor')
     map_win = mock('map_win')
     @ui.instance_variable_set :@map_win, map_win
 
@@ -308,7 +317,7 @@ describe CursesUI, "print_equipment" do
     map_win.should_receive(:addstr).with("Equipment\n")
     map_win.should_receive(:addstr).with("Press 'z' to exit\n\n")
     map_win.should_receive(:addstr).with("W Weapon: short sword\n")
-    map_win.should_receive(:addstr).with("A Armor: \n")
+    map_win.should_receive(:addstr).with("A Armor: leather armor\n")
     map_win.should_receive(:refresh)
 
     @ui.print_equipment
