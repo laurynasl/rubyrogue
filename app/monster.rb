@@ -36,6 +36,17 @@ class Monster
   def train(skill, chance, amount)
     @skills[skill] ||= 0.0
     @skills[skill] += amount / chance / chance / 1000
+
+    @skills['level'] ||= 0.0
+    @skills['level'] += amount / chance / chance / 10000
+  end
+
+  def skill(s)
+    if value = skills[s]
+      Math.sqrt(value).to_i
+    else
+      0
+    end
   end
 
   # returns amount of damage inflicted

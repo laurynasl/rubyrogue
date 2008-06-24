@@ -86,17 +86,39 @@ describe Monster, "attack" do
 end
 
 describe Monster, "train" do
-  it "should train new skill" do
+  it "should train new skill and improve level" do
     orc
     @orc.train('unarmed', 0.25, 2)
     @orc.skills['unarmed'].should == 0.032
+    @orc.skills['level'].should == 0.0032
   end
 
   it "should improve existing skills" do
     orc
     @orc.skills['dagger'] = 3.2
+    @orc.skills['level'] = 2.2
     @orc.train('dagger', 0.5, 6)
     @orc.skills['dagger'].should == 3.224
+    @orc.skills['level'].to_s.should == '2.2024'
+  end
+end
+
+describe Monster, "skill" do
+  it "should return 0 when skill is not present" do
+    orc
+    @orc.skill('sword').should == 0
+  end
+
+  it "should return 1 when skill is 1" do
+    orc
+    orc.skills['sword'] = 1
+    @orc.skill('sword').should == 1
+  end
+
+  it "should return square root of skill experience, rounded down" do
+    orc
+    orc.skills['sword'] = 15.2363
+    @orc.skill('sword').should == 3
   end
 end
 
