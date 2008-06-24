@@ -17,7 +17,7 @@ class Monster
 
   def attack(defender)
     wait
-    chance = dexterity / (dexterity + defender.dexterity).to_f
+    chance = melee_chance_to_hit(defender)
     if rand < chance
       if weapon
         item_class = ItemClass.all[weapon.name]
@@ -33,12 +33,27 @@ class Monster
     end
   end
 
+  def melee_chance_to_hit(defender)
+    attack = melee_attack_rating
+    defense = defender.melee_attack_rating
+    attack / (attack + defense).to_f
+  end
+
+  def melee_attack_rating
+    if weapon
+      item_class = ItemClass.all[weapon.name]
+      dexterity + (skill(item_class.skill) + item_class.accuracy) * 3
+    else
+      dexterity + skill('unarmed') * 3
+    end
+  end
+
   def train(skill, chance, amount)
     @skills[skill] ||= 0.0
-    @skills[skill] += amount / chance / chance / 1000
+    @skills[skill] += amount / chance / chance / 100
 
     @skills['level'] ||= 0.0
-    @skills['level'] += amount / chance / chance / 10000
+    @skills['level'] += amount / chance / chance / 1000
   end
 
   def skill(s)

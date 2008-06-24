@@ -89,8 +89,8 @@ describe Monster, "train" do
   it "should train new skill and improve level" do
     orc
     @orc.train('unarmed', 0.25, 2)
-    @orc.skills['unarmed'].should == 0.032
-    @orc.skills['level'].should == 0.0032
+    @orc.skills['unarmed'].should == 0.32
+    @orc.skills['level'].should == 0.032
   end
 
   it "should improve existing skills" do
@@ -98,8 +98,8 @@ describe Monster, "train" do
     @orc.skills['dagger'] = 3.2
     @orc.skills['level'] = 2.2
     @orc.train('dagger', 0.5, 6)
-    @orc.skills['dagger'].should == 3.224
-    @orc.skills['level'].to_s.should == '2.2024'
+    @orc.skills['dagger'].to_s.should == '3.44'
+    @orc.skills['level'].to_s.should == '2.224'
   end
 end
 
@@ -119,6 +119,49 @@ describe Monster, "skill" do
     orc
     orc.skills['sword'] = 15.2363
     @orc.skill('sword').should == 3
+  end
+end
+
+describe Monster, "melee_chance_to_hit" do
+  before(:each) do
+    orc
+    kobold
+  end
+
+  it "should return dexterity divided by sum of both oponents dexterity" do
+    @orc.melee_chance_to_hit(@kobold).should == 0.5625
+  end
+
+  it "should add triple unarmed skill value for attacker" do
+    @orc.skills['unarmed'] = 4 # actual value will be 2
+    @orc.skill('unarmed').should == 2
+    @kobold.skills['unarmed'] = 1
+    @orc.melee_chance_to_hit(@kobold).should == 0.6
+  end
+end
+
+describe Monster, "melee_attack_rating" do
+  before(:each) do
+    orc
+  end
+
+  it "should return sum of dexterity and triple unarmed skill" do
+    @orc.skills['unarmed'] = 4 #2
+    @orc.melee_attack_rating.should == 15
+  end
+
+  it "should use equipped weapon skill" do
+    ItemClass.load_all
+    @orc.weapon = Item.new('short sword')
+    @orc.skills['sword'] = 1
+    @orc.melee_attack_rating.should == 12
+  end
+
+  it "should aply weapon modifier" do
+    ItemClass.load_all
+    @orc.weapon = Item.new('long sword')
+    @orc.skills['sword'] = 4
+    @orc.melee_attack_rating.should == 12
   end
 end
 
