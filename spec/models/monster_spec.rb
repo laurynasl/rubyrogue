@@ -83,6 +83,12 @@ describe Monster, "attack" do
     @orc.should_receive(:train).with('sword', 0.5625, 3)
     @orc.attack(@kobold)
   end
+
+  it "should attack, hit but inflict no damage" do
+    @orc.should_receive(:rand).and_return(0.5624)
+    @orc.should_receive(:inflict_damage).with(@kobold, 2).and_return(0)
+    @orc.attack(@kobold).should == "orc hits, but does not manage to hurt kobold"
+  end
 end
 
 describe Monster, "train" do

@@ -20,14 +20,21 @@ class Monster
     chance = melee_chance_to_hit(defender)
     if rand < chance
       if weapon
-        item_class = ItemClass.all[weapon.name]
-        damage = inflict_damage(defender, item_class.damage)
-        train(item_class.skill, chance, damage)
+        maxdamage = weapon.klass.damage
+        skill = weapon.klass.skill
       else
-        damage = inflict_damage(defender, 2)
-        train('unarmed', chance, damage)
+        maxdamage = 2
+        skill = 'unarmed'
       end
-      (defender.alive? ? "%s hits %s" : "%s kills %s") % [fullname, defender.fullname]
+      damage = inflict_damage(defender, maxdamage)
+      train(skill, chance, damage)
+      if damage == 0
+        "%s hits, but does not manage to hurt %s"
+      elsif defender.alive?
+        "%s hits %s"
+      else
+        "%s kills %s"
+      end % [fullname, defender.fullname]
     else
       "%s misses %s" % [fullname, defender.fullname]
     end
