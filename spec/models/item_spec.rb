@@ -6,3 +6,11 @@ describe Item do
     item.to_s.should == 'short sword'
   end
 end
+
+describe Item, "klass" do
+  it "should return ItemClass object with same name" do
+    item = Item.new('short sword')
+    ItemClass.load_all
+    item.klass.should == ItemClass.all['short sword']
+  end
+end

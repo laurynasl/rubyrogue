@@ -166,13 +166,43 @@ describe Monster, "melee_attack_rating" do
 end
 
 describe Monster, "inflict_damage" do
-  it "should inflict damage of maximum 2 when without a weapon" do
+  before(:each) do
     orc
     kobold
+  end
+
+  it "should inflict damage of maximum 2 when without a weapon" do
     @kobold.hp = 3
     @orc.should_receive(:rand).with(3).and_return(1)
     @orc.inflict_damage(@kobold, 3).should == 2
     @kobold.hp.should == 1
+  end
+
+  it "leather armor should reduce damage" do
+    @orc.should_receive(:rand).with(4).and_return(3)
+    @kobold.should_receive(:rand_armor).and_return(2)
+    @orc.inflict_damage(@kobold, 4).should == 2
+  end
+
+  it "should return 0 if damage is nonpositive" do
+    @orc.should_receive(:rand).with(4).and_return(0)
+    @kobold.should_receive(:rand_armor).and_return(3)
+    @orc.inflict_damage(@kobold, 4).should == 0
+  end
+end
+
+describe Monster, "rand_armor" do
+  it "should return 0 when monster has no armor" do
+    kobold
+    @kobold.rand_armor.should == 0
+  end
+
+  it "should return number between 0 and 3 for leather armor" do
+    kobold
+    ItemClass.load_all
+    @kobold.armor = Item.new('leather armor')
+    @kobold.should_receive(:rand).with(4).and_return(2)
+    @kobold.rand_armor.should == 2
   end
 end
 

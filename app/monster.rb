@@ -67,8 +67,18 @@ class Monster
   # returns amount of damage inflicted
   def inflict_damage(defender, maxdamage)
     damage = rand(maxdamage) + 1
+    damage -= defender.rand_armor
+    return 0 unless damage > 0
     defender.hp -= damage
     damage
+  end
+
+  def rand_armor
+    if armor
+      rand(armor.klass.armor+1)
+    else
+      0
+    end
   end
 
   def fullname

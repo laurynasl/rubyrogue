@@ -8,4 +8,8 @@ class Item
   def to_s
     @name
   end
+
+  def klass
+    ItemClass.all[name]
+  end
 end
