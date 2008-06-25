@@ -76,3 +76,51 @@ describe Map, "passable_at?" do
     @map.passable_at?(11, 1).should be_false# k
   end
 end
+
+describe Map, "try_to_generate_monster" do
+  it "should generate monster when one in 100 times" do
+    kobold
+    @game = testgame
+    @map = @game.map
+
+    @map.should_receive(:rand).with(100).and_return(0)
+    @map.should_receive(:find_random_passable_square).and_return([1, 6])
+    @kobold.x = nil
+    @kobold.y = nil
+    MonsterClass.should_receive(:generate).and_return(@kobold)
+
+    @map.try_to_generate_monster
+
+    @map.find_monster(1, 6).should == @kobold
+  end
+
+  it "should not generate monster when random returns nonzero" do
+    @game = testgame
+    @map = @game.map
+
+    @map.should_receive(:rand).with(100).and_return(rand(99)+1)
+    @map.should_not_receive(:find_random_passable_square)
+
+    @map.try_to_generate_monster
+  end
+end
+
+describe Map, "find_random_passable_square" do
+  before(:each) do
+    @game = testgame
+    @map = @game.map
+  end
+
+  it "should find at first try" do
+    @map.should_receive(:rand).with(40).and_return(1)
+    @map.should_receive(:rand).with(21).and_return(6)
+
+    @map.find_random_passable_square.should == [1, 6]
+  end
+
+  it "should find at third try" do
+    @map.should_receive(:rand).and_return(34, 11, 22, 7, 23, 8)
+
+    @map.find_random_passable_square.should == [23, 8]
+  end
+end

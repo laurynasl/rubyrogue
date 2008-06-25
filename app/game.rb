@@ -9,6 +9,7 @@ class Game
     @maps = {}
     if filename
       ItemClass.load_all
+      MonsterClass.load_all
       @filename = filename
       f = File.open(filename)
       @data = YAML::load(f)
@@ -92,6 +93,7 @@ class Game
         monster.energy += monster.dexterity
         move_monster(monster) if monster.energy >= 0
       end
+      map.try_to_generate_monster
     end
   end
 
@@ -130,6 +132,7 @@ class Game
 
   def self.restore(filename)
     ItemClass.load_all
+    MonsterClass.load_all
     File.open(filename, 'r'){|f| YAML.load(f)}
   end
 end

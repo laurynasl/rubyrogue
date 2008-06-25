@@ -25,6 +25,7 @@ describe Game, 'load' do
     game.player.name.should == 'Kudlius'
 
     ItemClass.all['short sword'].class.should == ItemClass
+    MonsterClass.all['ogre'].class.should == MonsterClass
   end
 end
 
@@ -203,11 +204,12 @@ describe Game, 'go_stairs' do
 end
 
 describe Game, "iterate" do
-  it "should increase energy for player and monsters until player's energy reaches zero and regenerate all monsters and player" do
+  it "should increase energy for player and monsters until player's energy reaches zero, regenerate all monsters and player and try to generate monster" do
     @game = testgame
     @game.player.energy = -2
     monster = @game.map.find_monster(11, 1)
     @game.should_receive(:move_monster).with(monster)
+    @game.map.should_receive(:try_to_generate_monster)
 
     @game.player.should_receive(:regenerate)
     monster.should_receive(:regenerate)
@@ -303,9 +305,11 @@ describe Game, "save & restore" do
     @old_game = testgame
     @old_game.save('test_fork')
     ItemClass.all = nil
+    MonsterClass.all = nil
     @new_game = Game.restore('savegames/test_fork.yaml')
     @new_game.class.should == Game
     ItemClass.all['short sword'].class.should == ItemClass
+    MonsterClass.all['ogre'].class.should == MonsterClass
   end
 
   after(:each) do

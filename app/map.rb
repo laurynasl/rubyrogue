@@ -58,4 +58,18 @@ class Map
   def passable_at?(x, y)
     tiles[y][x] == '.'[0] && !find_monster(x, y)
   end
+
+  def try_to_generate_monster
+    if rand(100) == 0
+      monster = MonsterClass.generate
+      monster.x, monster.y = find_random_passable_square
+      monsters << monster
+    end
+  end
+
+  def find_random_passable_square
+    square = [0, 0]
+    square = [rand(width), rand(height)] until passable_at?(square.first, square.last)
+    square
+  end
 end
