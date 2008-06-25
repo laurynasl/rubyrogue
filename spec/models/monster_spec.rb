@@ -71,7 +71,7 @@ describe Monster, "attack" do
   it "should inflict damage of maximum 2 when without a weapon" do
     @orc.should_receive(:rand).and_return(0.5624)
     @orc.should_receive(:inflict_damage).with(@kobold, 2).and_return(1)
-    @orc.should_receive(:train).with(['unarmed'], 0.5625, 1)
+    @orc.should_receive(:train).with('unarmed', 0.5625, 1)
     @orc.attack(@kobold)
   end
 

@@ -25,7 +25,7 @@ class Monster
         train(item_class.skill, chance, damage)
       else
         damage = inflict_damage(defender, 2)
-        train(['unarmed'], chance, damage)
+        train('unarmed', chance, damage)
       end
       (defender.alive? ? "%s hits %s" : "%s kills %s") % [fullname, defender.fullname]
     else
