@@ -1,27 +1,12 @@
-class ItemClass
+class ItemClass < Constructable
   attr_accessor :damage, :accuracy, :symbol, :skill, :armor, :evasion, :damage_type
 
-  def initialize(name, attributes)
-    attributes.each do |key, value|
-      send("#{key}=", value)
-    end
+  class << self
+    include MassLoadable
   end
 
-  def self.all
-    @@all
-  end
-
-  def self.all=(value)
-    @@all = value
-  end
 
   def self.load_all
-    f = File.open('data/items.yaml')
-    items_data = YAML::load(f)
-    @@all = {}
-    items_data.each do |key, value|
-      @@all[key] = ItemClass.new(key, value)
-    end
-    f.close
+    load_all_from 'data/items.yaml'
   end
 end

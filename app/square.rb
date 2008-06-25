@@ -1,10 +1,8 @@
-class Square
+class Square < Constructable
   attr_accessor :x, :y, :items, :stair
 
   def initialize(attributes)
-    attributes.each do |key, value|
-      send("#{key}=", value)
-    end
+    super
     @items ||= []
   end
 

@@ -1,4 +1,4 @@
-class Monster
+class Monster < Constructable
   attr_accessor :name, :x, :y, :inventory, :monster_type, :skills
   attr_accessor :maxhp, :hp, :energy, :hpfrac
   attr_accessor :dexterity, :perception, :health
@@ -9,9 +9,7 @@ class Monster
     @energy = 0
     @hpfrac = 0
     @skills = {}
-    attributes.each do |key, value|
-      send("#{key}=", value)
-    end
+    super
     validate!
   end
 
@@ -93,7 +91,7 @@ class Monster
   end
 
   def validate!
-    ['hp', 'maxhp', 'dexterity', 'perception', 'health'].each do |attribute|
+    %w{hp maxhp dexterity perception health}.each do |attribute|
       raise "#{attribute} is required!" unless send(attribute)
     end
   end
