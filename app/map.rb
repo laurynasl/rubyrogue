@@ -1,6 +1,6 @@
 class Map
   attr_reader :tiles
-  attr_accessor :name, :width, :height, :squares, :game, :monsters
+  attr_accessor :name, :width, :height, :squares, :game, :monsters, :generate_monster_counter
 
   def self.load(filename)
     map = self.new
@@ -60,10 +60,14 @@ class Map
   end
 
   def try_to_generate_monster
-    if rand(100) == 0
+    if @generate_monster_counter.to_i != 0
+      @generate_monster_counter -= 1
+    else
+      @generate_monster_counter = (monsters.size + 1) * 100
       monster = MonsterClass.generate
       monster.x, monster.y = find_random_passable_square
       monsters << monster
+      game.ui.repaint_square(monster.x, monster.y)
     end
   end
 

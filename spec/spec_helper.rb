@@ -8,7 +8,10 @@ end
 def testgame
   ItemClass.load_all
   MonsterClass.load_all
-  Game.new('games/test/game.yaml')
+  game = Game.new('games/test/game.yaml')
+  @ui = mock('ui')
+  game.ui = @ui
+  game
 end
 
 TESTGAME = 'games/test/game.yaml'

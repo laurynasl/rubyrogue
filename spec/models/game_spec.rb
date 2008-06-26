@@ -222,6 +222,7 @@ describe Game, "iterate" do
   it "should iterate twice" do
     @game = testgame
     @game.player.energy = -22
+    @ui.stub!(:repaint_square)
     @game.iterate
 
     @game.player.energy.should == 0

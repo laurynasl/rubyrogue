@@ -80,30 +80,47 @@ describe Map, "passable_at?" do
 end
 
 describe Map, "try_to_generate_monster" do
-  it "should generate monster when one in 100 times" do
+  [nil, 0].each do |value|
+    it "should generate monster and set counter to monsters count + 1, multiplied by 100" do
+      kobold
+      @game = testgame
+      @map = @game.map
+
+      @map.generate_monster_counter = value
+      @map.should_receive(:find_random_passable_square).and_return([1, 6])
+      @kobold.x = nil
+      @kobold.y = nil
+      MonsterClass.should_receive(:generate).and_return(@kobold)
+      @ui.should_receive(:repaint_square).with(1, 6)
+
+      @map.try_to_generate_monster
+
+      @map.find_monster(1, 6).should == @kobold
+      @map.generate_monster_counter.should == 200
+    end
+  end
+
+  it "should set count to 300 when there are 2 monsters" do
     kobold
     @game = testgame
     @map = @game.map
+    @ui.stub!(:repaint_square)
 
-    @map.should_receive(:rand).with(100).and_return(0)
-    @map.should_receive(:find_random_passable_square).and_return([1, 6])
-    @kobold.x = nil
-    @kobold.y = nil
-    MonsterClass.should_receive(:generate).and_return(@kobold)
-
+    @map.monsters << @kobold
     @map.try_to_generate_monster
 
-    @map.find_monster(1, 6).should == @kobold
+    @map.generate_monster_counter.should == 300
   end
 
-  it "should not generate monster when random returns nonzero" do
+  it "should not generate monster when counter is more than" do
     @game = testgame
     @map = @game.map
 
-    @map.should_receive(:rand).with(100).and_return(rand(99)+1)
+    @map.generate_monster_counter = 11
     @map.should_not_receive(:find_random_passable_square)
 
     @map.try_to_generate_monster
+    @map.generate_monster_counter.should == 10
   end
 end
 
