@@ -5,6 +5,7 @@ kobold:
   health: 5
   intelligence: 6
   danger: 1
+  symbol: k
 
 goblin:
   strength: 5
@@ -13,6 +14,7 @@ goblin:
   health: 5
   intelligence: 7
   danger: 1
+  symbol: g
 
 dog:
   strength: 6
@@ -21,6 +23,7 @@ dog:
   health: 5
   intelligence: 3
   danger: 2
+  symbol: d
 
 orc:
   strength: 12
@@ -29,6 +32,7 @@ orc:
   health: 11
   intelligence: 5
   danger: 3
+  symbol: o
 
 elf:
   strength: 6
@@ -37,6 +41,7 @@ elf:
   health: 6
   intelligence: 11
   danger: 4
+  symbol: E
 
 ogre:
   strength: 15
@@ -45,6 +50,7 @@ ogre:
   health: 15
   intelligence: 4
   danger: 5
+  symbol: O
 
 fey:
   strength: 3
@@ -53,11 +59,4 @@ fey:
   health: 4
   intelligence: 12
   danger: 4
-
-human:
-  strength: 10
-  dexterity: 10
-  perception: 10
-  health: 10
-  intelligence: 10
-  danger: 4
+  symbol: i

@@ -1,5 +1,5 @@
 class MonsterClass < Constructable
-  attr_accessor :strength, :dexterity, :intelligence, :health, :perception, :danger
+  attr_accessor :strength, :dexterity, :intelligence, :health, :perception, :danger, :symbol
 
   class << self
     include MassLoadable
@@ -14,7 +14,7 @@ class MonsterClass < Constructable
     name = candidates[rand(candidates.size)]
     prototype = all[name]
     monster = Monster.new({
-      :name => name,
+      :monster_type => name,
       :hp => prototype.health,
       :maxhp => prototype.health,
       :dexterity => prototype.dexterity,

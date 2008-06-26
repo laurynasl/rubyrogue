@@ -63,6 +63,8 @@ describe Map, "square_symbol_at" do
 
   it "should display monster" do
     @map.square_symbol_at(11, 1).should be_char('k')
+    MonsterClass.all['kobold'].symbol = 'K'
+    @map.square_symbol_at(11, 1).should be_char('K')
   end
 end
 

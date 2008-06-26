@@ -25,7 +25,7 @@ describe Monster do
     @kobold.validate!
   end
 
-  it_should_have_fields :kobold, 'dexterity', 'perception', 'health', 'hp', 'maxhp'
+  it_should_have_fields :kobold, 'monster_type', 'dexterity', 'perception', 'health', 'hp', 'maxhp'
 end
 
 describe Monster, "fullname" do
@@ -300,5 +300,13 @@ describe Monster, "equip" do
     @orc.inventory << 'leather armor'
     @orc.equip('armor', 0)
     @orc.armor.name.should == 'leather armor'
+  end
+end
+
+describe Monster, 'klass' do
+  it "should return it's MonsterClass" do
+    MonsterClass.load_all
+    orc
+    @orc.klass.symbol.should == 'o'
   end
 end

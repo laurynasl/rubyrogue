@@ -38,7 +38,7 @@ class Map
   def square_symbol_at(x, y)
     return ' '[0] if x >= @width || y >= @height
     if monster = find_monster(x, y)
-      return 'k'[0]
+      return monster.klass.symbol[0]
     end
     if square = find_square(x, y)
       if !square.items.empty?
@@ -52,7 +52,7 @@ class Map
       tiles[y][x]
     end
   rescue
-    raise $!.class.new($!.to_s + " and x = #{x}, y = #{y}")
+    raise $!.class.new($!.to_s + " and x = #{x}, y = #{y} monster is #{monster.monster_type}")
   end
 
   def passable_at?(x, y)

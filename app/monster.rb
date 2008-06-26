@@ -91,7 +91,7 @@ class Monster < Constructable
   end
 
   def validate!
-    %w{hp maxhp dexterity perception health}.each do |attribute|
+    %w{hp monster_type maxhp dexterity perception health}.each do |attribute|
       raise "#{attribute} is required!" unless send(attribute)
     end
   end
@@ -122,5 +122,9 @@ class Monster < Constructable
   def equip(slot, id)
     @inventory << send(slot) if send(slot)
     send(slot + '=', inventory.items.delete_at(id))
+  end
+
+  def klass
+    MonsterClass.all[monster_type]
   end
 end

@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Player do
   it "should load player" do
     player = Player.new({
+      'monster_type' => 'player',
       'name' => 'Kudlius',
       'x' => 2,
       'y' => 1,

@@ -1,6 +1,7 @@
 maps:
 - cave-1
 player:
+  monster_type: player
   name: Kudlius
   x: 2
   y: 1
