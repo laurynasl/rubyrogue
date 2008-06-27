@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./extconf.rb && make clean && make && ./test

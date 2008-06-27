@@ -1,0 +1,4 @@
+Makefile
+fov.o
+ruby_fov.o
+ruby_fov.so

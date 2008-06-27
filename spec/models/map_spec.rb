@@ -143,3 +143,15 @@ describe Map, "find_random_passable_square" do
     @map.find_random_passable_square.should == [23, 8]
   end
 end
+
+describe Map, "Field of view (fov)" do
+  it "should not see monster which it cannot see" do
+    @game = testgame
+    @game.player.x = 3
+    @game.player.y = 14
+    @map = @game.map
+    @map.calculate_fov
+    @map.visible_at?(4, 14).should be_true
+    @map.visible_at?(3, 18).should be_false
+  end
+end

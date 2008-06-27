@@ -5,6 +5,7 @@ require 'rubygems'
 require 'getoptlong'
 require 'rdoc/ri/ri_paths'
 require 'rdoc/usage'
+require 'lib/fov/ruby_fov'
 
 opts = GetoptLong.new([ '--help', '-h', GetoptLong::NO_ARGUMENT ], [ '--debug', '-d', GetoptLong::OPTIONAL_ARGUMENT ])
 

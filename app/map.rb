@@ -76,4 +76,13 @@ class Map
     square = [rand(width), rand(height)] until passable_at?(square.first, square.last)
     square
   end
+
+  def calculate_fov
+    fov = RubyFov.calculate(self)
+
+  end
+
+  def visible_at?(x, y)
+    true
+  end
 end

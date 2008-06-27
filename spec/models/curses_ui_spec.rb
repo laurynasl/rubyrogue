@@ -415,3 +415,6 @@ describe CursesUI, "restore game" do
     @ui.game.ui.should == @ui
   end
 end
+
+describe CursesUI, "draw_fov" do
+end
