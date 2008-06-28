@@ -380,6 +380,8 @@ describe CursesUI, 'game_loop' do
     mess_win = mock('mess_win')
     @ui.instance_variable_set(:@mess_win, mess_win)
     mess_win.should_receive(:refresh)
+    @ui.should_receive(:redraw_map)
+    @ui.should_receive(:move_player)
     @ui.should_receive(:draw_attributes)
 
     @ui.game_loop

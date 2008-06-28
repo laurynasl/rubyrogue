@@ -87,12 +87,17 @@ class CursesUI
   end
 
   def redraw_map
+    @game.map.calculate_fov
     @game.output @map_win.maxx.to_s + 'x' + @map_win.maxy.to_s
     @map_win.setpos 0, 0
     @map_win.maxy.times do |y|
       @map_win.maxx.times do |x|
         begin
-          @map_win.addch @game.map.square_symbol_at(x + @offset[:x], y + @offset[:y])
+          if @game.map.visible_at?(x + @offset[:x], y + @offset[:y])
+            @map_win.addch @game.map.square_symbol_at(x + @offset[:x], y + @offset[:y])
+          else
+            @map_win.addch ' '[0]
+          end
         #rescue
           #$error_id ||= 0
           #$error_id += 1
@@ -129,6 +134,8 @@ class CursesUI
 
       # Launches the game logics
       @game.iterate
+      redraw_map
+      move_player
       draw_attributes
     end
   ensure
