@@ -79,6 +79,16 @@ describe Map, "passable_at?" do
   end
 end
 
+describe Map, "opaque_at?" do
+  it "should return true when square opaque (light cannot pass through it)" do
+    @game = testgame
+    @map = @game.map
+
+    @map.opaque_at?(0, 0).should be_true # #
+    @map.opaque_at?(1, 1).should be_false  # .
+  end
+end
+
 describe Map, "try_to_generate_monster" do
   [nil, 0].each do |value|
     it "should generate monster and set counter to monsters count + 1, multiplied by 100" do
@@ -152,6 +162,18 @@ describe Map, "Field of view (fov)" do
     @map = @game.map
     @map.calculate_fov
     @map.visible_at?(4, 14).should be_true
-    @map.visible_at?(3, 18).should be_false
+    @map.visible_at?(3, 18).should be_nil
+  end
+end
+
+describe Map, "apply_lighting" do
+  it "should set value at @lighting array to true" do
+    @game = testgame
+    @map = @game.map
+
+    @map.lighting = []
+    @map.lighting[3 * @map.width + 2].should be_nil
+    @map.apply_lighting(2, 3)
+    @map.lighting[3 * @map.width + 2].should be_true
   end
 end

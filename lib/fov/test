@@ -2,4 +2,4 @@
 
 require 'ruby_fov'
 
-RubyFov.calculate({})
+RubyFov.calculate({}, 1, 2, 5)

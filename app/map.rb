@@ -1,6 +1,6 @@
 class Map
   attr_reader :tiles
-  attr_accessor :name, :width, :height, :squares, :game, :monsters, :generate_monster_counter
+  attr_accessor :name, :width, :height, :squares, :game, :monsters, :generate_monster_counter, :lighting
 
   def self.load(filename)
     map = self.new
@@ -55,6 +55,10 @@ class Map
     raise $!.class.new($!.to_s + " and x = #{x}, y = #{y} monster is #{monster.monster_type}")
   end
 
+  def opaque_at?(x, y)
+    tiles[y][x] == '#'[0]
+  end
+
   def passable_at?(x, y)
     tiles[y][x] == '.'[0] && !find_monster(x, y)
   end
@@ -78,11 +82,16 @@ class Map
   end
 
   def calculate_fov
-    fov = RubyFov.calculate(self)
+    @lighting = []
+    fov = RubyFov.calculate(self, game.player.x, game.player.y, game.player.perception)
 
   end
 
   def visible_at?(x, y)
-    true
+    @lighting[y * width + x]
+  end
+
+  def apply_lighting(x, y)
+    @lighting[y * width + x] = true
   end
 end
