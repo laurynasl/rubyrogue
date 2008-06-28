@@ -88,7 +88,6 @@ class CursesUI
 
   def redraw_map
     @game.map.calculate_fov
-    @game.output @map_win.maxx.to_s + 'x' + @map_win.maxy.to_s
     @map_win.setpos 0, 0
     @map_win.maxy.times do |y|
       @map_win.maxx.times do |x|
@@ -98,12 +97,6 @@ class CursesUI
           else
             @map_win.addch ' '[0]
           end
-        #rescue
-          #$error_id ||= 0
-          #$error_id += 1
-          #msg = "#{$error_id} Error: " + $!.to_s
-          #puts msg
-          #@game.output(msg)
         end
       end
     end
@@ -221,12 +214,6 @@ class CursesUI
     if square = @game.map.find_square(@game.player.x, @game.player.y)
       @game.output square.look # + square.item_names.join(', ')
     end
-    @map_win.refresh
-  end
-
-  def hide_player
-    @map_win.setpos @game.player.y - @offset[:y], @game.player.x - offset[:x]
-    @map_win.addch @game.map.square_symbol_at(@game.player.x, @game.player.y)
     @map_win.refresh
   end
 

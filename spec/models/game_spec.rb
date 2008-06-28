@@ -51,14 +51,10 @@ describe Game, 'move_by' do
 
   before(:each) do
     @game = testgame
-    @ui = mock('CursesUI')
-    @game.ui = @ui
   end
 
   it "should move player to right" do
     @game.player.x.should == 2
-    @ui.should_receive(:hide_player)
-    @ui.should_receive(:move_player)
 
     @game.move_by(1, 0)
     @game.player.x.should == 3
@@ -67,8 +63,6 @@ describe Game, 'move_by' do
   end
 
   it "should move player to bottom left" do
-    @ui.should_receive(:hide_player)
-    @ui.should_receive(:move_player)
     @game.move_by(-1, 1)
 
     @game.player.x.should == 1
@@ -96,7 +90,6 @@ describe Game, 'move_by' do
     @game.player.x = 10
     @game.map.find_monster(11, 1).hp = 2
     @game.player.should_receive(:rand).and_return(0, 1) # hit and do damage 2 (1 + 1)
-    @ui.should_receive(:repaint_square).with(11, 1)
 
     @game.move_by(1, 0)
 
@@ -150,15 +143,11 @@ end
 describe Game, 'go_stairs' do
   before(:each) do
     @game = testgame
-    @ui = mock('ui')
-    @game.ui = @ui
   end
 
   it "should go downstairs" do
     @game.player.x = 26
     @game.player.y = 2
-    @ui.should_receive(:redraw_map)
-    @ui.should_receive(:move_player)
 
     @game.go_stairs(true)
 
@@ -191,8 +180,6 @@ describe Game, 'go_stairs' do
     @game.player.x = 26
     @game.player.y = 2
     @game.player_square.stair['down'] = false
-    @ui.should_receive(:redraw_map)
-    @ui.should_receive(:move_player)
     @game.go_stairs(false)
     @game.read_message.should == 'You go upstairs'
   end
@@ -262,10 +249,9 @@ describe Game, "move_monster (just move)" do
   it "should move monster one square right when it sees player" do
     @game.player.x = 16
 
-    @ui.should_receive(:repaint_square).with(11, 1)
-    @ui.should_receive(:repaint_square).with(12, 1)
     @game.move_monster(@monster)
     @monster.x.should == 12
+    @monster.y.should == 1
     @monster.energy.should == -100
   end
 
@@ -275,9 +261,8 @@ describe Game, "move_monster (just move)" do
     @monster.x = 23
     @monster.y = 1
 
-    @ui.should_receive(:repaint_square).with(23, 1)
-    @ui.should_receive(:repaint_square).with(23, 2)
     @game.move_monster(@monster)
+    @monster.x.should == 23
     @monster.y.should == 2
   end
 
@@ -287,9 +272,9 @@ describe Game, "move_monster (just move)" do
     @monster.x = 2
     @monster.y = 1
 
-    @ui.should_receive(:repaint_square).with(2, 1)
-    @ui.should_receive(:repaint_square).with(1, 1)
     @game.move_monster(@monster)
+    @monster.x.should == 1
+    @monster.y.should == 1
   end
 
   it "should not move, just wait if monster cannot move anywhere" do

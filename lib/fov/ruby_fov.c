@@ -12,12 +12,10 @@ static bool opaque(void *map_ptr, int x, int y) {
 }
 
 static void apply(void *map, int x, int y, int dx, int dy, void *src) {
-  printf("x: %d, y: %d, dx: %d, dy: %d\n", x, y, dx, dy);
   rb_funcall((VALUE)map, rb_intern("apply_lighting"), 2, INT2FIX(x), INT2FIX(y));
 }
 
 static VALUE fov_calculate(VALUE self, VALUE map, VALUE x, VALUE y, VALUE radius) {
-  printf("labas\n");
   fov_settings_type fov_settings;
 
   fov_settings_init(&fov_settings);
@@ -27,7 +25,6 @@ static VALUE fov_calculate(VALUE self, VALUE map, VALUE x, VALUE y, VALUE radius
   fov_circle(&fov_settings, (void*)map, NULL, FIX2INT(x), FIX2INT(y), FIX2INT(radius));
 
   fov_settings_free(&fov_settings);
-  printf("viso\n");
   return Qnil;
 }
 

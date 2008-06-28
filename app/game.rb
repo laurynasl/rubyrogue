@@ -42,14 +42,11 @@ class Game
       output player.attack(monster)
       unless monster.alive?
         map.monsters.delete(monster) 
-        ui.repaint_square(x, y)
       end
     elsif map.passable_at?(x, y)
       player.wait
-      ui.hide_player
       player.x = x
       player.y = y
-      ui.move_player
     else
       output "Ouch. You bump into a wall."
     end
@@ -77,8 +74,6 @@ class Game
       player.x = stair['x']
       player.y = stair['y']
       output "You go #{down ? 'down' : 'up'}stairs"
-      ui.redraw_map
-      ui.move_player
     else
       output "You see no #{down ? 'down' : 'up'}stairs here"
     end
@@ -101,8 +96,6 @@ class Game
     if monster.square_range_to(player) == 1
       output monster.attack(player)
     elsif monster.perception * monster.perception >= (range = monster.square_range_to(player))
-      old = [monster.x, monster.y]
-      
       pair = nil
       [[1, 0], [0, 1], [-1, 0], [0, -1]].each do |dx, dy|
         r = player.square_range_to([monster.x + dx, monster.y + dy])
@@ -115,9 +108,6 @@ class Game
       if pair
         monster.x += pair.first
         monster.y += pair.last
-
-        ui.repaint_square(*old)
-        ui.repaint_square(monster.x, monster.y)
       end
       monster.wait
     else
