@@ -22,6 +22,17 @@ class CursesUI
       @game = Game.new(filename)
     end
     @game.ui = self
+
+    @sym_to_color = {
+      :black => COLOR_BLACK,
+      :green => COLOR_GREEN,
+      :red => COLOR_RED,
+      :cyan => COLOR_CYAN,
+      :white => COLOR_WHITE,
+      :magenta => COLOR_MAGENTA,
+      :blue => COLOR_BLUE,
+      :yellow => COLOR_YELLOW
+    }
   end
 
   ##
@@ -80,10 +91,9 @@ class CursesUI
     draw_attributes
   end
 
-  def repaint_square(x, y)
-    @map_win.setpos(y- @offset[:y], x - @offset[:x])
-    @map_win.addch(@game.map.square_symbol_at(x, y))
-    @map_win.refresh
+  def print_char(char)
+    @map_win.attrset(Curses.color_pair(@sym_to_color[char.first]))
+    @map_win.addch char.last
   end
 
   def redraw_map
@@ -92,11 +102,15 @@ class CursesUI
     @map_win.maxy.times do |y|
       @map_win.maxx.times do |x|
         begin
-          if @game.map.visible_at?(x + @offset[:x], y + @offset[:y])
-            @map_win.addch @game.map.square_symbol_at(x + @offset[:x], y + @offset[:y])
-          else
-            @map_win.addch ' '[0]
-          end
+          pos = [x + @offset[:x], y + @offset[:y]]
+          #if @game.map.visible_at?(*pos)
+            print_char @game.map.square_symbol_at(*pos)
+          #else
+            #print_char [:black, ' '[0]]
+            #char = @game.map.memory[pos.last][pos.first] rescue nil
+            #char ||= ' '[0]
+            #print_char [:white, char]
+          #end
         end
       end
     end

@@ -5,14 +5,14 @@ class BeChar
 
   def matches?(target)
     @target = target
-    target == @expected[0]
+    target == @expected
   end
 
   def failure_message
-    "expected '#{@expected}', got '#{"".concat @target.to_i}'"
+    "expected #{@expected.first} '#{"".concat @expected.last}', got #{@target.first} '#{"".concat @target.last}'"
   end
 end
 
-def be_char(expected)
-  BeChar.new(expected)
+def be_char(color, char)
+  BeChar.new([color, char[0]])
 end

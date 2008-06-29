@@ -270,35 +270,10 @@ end
 describe CursesUI, "redraw_map" do
   it "should at least not fail" do
     @ui = CursesUI.new(TESTGAME)
-    map_win = mock('map_win', :maxx => 60, :maxy => 16, :setpos => nil, :refresh => nil, :addch => nil)
+    map_win = mock('map_win', :maxx => 60, :maxy => 16, :setpos => nil, :refresh => nil, :addch => nil, :attrset => nil)
     @ui.instance_variable_set :@map_win, map_win
 
     @ui.redraw_map
-  end
-end
-
-describe CursesUI, "repaint_square" do
-  it "should repaint square" do
-    @ui = CursesUI.new(TESTGAME)
-    map_win = mock('map_win')
-    @ui.instance_variable_set :@map_win, map_win
-    map_win.should_receive(:setpos).with(1, 11)
-    map_win.should_receive(:addch).with('k'[0])
-    map_win.should_receive(:refresh)
-
-    @ui.repaint_square(11, 1)
-  end
-
-  it "should should repaint square (with offset)" do
-    @ui = CursesUI.new(TESTGAME)
-    @ui.offset = {:x => 2, :y => 1}
-    map_win = mock('map_win')
-    @ui.instance_variable_set :@map_win, map_win
-    map_win.should_receive(:setpos).with(0, 8)
-    map_win.should_receive(:addch).with('['[0])
-    map_win.should_receive(:refresh)
-
-    @ui.repaint_square(10, 1)
   end
 end
 
@@ -349,5 +324,16 @@ describe CursesUI, "restore game" do
   end
 end
 
-describe CursesUI, "draw_fov" do
+describe CursesUI, "print_char" do
+  [[:white, Curses::COLOR_WHITE], [:yellow, Curses::COLOR_YELLOW]].each do |color, constant|
+    it "should print #{color} character to map win" do
+      @ui = CursesUI.new(TESTGAME)
+      @map_win = mock('map_win')
+      @ui.instance_variable_set(:@map_win, @map_win)
+      @map_win.should_receive(:attrset).with(Curses.color_pair constant)
+      @map_win.should_receive(:addch).with('.'[0])
+
+      @ui.print_char([color, '.'[0]])
+    end
+  end
 end

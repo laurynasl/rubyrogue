@@ -6,6 +6,9 @@ describe Map, 'load' do
     @map.name.should == 'cave-1'
     @map.tiles.size.should == 21
     @map.tiles[1].should == "#...........................############\n"
+    @map.memory.size.should == 21
+    @map.memory[1].should == "                                        "
+
     @map.width.should == 40
     @map.height.should == 21
     @map.squares.should_not be_nil
@@ -39,32 +42,46 @@ describe Map, "square_symbol_at" do
   before(:each) do
     @game = testgame
     @map = @game.map
+
   end
 
   it "should return background" do
-    @map.square_symbol_at(3, 1).should be_char('.')
-    @map.square_symbol_at(3, 2).should be_char('#')
+    @map.lighting = [true] * (@map.width * @map.height)
+
+    @map.square_symbol_at(3, 1).should be_char(:yellow, '.')
+    @map.square_symbol_at(3, 2).should be_char(:yellow, '#')
     #@map.square_symbol_at(2, 1).should be_char('@')
-    @map.square_symbol_at(2, 14).should be_char('(')
-    @map.square_symbol_at(10, 1).should be_char('[')
+    @map.square_symbol_at(2, 14).should be_char(:white, '(')
+    @map.square_symbol_at(10, 1).should be_char(:white, '[')
 
     @map.find_square(10, 1).items = []
-    @map.square_symbol_at(10, 1).should be_char('.')
+    @map.square_symbol_at(10, 1).should be_char(:yellow, '.')
 
-    @map.square_symbol_at(26, 2).should be_char('>')
+    @map.square_symbol_at(26, 2).should be_char(:white, '>')
     @map.find_square(26, 2).stair['down'] = false
-    @map.square_symbol_at(26, 2).should be_char('<')
+    @map.square_symbol_at(26, 2).should be_char(:white, '<')
   end
 
   it "should return space when square is outside of map" do
-    @map.square_symbol_at(100, 1).should be_char(' ')
-    @map.square_symbol_at(1, 100).should be_char(' ')
+    @map.lighting = [true] * (@map.width * @map.height)
+
+    @map.square_symbol_at(100, 1).should be_char(:black, ' ')
+    @map.square_symbol_at(1, 100).should be_char(:black, ' ')
   end
 
   it "should display monster" do
-    @map.square_symbol_at(11, 1).should be_char('k')
+    @map.lighting = [true] * (@map.width * @map.height)
+
+    @map.square_symbol_at(11, 1).should be_char(:white, 'k')
     MonsterClass.all['kobold'].symbol = 'K'
-    @map.square_symbol_at(11, 1).should be_char('K')
+    @map.square_symbol_at(11, 1).should be_char(:white, 'K')
+  end
+
+  it "should recall from memory" do
+    @map.lighting = []
+    @map.memory = ['', 'abcdefghijkl']
+
+    @map.square_symbol_at(11, 1).should be_char(:white, 'l')
   end
 end
 
@@ -101,7 +118,6 @@ describe Map, "try_to_generate_monster" do
       @kobold.x = nil
       @kobold.y = nil
       MonsterClass.should_receive(:generate).and_return(@kobold)
-      @ui.should_receive(:repaint_square).with(1, 6)
 
       @map.try_to_generate_monster
 
@@ -167,13 +183,17 @@ describe Map, "Field of view (fov)" do
 end
 
 describe Map, "apply_lighting" do
-  it "should set value at @lighting array to true" do
+  it "should set value at @lighting array to true and memorize square" do
     @game = testgame
     @map = @game.map
 
     @map.lighting = []
     @map.lighting[3 * @map.width + 2].should be_nil
+    @map.memory[3][2].should == ' '[0]
+
     @map.apply_lighting(2, 3)
+
+    @map.memory[3][2].should == '#'[0]
     @map.lighting[3 * @map.width + 2].should be_true
   end
 end
