@@ -23,4 +23,8 @@ class Square < Constructable
       "you see here: " + items.join(', ')
     end
   end
+
+  def empty?
+    items.empty? && !stair
+  end
 end

@@ -75,3 +75,20 @@ describe Square, "look" do
     @square.look.should == "you see here: upstairs"
   end
 end
+
+describe Square, "empty?" do
+  it "should be empty when without stair and items" do
+    square = Square.new({})
+    square.should be_empty
+  end
+
+  it "should not be empty when has items" do
+    square = Square.new(:items => ['short sword', 'long sword'])
+    square.should_not be_empty
+  end
+
+  it "should not be empty when has stair" do
+    square = square_with_stairs_down
+    square.should_not be_empty
+  end
+end
