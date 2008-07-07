@@ -29,7 +29,14 @@ class Map
   end
 
   def find_square(x, y)
-    @squares[y * width + x]
+    i = y * width + x
+    found = @squares[i]
+    if found && found.empty?
+      @squares[i] = nil
+      nil
+    else
+      found
+    end
   end
 
   def find_monster(x, y)

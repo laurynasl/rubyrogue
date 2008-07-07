@@ -19,11 +19,20 @@ end
 describe Map, 'find_square' do
   it "should find square" do
     @map = Map.load(TESTMAP)
-    square = @map.find_square(1, 1) #.should == {'x' => 1, 'y' => 1, 'items' => ['short sword']}
+    square = @map.find_square(1, 1)
     square.should be_instance_of(Square)
     square.x.should == 1
     square.y.should == 1
     square.items.first.name.should == 'short sword'
+  end
+
+  it "should return nil when square is empty and remove that square" do
+    @map = Map.load(TESTMAP)
+    square = @map.find_square(1, 1)
+    square.items.clear
+    square.should be_empty
+    @map.find_square(1, 1).should be_nil
+    @map.squares[@map.width + 1].should be_nil
   end
 end
 

@@ -110,8 +110,7 @@ describe Game, "pickup" do
     @game.player.inventory.should_not include('short sword')
     @game.pickup
     @game.player.inventory.should include('short sword')
-    #@game.map.find_square(1, 1)['items'].should == [] # possibly this is better, but... YAGNI
-    @game.map.find_square(1, 1).items.should be_empty
+    @game.map.find_square(1, 1).should be_nil # empty square now is destroyed on find
     @game.read_message.should == 'You pick up short sword'
   end
 
