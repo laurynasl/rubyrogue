@@ -1,0 +1,143 @@
+2007-09-03  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* configure.in, **/Makefile.am, aclocal.m4: Updated to work with
+	automake 1.10.
+
+	* COPYING: Changed from BSD license to MIT license (more liberal).
+
+2006-03-04  Greg McIntyre  <greg@puyo.cjb.net>
+ 
+	* tests/testfov.cc, fov/fov.c: Fixed lighting correctness for
+	angles when orthogonally behind a single tile wall, at a distance.
+  
+	* tests/testfov.cc, fov/fov.c: Fixed a double-free memory errory.
+	Test and fix cycle. Now pretty confident the library now has no
+	memory problems.
+
+2006-03-02  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* fov/fov.c: Ran splint on fov.c and fixed up code to remove all
+	warnings.
+
+2006-02-14  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* configure.in, docs: Fixed Doxygen documentation detection and
+	creation (yet to test on Cygwin).
+
+2006-02-09  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* src/fov.c: Implemented beams!! They look like fun. Can somebody
+	now make a Desperados or Commandos-style roguelike game with
+	guards carrying torches and pacing up and down?
+
+	* tests/fovtest.cpp, examples/simple.cpp, examples/map.cpp:
+	Renamed *.cpp to *.cc.
+	
+	* configure.in: Spelled "Debbugging" correctly. *blush*
+
+	* tests/fovtest.cpp: Organised tests better and made them defer
+	their error output until they've all run so they don't muck up the
+	nice progress meter.
+
+	* example/simple.cpp: Now demos beams and prints keyboard usage
+	when you press 'h' on the keyboard.
+
+	* src/fov.c: Eliminated the need to call separate code for
+	diagonal lines. These are now applied in by the beam casting
+	function in a similar manner to the orthogonal lines.
+
+	* src/fov.h: Renamed many functions to be a little more O-O
+	inspired by including, for example "fov_settings" on the front of
+	any function that operates upon a fov_settings_type data structure
+	and takes a pointer to such a data structure as its first argument
+	(like "this" in C++).
+
+2006-02-07  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* src/fov.c: Turned on more GCC warning flags & eliminated many
+	GCC warnings.
+
+	* src/fov.h, src/fov.c: Eliminated global variables. They are now
+	kept in a "settings" data structure that must be initialised by
+	the user, freed if pre-calcualtion is used, and is passed around
+	internally within the library.
+
+	* src/fov.c: Halved the opacity test frequency for straight lines
+	emanating from the data source (was 4 per tile, now 2 per tile).
+
+2006-02-04  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* src/fov.c: Incorporated Joni Yrjana's patch to fix memcpy use,
+	cast 8 octants instead of 9 (whoops) and fix a bug causing many
+	more calls to opaque than necessary.
+
+	* src/fov.c: Improved "square" FOV's diagonal limits.
+
+	* src/fov.c: Standardised usage of x and rx in octant macro for
+	greater clarity. rx is sometimes set to "x" and sometimes to "y"
+	in the macro to swap the axes and mirror an octant on a diagonal
+	axis.
+
+	* src/fov.c: Standardised C code style a bit more (more
+	underscores, less camelCase, curly brackets never omitted).
+
+	* tests/fovtest.cpp: Started a set of unit test cases.
+
+	* src/fov.c: Replaced horizontal and vertical beams with flags to
+	octant functions so that every 2nd octant function lights the
+	"edge", removing the need for separate calls. Diagonal beams
+	are still cast separately although I may change this in future so
+	everything is done with the octant functions as this would
+	avoid the need to calculate the diagonal beam length.
+
+2004-07-11  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* examples/simple.cpp: Added more comments to explain usage.
+
+	* src/fov.c: Fixed to remove two errors on Dev-C++ 4.9.8.9:
+		105: invalid conversion from 'void* to 'unsigned int*'
+		117: invalid conversion from 'void* to 'unsigned int**'
+
+2004-01-18  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* src/fov.c: Introduced hack to fix problem with broken lines when
+	dy0 > dy1. Now produces correct appearance, however this problem
+	needs closer examination.
+
+2003-09-10  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* src/fov.c: Moved bool prevBlocked to top of define -> ANSI C.
+
+2003-08-28  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* src/fov.c: Corrected octagonal limit (diagonal lines were
+	  overshooting the rest of the FOV).
+
+	* src/fov.h: Simplified API.
+
+2003-08-27  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* src/simple.cpp: Implemented keys to toggle all library options.
+
+	* src/angle.h, src/direction8.h: Amalgamated into fov.h.
+
+	* src/fov.h, src/fov.c: Make radius limit a parameter of
+	  fov_circle so it can be changed on the fly.
+
+	* src/fov.h, src/fov.c: Implemented:
+		- 4 different methods for limiting the FOV
+			- precalculated circle
+			- circle (Pythagorean)
+			- octagon
+			- square
+		- Ability to prevent apply callback being called on opaque
+		  tiles.
+
+2003-08-15  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* src/shadowcast.*: Moved to src/shadowcast/ to remove it from
+	Doxygen API.
+
+2003-06-19  Greg McIntyre  <greg@puyo.cjb.net>
+
+	* New C roguelike field-of-view library.
