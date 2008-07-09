@@ -90,9 +90,8 @@ class Map
   end
 
   def calculate_fov
-    @lighting = []
-    fov = RubyFov.calculate(self, game.player.x, game.player.y, game.player.perception)
-
+    @lighting = Lighting.new(:map => self, :memorize => true)
+    @lighting.calculate_fov
   end
 
   def visible_at?(x, y)
@@ -100,7 +99,7 @@ class Map
   end
 
   def apply_lighting(x, y)
-    @lighting[y * width + x] = true
+    #@lighting[y * width + x] = true
     @memory[y][x] = square_symbol_at(x, y).last
   end
 end

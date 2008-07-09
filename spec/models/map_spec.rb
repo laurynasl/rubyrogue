@@ -192,17 +192,15 @@ describe Map, "Field of view (fov)" do
 end
 
 describe Map, "apply_lighting" do
-  it "should set value at @lighting array to true and memorize square" do
+  it "should memorize square" do
     @game = testgame
     @map = @game.map
 
-    @map.lighting = []
-    @map.lighting[3 * @map.width + 2].should be_nil
+    @map.lighting = Hash.new(true)
     @map.memory[3][2].should == ' '[0]
 
     @map.apply_lighting(2, 3)
 
     @map.memory[3][2].should == '#'[0]
-    @map.lighting[3 * @map.width + 2].should be_true
   end
 end
