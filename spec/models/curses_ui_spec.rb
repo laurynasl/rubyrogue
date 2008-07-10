@@ -170,6 +170,15 @@ describe CursesUI, "handle_input" do
     @ui.handle_input(scr).should be_false
 
   end
+
+  it "should start targeting when clicked 'f'" do
+    @ui = CursesUI.new(TESTGAME)
+    scr = mock('scr', :getch => 'f'[0])
+
+    @ui.should_receive(:target_and_shoot).with(scr)
+
+    @ui.handle_input(scr)
+  end
 end
 
 describe CursesUI, "show_inventory" do
@@ -335,5 +344,29 @@ describe CursesUI, "print_char" do
 
       @ui.print_char([color, '.'[0]])
     end
+  end
+end
+
+describe CursesUI, "target_and_shoot" do
+  include Curses
+  it "should find and pre-target nearest monster, then allow player to move aim to other monster and fire at it" do
+    @ui = CursesUI.new(TESTGAME)
+    @map_win = mock('map_win')
+    @ui.instance_variable_set(:@map_win, @map_win)
+    @game = @ui.game
+    @game.player.x = 24
+    @game.player.y = 3
+    orc(:x => 27, :y => 8)
+    kobold(:x => 22, :y => 1)
+    @game.map.monsters << @orc
+    @game.map.monsters << @kobold
+
+    @scr = mock('scr')
+    @scr.should_receive(:getch).and_return(KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_RIGHT, KEY_RIGHT, KEY_RIGHT, KEY_RIGHT, KEY_RIGHT, 'f'[0])
+    @map_win.should_receive(:setpos).with(1, 22)
+    Curses.should_receive(:curs_set).with(1)
+    @map_win.should_receive(:refresh)
+
+    @ui.target_and_shoot(@scr)
   end
 end

@@ -29,19 +29,19 @@ def it_should_have_fields(object_name, *attributes)
   end
 end
 
-def orc
-  @orc = Monster.new(
+def orc(options = {})
+  @orc = Monster.new({
     'hp' => 9,
     'maxhp' => 9,
     'health' => 9,
     'dexterity' => 9,
     'perception' => 6,
     'monster_type' => 'orc'
-  )
+  }.merge(options))
 end
 
-def kobold
-  @kobold = Monster.new(
+def kobold(options = {})
+  @kobold = Monster.new({
     'x' => 10,
     'y' => 1,
     'hp' => 4,
@@ -50,5 +50,5 @@ def kobold
     'dexterity' => 7,
     'perception' => 6,
     'monster_type' => 'kobold'
-  )
+  }.merge(options))
 end

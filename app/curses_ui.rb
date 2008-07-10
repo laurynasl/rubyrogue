@@ -185,6 +185,8 @@ class CursesUI
         when 'S'[0]
           game.save(game.player.fullname)
           keep_playing = false
+        when 'f'[0]
+          target_and_shoot(scr)
         else
           @game.output((key.is_a?(Fixnum) ? keyname(key) : key.to_s) || key.to_s)
         end
@@ -297,5 +299,17 @@ class CursesUI
     @att_win.addstr("Perception %d\n" % game.player.perception)
     @att_win.addstr("Health %d\n" % game.player.health)
     @att_win.refresh
+  end
+
+  def target_and_shoot(scr)
+    @map_win.setpos(1, 22)
+    #@map_win.addch ' '[0]
+    Curses.curs_set(1)
+    @map_win.refresh
+
+    while true do
+      c = scr.getch
+      break if c == 'f'[0]
+    end
   end
 end
