@@ -7,6 +7,10 @@ squares:
   y: 1
   items:
   - short sword
+- x: 1
+  y: 2
+  items:
+  - 15 darts
 - x: 2
   y: 14
   items:

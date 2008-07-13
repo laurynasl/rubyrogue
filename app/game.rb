@@ -54,7 +54,7 @@ class Game
 
   def pickup
     if square = map.find_square(player.x, player.y)
-      output 'You pick up ' + square.items.collect{|item| item.name}.join(', ')
+      output 'You pick up ' + square.items.collect{|item| item.to_s}.join(', ')
       for item in square.items
         player.inventory << item
       end

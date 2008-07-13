@@ -1,12 +1,21 @@
 class Item
-  attr_accessor :name
+  attr_accessor :name, :count
 
   def initialize(name)
-    @name = name
+    if matchdata = /^(\d+) (.+)s$/.match(name)
+      @name = matchdata[2]
+      @count = matchdata[1].to_i
+    else
+      @name = name
+    end
   end
 
   def to_s
-    @name
+    if @count
+      "#{@count} #{@name}s"
+    else
+      @name
+    end
   end
 
   def klass
