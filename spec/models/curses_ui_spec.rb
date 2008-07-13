@@ -218,11 +218,15 @@ end
 
 describe CursesUI, "manage_equipment" do
   it "should show equipped items and let to equip weapon" do
-    do_it('short sword', 'weapon', 'w')
+    do_it('short sword', 'weapon', 'a')
   end
 
   it "should let to equip armor" do
-    do_it('leather armor', 'armor', 'a')
+    do_it('leather armor', 'armor', 'b')
+  end
+
+  it "should let to equip ammunition" do
+    do_it('14 darts', 'ammunition', 'c')
   end
 
   def do_it(item_name, slot, letter)
@@ -249,6 +253,7 @@ describe CursesUI, "print_equipment" do
     @ui = CursesUI.new(TESTGAME)
     @ui.game.player.weapon = Item.new('short sword')
     @ui.game.player.armor = Item.new('leather armor')
+    @ui.game.player.ammunition = Item.new('19 darts')
     map_win = mock('map_win')
     @ui.instance_variable_set :@map_win, map_win
 
@@ -256,15 +261,16 @@ describe CursesUI, "print_equipment" do
     map_win.should_receive(:setpos).with(0, 0)
     map_win.should_receive(:addstr).with("Equipment\n")
     map_win.should_receive(:addstr).with("Press 'z' to exit\n\n")
-    map_win.should_receive(:addstr).with("W Weapon: short sword\n")
-    map_win.should_receive(:addstr).with("A Armor: leather armor\n")
+    map_win.should_receive(:addstr).with("A Weapon: short sword\n")
+    map_win.should_receive(:addstr).with("B Armor: leather armor\n")
+    map_win.should_receive(:addstr).with("C Ammunition: 19 darts\n")
     map_win.should_receive(:refresh)
 
     @ui.print_equipment
   end
 end
 
-describe CursesUI, "print_equipment" do
+describe CursesUI, "select_item" do
   it "should select item and return it's index" do
     @ui = CursesUI.new(TESTGAME)
     @ui.game.player.inventory << 'short sword' << 'leather armor'

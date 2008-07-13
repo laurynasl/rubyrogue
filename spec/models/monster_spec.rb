@@ -287,11 +287,11 @@ describe Monster, "equip" do
     orc
     @orc.inventory << 'short sword' << 'leather armor' << 'dagger'
     @orc.equip('weapon', 2) #dagger
-    @orc.weapon.name.should == 'dagger'
+    @orc.weapon.to_s.should == 'dagger'
     @orc.inventory.items.size.should == 2
 
     @orc.equip('weapon', 0) #short sword
-    @orc.weapon.name.should == 'short sword'
+    @orc.weapon.to_s.should == 'short sword'
     @orc.inventory.items.size.should == 2
   end
 
@@ -299,7 +299,14 @@ describe Monster, "equip" do
     orc
     @orc.inventory << 'leather armor'
     @orc.equip('armor', 0)
-    @orc.armor.name.should == 'leather armor'
+    @orc.armor.to_s.should == 'leather armor'
+  end
+
+  it "should equip 13 darts to ammunition slot" do
+    orc
+    @orc.inventory << '13 darts'
+    @orc.equip('ammunition', 0)
+    @orc.ammunition.to_s.should == '13 darts'
   end
 end
 

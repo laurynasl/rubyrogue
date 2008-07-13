@@ -2,7 +2,7 @@ class Monster < Constructable
   attr_accessor :name, :x, :y, :inventory, :monster_type, :skills
   attr_accessor :maxhp, :hp, :energy, :hpfrac
   attr_accessor :dexterity, :perception, :health
-  attr_accessor :weapon, :armor
+  attr_accessor :weapon, :armor, :ammunition
 
   def initialize(attributes)
     @inventory = Inventory.new
