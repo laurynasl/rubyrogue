@@ -310,3 +310,31 @@ describe Monster, 'klass' do
     @orc.klass.symbol.should == 'o'
   end
 end
+
+describe Monster, "ranged_attack" do
+  before(:each) do
+    orc
+    kobold
+  end
+
+  it "should miss" do
+    @orc.should_receive(:rand).and_return(0.5625)
+    @orc.ranged_attack(@kobold).should == "orc misses kobold"
+    @orc.energy.should == -100
+  end
+
+=begin
+  it "should hit" do
+    @orc.should_receive(:rand).and_return(0.5624, 1)
+    @orc.ranged_attack(@kobold).should == "orc hits kobold"
+    @kobold.hp.should == 2
+  end
+
+  it "should kill" do
+    @kobold.hp = 2
+    @orc.should_receive(:rand).and_return(0.5624, 1)
+    @orc.ranged_attack(@kobold).should == "orc kills kobold"
+    @kobold.hp.should == 0
+  end
+=end
+end

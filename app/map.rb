@@ -102,4 +102,7 @@ class Map
     #@lighting[y * width + x] = true
     @memory[y][x] = square_symbol_at(x, y).last
   end
+
+  def find_nearest_visible_monster
+  end
 end

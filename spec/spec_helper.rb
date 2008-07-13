@@ -35,7 +35,7 @@ def orc(options = {})
     'maxhp' => 9,
     'health' => 9,
     'dexterity' => 9,
-    'perception' => 6,
+    'perception' => 5,
     'monster_type' => 'orc'
   }.merge(options))
 end
@@ -48,7 +48,7 @@ def kobold(options = {})
     'maxhp' => 4,
     'health' => 4,
     'dexterity' => 7,
-    'perception' => 6,
+    'perception' => 7,
     'monster_type' => 'kobold'
   }.merge(options))
 end

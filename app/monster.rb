@@ -53,6 +53,12 @@ class Monster < Constructable
     end
   end
 
+  def ranged_attack(defender)
+    wait
+    rand
+    "%s misses %s" % [fullname, defender.fullname]
+  end
+
   def train(skill, chance, amount)
     @skills[skill] ||= 0.0
     @skills[skill] += amount / chance / chance / 100

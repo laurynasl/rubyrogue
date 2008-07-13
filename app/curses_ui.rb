@@ -161,15 +161,9 @@ class CursesUI
       draw_windows
     else
       begin
-        case key
-        when KEY_UP: 
-          @game.move_by(0, -1)
-        when KEY_DOWN: 
-          @game.move_by(0, 1)
-        when KEY_LEFT: 
-          @game.move_by(-1, 0)
-        when KEY_RIGHT: 
-          @game.move_by(1, 0)
+        case dxdy = recognize_move(key)
+        when Array
+          @game.move_by(*dxdy)
         when ','[0]
           @game.pickup
         when 'i'[0]
@@ -302,14 +296,39 @@ class CursesUI
   end
 
   def target_and_shoot(scr)
-    @map_win.setpos(1, 22)
-    #@map_win.addch ' '[0]
+    monster = @game.map.find_nearest_visible_monster || @game.player
+    square = [monster.x, monster.y]
+    @map_win.setpos(*square.reverse)
     Curses.curs_set(1)
     @map_win.refresh
 
     while true do
-      c = scr.getch
-      break if c == 'f'[0]
+      c = recognize_move(scr.getch)
+      if c.is_a?(Array)
+        square.add!(c)
+        @map_win.setpos(*square.reverse)
+        @map_win.refresh
+      else
+        case c
+        when 'f'[0]:
+          @game.output @game.player.ranged_attack(@game.map.find_monster(*square))
+          break
+        when 'z'[0]
+          break
+        end
+      end
+    end
+    Curses.curs_set(0)
+  end
+
+  def recognize_move(key)
+    case key
+    when KEY_DOWN: [0, 1]
+    when KEY_UP: [0, -1]
+    when KEY_LEFT: [-1, 0]
+    when KEY_RIGHT: [1, 0]
+    else
+      key
     end
   end
 end

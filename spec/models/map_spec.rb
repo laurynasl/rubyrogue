@@ -204,3 +204,10 @@ describe Map, "apply_lighting" do
     @map.memory[3][2].should == '#'[0]
   end
 end
+
+describe Map, "find_nearest_visible_monster" do
+  it "should return when no monster is visible" do
+    @game = testgame
+    @game.map.find_nearest_visible_monster.should be_nil
+  end
+end

@@ -339,7 +339,7 @@ describe CursesUI, "print_char" do
       @ui = CursesUI.new(TESTGAME)
       @map_win = mock('map_win')
       @ui.instance_variable_set(:@map_win, @map_win)
-      @map_win.should_receive(:attrset).with(Curses.color_pair constant)
+      @map_win.should_receive(:attrset).with(Curses.color_pair(constant))
       @map_win.should_receive(:addch).with('.'[0])
 
       @ui.print_char([color, '.'[0]])
@@ -363,10 +363,43 @@ describe CursesUI, "target_and_shoot" do
 
     @scr = mock('scr')
     @scr.should_receive(:getch).and_return(KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_RIGHT, KEY_RIGHT, KEY_RIGHT, KEY_RIGHT, KEY_RIGHT, 'f'[0])
-    @map_win.should_receive(:setpos).with(1, 22)
+    @game.map.should_receive(:find_nearest_visible_monster).and_return(@kobold)
+    @map_win.stub!(:setpos)
     Curses.should_receive(:curs_set).with(1)
-    @map_win.should_receive(:refresh)
+    @map_win.should_receive(:refresh).exactly(13).times
+    Curses.should_receive(:curs_set).with(0)
+    @game.player.should_receive(:ranged_attack).with(@orc).and_return("Kudlius misses orc")
 
     @ui.target_and_shoot(@scr)
+    @game.read_message.should == "Kudlius misses orc"
+  end
+
+  it "should find nothing to shoot at" do
+    @ui = CursesUI.new(TESTGAME)
+    @map_win = mock('map_win')
+    @ui.instance_variable_set(:@map_win, @map_win)
+    @game = @ui.game
+
+    @scr = mock('scr')
+    @scr.should_receive(:getch).and_return(KEY_DOWN, 'z'[0])
+    @game.map.should_receive(:find_nearest_visible_monster).and_return(nil)
+    @map_win.stub!(:setpos)
+    Curses.should_receive(:curs_set).with(1)
+    @map_win.should_receive(:refresh).exactly(2).times
+    Curses.should_receive(:curs_set).with(0)
+
+    @ui.target_and_shoot(@scr)
+  end
+end
+
+describe CursesUI, "recognize_move" do
+  it "should return key, transformed into [dx,dy] for movement and key for other keys" do
+    @ui = CursesUI.new(TESTGAME)
+
+    @ui.recognize_move(KEY_DOWN).should == [0, 1]
+    @ui.recognize_move(KEY_UP).should == [0, -1]
+    @ui.recognize_move(KEY_LEFT).should == [-1, 0]
+    @ui.recognize_move(KEY_RIGHT).should == [1, 0]
+    @ui.recognize_move('a'[0]).should == 'a'[0]
   end
 end
