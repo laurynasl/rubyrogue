@@ -5,6 +5,7 @@ describe MassLoadable do
     @klass = Class.new(Constructable)
     @klass.class_eval "class << self; include MassLoadable; end"
     @klass.class_eval('attr_accessor :damage, :accuracy, :symbol, :skill, :armor, :evasion, :damage_type')
+    @klass.class_eval('attr_accessor :ammunition_type, :ranged_damage, :ammunition, :launcher_damage')
   end
 
   it "should create short sword" do
