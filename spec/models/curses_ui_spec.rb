@@ -126,6 +126,14 @@ describe CursesUI, "handle_input" do
     @ui.handle_input(scr)
   end
 
+  it "should drop item when clicked 'd'" do
+    @ui = CursesUI.new(TESTGAME)
+
+    scr = mock('scr', :getch => 'd'[0])
+    @ui.should_receive(:drop_item).with(scr)
+    @ui.handle_input(scr)
+  end
+
   it "should let to manage equipment when clicked 'e'" do
     @ui = CursesUI.new(TESTGAME)
 
@@ -407,5 +415,35 @@ describe CursesUI, "recognize_move" do
     @ui.recognize_move(KEY_LEFT).should == [-1, 0]
     @ui.recognize_move(KEY_RIGHT).should == [1, 0]
     @ui.recognize_move('a'[0]).should == 'a'[0]
+  end
+end
+
+describe CursesUI, "drop_item" do
+  it "should print inventory, read letter and drop item" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.inventory << 'short sword' << 'leather armor'
+    @scr = mock('scr')
+
+    @ui.should_receive(:select_item).with(@scr).and_return(1) #leather armor
+
+    @ui.drop_item(@scr)
+
+    @ui.game.player.inventory.items.size.should == 1
+    square = @ui.game.map.find_square(2, 1)
+    square.items.size.should == 1
+    square.items[0].to_s.should == 'leather armor'
+  end
+
+  it "should drop nothing if no item selected" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.inventory << 'short sword' << 'leather armor'
+    @scr = mock('scr')
+
+    @ui.should_receive(:select_item).with(@scr).and_return(3) #nothing
+
+    @ui.drop_item(@scr)
+
+    @ui.game.player.inventory.items.size.should == 2
+    @ui.game.map.find_square(2, 1).should be_nil
   end
 end

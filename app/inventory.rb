@@ -24,4 +24,10 @@ class Inventory
     end
     false
   end
+
+  def take(i)
+    if i >= 0
+      @items.delete_at(i)
+    end
+  end
 end

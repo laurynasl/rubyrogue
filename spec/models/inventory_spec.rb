@@ -26,4 +26,17 @@ describe Inventory do
     @inventory << 'short sword'
     @inventory.should include('short sword')
   end
+
+  it "should take item from inventory and return it" do
+    @inventory << 'short sword' << 'leather armor'
+    item = @inventory.take(1)
+    item.should be_instance_of(Item)
+    item.to_s.should == 'leather armor'
+    @inventory.items.size.should == 1
+  end
+
+  it "should take nothing from inventory if index is negative" do
+    @inventory << 'short sword' << 'leather armor'
+    item = @inventory.take(-1).should be_nil
+  end
 end

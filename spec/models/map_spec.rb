@@ -34,6 +34,16 @@ describe Map, 'find_square' do
     @map.find_square(1, 1).should be_nil
     @map.squares[@map.width + 1].should be_nil
   end
+
+  it "should create square if forced" do
+    @map = Map.load(TESTMAP)
+    @map.find_square(2, 1).should be_nil #ensures changes to map don't silently break test
+    square = @map.find_square(2, 1, :force => true)
+    square.should be_instance_of(Square)
+    square.x.should == 2
+    square.y.should == 1
+    square.items.should == []
+  end
 end
 
 describe Map, 'find_monster' do

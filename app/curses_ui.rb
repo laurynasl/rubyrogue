@@ -168,6 +168,8 @@ class CursesUI
           @game.pickup
         when 'i'[0]
           show_inventory scr
+        when 'd'[0]
+          drop_item scr
         when 'e'[0]
           manage_equipment scr
         when '>'[0]
@@ -284,6 +286,12 @@ class CursesUI
   def select_item(scr)
     print_inventory
     scr.getch - 'a'[0]
+  end
+
+  def drop_item(scr)
+    if item = @game.player.inventory.take(select_item(scr))
+      @game.map.find_square(@game.player.x, @game.player.y, :force => true).items << item
+    end
   end
 
   def draw_attributes

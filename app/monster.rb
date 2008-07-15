@@ -127,7 +127,7 @@ class Monster < Constructable
 
   def equip(slot, id)
     @inventory << send(slot) if send(slot)
-    send(slot + '=', inventory.items.delete_at(id))
+    send(slot + '=', inventory.take(id))
   end
 
   def klass

@@ -28,12 +28,13 @@ class Map
     @monsters = (data['monsters'] || []).collect{|monster| Monster.new monster}
   end
 
-  def find_square(x, y)
+  def find_square(x, y, options = {})
     i = y * width + x
     found = @squares[i]
-    if found && found.empty?
+    if !found && options[:force]
+      @squares[i] = Square.new({:x => x, :y => y})
+    elsif found && found.empty?
       @squares[i] = nil
-      nil
     else
       found
     end

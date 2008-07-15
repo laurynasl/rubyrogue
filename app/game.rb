@@ -35,6 +35,7 @@ class Game
     @messages << data
   end
 
+  # player moves. if moves into wall, stops. if moves into monster, attacks
   def move_by(dx, dy)
     x = player.x + dx
     y = player.y + dy
@@ -52,8 +53,9 @@ class Game
     end
   end
 
+  # player picks up all items from square he is standing at
   def pickup
-    if square = map.find_square(player.x, player.y)
+    if square = player_square
       output 'You pick up ' + square.items.collect{|item| item.to_s}.join(', ')
       for item in square.items
         player.inventory << item
@@ -68,6 +70,7 @@ class Game
     map.find_square player.x, player.y
   end
 
+  # go stairs. down: true - down, false - up
   def go_stairs(down)
     if (square = player_square) && (stair = square.stair) && (stair['down'] == down)
       load_map stair['map']
@@ -79,6 +82,7 @@ class Game
     end
   end
 
+  # single game cycle
   def iterate
     while player.energy < 0
       player.energy += player.dexterity
@@ -92,6 +96,7 @@ class Game
     end
   end
 
+  # primitive AI for moving monster
   def move_monster(monster)
     if monster.square_range_to(player) == 1
       output monster.attack(player)
