@@ -37,11 +37,7 @@ class Game
 
   def kill_monster(monster)
     map.monsters.delete(monster) 
-    square = map.find_square(monster.x, monster.y, :force => true)
-    items = monster.inventory.items + [monster.weapon, monster.armor, monster.ammunition]
-    items.each do |item|
-      square.items << item if item
-    end
+    map.drop_items(monster.x, monster.y, monster.inventory.items + [monster.weapon, monster.armor, monster.ammunition])
   end
 
   # player moves. if moves into wall, stops. if moves into monster, attacks

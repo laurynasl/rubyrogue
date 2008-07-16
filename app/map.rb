@@ -106,4 +106,11 @@ class Map
 
   def find_nearest_visible_monster
   end
+
+  def drop_items(x, y, items)
+    square = find_square(x, y, :force => true)
+    items.each do |item|
+      square.items << item if item
+    end
+  end
 end

@@ -221,3 +221,11 @@ describe Map, "find_nearest_visible_monster" do
     @game.map.find_nearest_visible_monster.should be_nil
   end
 end
+
+describe Map, "drop_items" do
+  it "should put items at specified coordinates" do
+    @game = testgame
+    @game.map.drop_items(1, 2, [Item.new('knife'), Item.new('short bow')])
+    @game.map.find_square(1, 2).items.collect{|item| item.to_s}.should == ['15 darts', 'knife', 'short bow']
+  end
+end

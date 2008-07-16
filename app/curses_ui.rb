@@ -290,7 +290,7 @@ class CursesUI
 
   def drop_item(scr)
     if item = @game.player.inventory.take(select_item(scr))
-      @game.map.find_square(@game.player.x, @game.player.y, :force => true).items << item
+      @game.map.drop_items(@game.player.x, @game.player.y, [item])
     end
   end
 
