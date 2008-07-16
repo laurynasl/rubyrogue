@@ -35,6 +35,15 @@ class Game
     @messages << data
   end
 
+  def kill_monster(monster)
+    map.monsters.delete(monster) 
+    square = map.find_square(monster.x, monster.y, :force => true)
+    items = monster.inventory.items + [monster.weapon, monster.armor, monster.ammunition]
+    items.each do |item|
+      square.items << item if item
+    end
+  end
+
   # player moves. if moves into wall, stops. if moves into monster, attacks
   def move_by(dx, dy)
     x = player.x + dx
@@ -42,7 +51,7 @@ class Game
     if monster = map.find_monster(x, y)
       output player.attack(monster)
       unless monster.alive?
-        map.monsters.delete(monster) 
+        kill_monster(monster) 
       end
     elsif map.passable_at?(x, y)
       player.wait

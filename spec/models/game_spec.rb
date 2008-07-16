@@ -301,3 +301,25 @@ describe Game, "save & restore" do
     system 'rm savegames/test_fork.yaml'
   end
 end
+
+describe Game, "kill_monster" do
+  before(:each) do
+    @game = testgame
+    @kobold = @game.map.find_monster(11, 1)
+  end
+
+  it "should remove monster from map" do
+    @kobold.inventory << 'short bow' << '5 arrows'
+    @game.kill_monster(@kobold)
+    @game.map.find_monster(11, 1).should be_nil
+    @game.map.find_square(11, 1).items.collect{|item| item.to_s}.should == ['short bow', '5 arrows']
+  end
+
+  it "should drop all items it is wielding" do
+    @kobold.weapon = Item.new('long sword')
+    @kobold.armor = Item.new('chain mail')
+    @kobold.ammunition = Item.new('15 darts')
+    @game.kill_monster(@kobold)
+    @game.map.find_square(11, 1).items.collect{|item| item.to_s}.should == ['long sword', 'chain mail', '15 darts']
+  end
+end
