@@ -1,4 +1,5 @@
 #!/bin/bash
 
 #xterm -e ./launch.rb maps/testmap.yaml
-$COLORTERM -e './launch.rb games/test/game.yaml'
+#$COLORTERM -e './launch.rb games/test/game.yaml'
+./launch.rb games/test/game.yaml
