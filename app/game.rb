@@ -99,6 +99,11 @@ class Game
       end
       map.try_to_generate_monster
     end
+    if player.hp <= 0
+      output 'You die. Press Enter to exit'
+      return false
+    end
+    true
   end
 
   # primitive AI for moving monster
