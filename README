@@ -1,3 +1,9 @@
+======== Compiling ========
+
+Yes, there is one part that needs to be compiled. Just run:
+
+rake build
+
 ======== Starting ==========
 
 ./run
