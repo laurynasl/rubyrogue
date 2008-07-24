@@ -2,10 +2,41 @@
 
 ./run
 
-If that fails, probably $COLORTERM is not set in environment. Try running:
+or equivalent:
 
 ./launch games/test/game.yaml
 
+=========== Map ============
+
+@ - you
+# - wall
+. - explored empty space
+letter - monster
+( - weapon
+[ - armor
+/ - ammunition
+) - launcher (bow, crossbow, pistol etc.)
+> - stairs down
+< - stairs up
+
+==== Keys and Commands =====
+
+arrows (left, right, top, down) Go to corresponding direction (hit monster if it is in path)
+
+  , pick up items
+  i show inventory
+  d drop item
+  e manage equipped items
+  > go downstairs
+  < go upstairs
+  S save and exit game
+  f start shooting (as of 2008 07 24 works just partially; may crash)
+
+====== Loading game =========
+
+currently the only way is:
+
+./launch savegames/Kudlius.yaml
 
 ======== Crashes ============
 
