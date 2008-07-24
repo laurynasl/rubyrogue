@@ -218,7 +218,7 @@ describe Game, "iterate" do
     @game.player.should_receive(:regenerate)
     monster.should_receive(:regenerate)
 
-    @game.iterate.should be_true
+    @game.iterate
 
     @game.player.energy.should == 9 #player's dexterity is 11
   end
@@ -226,20 +226,11 @@ describe Game, "iterate" do
   it "should iterate twice" do
     @game = testgame
     @game.player.energy = -22
+    @ui.stub!(:repaint_square)
     @game.iterate
 
     @game.player.energy.should == 0
     @game.map.find_monster(11, 1).energy.should == -86
-  end
-
-  [0, -1].each do |hp|
-    it "should return false when player hp reaches #{hp}" do
-      @game = testgame
-      @game.player.hp = hp
-
-      @game.iterate.should be_false
-      @game.read_message.should == 'You die. Press Enter to exit'
-    end
   end
 end
 

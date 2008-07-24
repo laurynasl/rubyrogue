@@ -147,7 +147,6 @@ class CursesUI
 
     # Real game loop
     while playing do
-      playing = handle_input(@scr) && @game.iterate
       # First, we show all queued messages
       messages  = ''
       while m = @game.read_message do
@@ -155,14 +154,11 @@ class CursesUI
       end
       draw_message(@mess_win, messages) unless messages.empty?
       @mess_win.refresh
-      if !playing
-        while @scr.getch != 10
-        end
-      end
 
+      playing = handle_input(@scr)
 
       # Launches the game logics
-      
+      @game.iterate
       redraw_map
       move_player
       draw_attributes

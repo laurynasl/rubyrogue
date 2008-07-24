@@ -323,25 +323,6 @@ describe CursesUI, 'game_loop' do
     @ui = CursesUI.new(TESTGAME)
     @ui.should_receive(:draw_windows)
     @ui.should_receive(:handle_input).and_return(false)
-    @ui.game.should_not_receive(:iterate)
-    mess_win = mock('mess_win')
-    @ui.instance_variable_set(:@mess_win, mess_win)
-    mess_win.should_receive(:refresh)
-    @ui.should_receive(:redraw_map)
-    @ui.should_receive(:move_player)
-    @ui.should_receive(:draw_attributes)
-    scr = mock('scr')
-    @ui.instance_variable_set(:@scr, scr)
-    scr.should_receive(:getch).and_return(10)
-
-
-    @ui.game_loop
-  end
-
-  it "should end game when game.iterate returns false" do
-    @ui = CursesUI.new(TESTGAME)
-    @ui.should_receive(:draw_windows)
-    @ui.should_receive(:handle_input).and_return(true)
     @ui.game.should_receive(:iterate)
     mess_win = mock('mess_win')
     @ui.instance_variable_set(:@mess_win, mess_win)
@@ -349,10 +330,6 @@ describe CursesUI, 'game_loop' do
     @ui.should_receive(:redraw_map)
     @ui.should_receive(:move_player)
     @ui.should_receive(:draw_attributes)
-    @ui.game.player.hp = 0
-    scr = mock('scr')
-    @ui.instance_variable_set(:@scr, scr)
-    scr.should_receive(:getch).and_return(10)
 
     @ui.game_loop
   end
