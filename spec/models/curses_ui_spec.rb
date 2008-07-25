@@ -255,6 +255,10 @@ describe CursesUI, "manage_equipment" do
     do_it('14 darts', 'ammunition', 'c')
   end
 
+  it "should let to unequip weapon" do
+    do_unequip('dagger', 'weapon', 'a')
+  end
+
   def do_it(item_name, slot, letter)
     @ui = CursesUI.new(TESTGAME)
     @ui.game.player.inventory << item_name
@@ -265,12 +269,29 @@ describe CursesUI, "manage_equipment" do
     @ui.should_receive(:print_equipment).exactly(2).times
     @scr.should_receive(:getch).and_return(letter[0], 'z'[0])
     @ui.should_receive(:select_item).with(@scr).and_return(0) # should be short sword
-    @ui.game.player.should_receive(:equip).with(slot, 0)
     @ui.should_receive(:redraw_map)
     @ui.should_receive(:move_player)
     map_win.should_receive(:refresh)
 
     @ui.manage_equipment(@scr)
+  end
+
+  def do_unequip(item_name, slot, letter)
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.send(slot + '=', item_name)
+
+    @scr = mock('scr')
+    map_win = mock('map_win')
+    @ui.instance_variable_set :@map_win, map_win
+    @ui.should_receive(:print_equipment).exactly(2).times
+    @scr.should_receive(:getch).and_return(letter[0], 'z'[0])
+    @ui.should_receive(:redraw_map)
+    @ui.should_receive(:move_player)
+    map_win.should_receive(:refresh)
+
+    @ui.manage_equipment(@scr)
+
+    @ui.game.player.send(slot).should be_nil
   end
 end
 

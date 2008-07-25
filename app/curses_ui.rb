@@ -281,7 +281,11 @@ class CursesUI
     print_equipment
     while (c = scr.getch) != 'z'[0]
       if slot = {'a'[0] => 'weapon', 'b'[0] => 'armor', 'c'[0] => 'ammunition'}[c]
-        @game.player.equip(slot, select_item(scr))
+        if @game.player.send(slot)
+          @game.player.unequip(slot)
+        else
+          @game.player.equip(slot, select_item(scr))
+        end
       end
       print_equipment
     end
