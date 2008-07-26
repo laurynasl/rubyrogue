@@ -413,6 +413,7 @@ describe CursesUI, "target_and_shoot" do
     kobold(:x => 22, :y => 1)
     @game.map.monsters << @orc
     @game.map.monsters << @kobold
+    @game.player.ammunition = Item.new('15 darts')
 
     @scr = mock('scr')
     @scr.should_receive(:getch).and_return(KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_DOWN, KEY_RIGHT, KEY_RIGHT, KEY_RIGHT, KEY_RIGHT, KEY_RIGHT, 'f'[0])
@@ -432,6 +433,7 @@ describe CursesUI, "target_and_shoot" do
     @map_win = mock('map_win')
     @ui.instance_variable_set(:@map_win, @map_win)
     @game = @ui.game
+    @game.player.ammunition = Item.new('15 darts')
 
     @scr = mock('scr')
     @scr.should_receive(:getch).and_return(KEY_DOWN, 'z'[0])
@@ -442,6 +444,16 @@ describe CursesUI, "target_and_shoot" do
     Curses.should_receive(:curs_set).with(0)
 
     @ui.target_and_shoot(@scr)
+  end
+
+  it "should refuse targeting if player has no ammunition readied" do
+    @ui = CursesUI.new(TESTGAME)
+    #@map_win = mock('map_win')
+    #@ui.instance_variable_set(:@map_win, @map_win)
+    #@game = @ui.game
+
+    @ui.target_and_shoot(@scr)
+    @ui.game.read_message.should == "you have no ammunition readied"
   end
 end
 

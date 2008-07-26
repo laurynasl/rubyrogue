@@ -327,6 +327,10 @@ class CursesUI
   end
 
   def target_and_shoot(scr)
+    if !@game.player.ammunition
+      @game.output "you have no ammunition readied"
+      return
+    end
     monster = @game.map.find_nearest_visible_monster || @game.player
     square = [monster.x, monster.y]
     @map_win.setpos(*square.reverse)
