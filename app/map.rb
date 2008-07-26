@@ -131,4 +131,8 @@ class Map
       square.items << item if item
     end
   end
+
+  def inspect
+    "<Map #{@name}>"
+  end
 end

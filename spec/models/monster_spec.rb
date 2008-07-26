@@ -347,12 +347,18 @@ describe Monster, "ranged_attack" do
   before(:each) do
     orc
     kobold
+    @map = mock('map')
   end
 
   it "should miss" do
     @orc.should_receive(:rand).and_return(0.5625)
-    @orc.ranged_attack(@kobold).should == "orc misses kobold"
+    @orc.ranged_attack(@kobold, @map).should == "orc misses kobold"
     @orc.energy.should == -100
+  end
+
+  it "should say that attacking non-monster is not allowed" do
+    @orc.ranged_attack(nil, @map).should == "you should target monster"
+    @orc.energy.should == 0
   end
 
 =begin

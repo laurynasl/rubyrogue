@@ -71,7 +71,8 @@ class Monster < Constructable
     end
   end
 
-  def ranged_attack(defender)
+  def ranged_attack(defender, map)
+    return "you should target monster" unless defender
     wait
     rand
     "%s misses %s" % [fullname, defender.fullname]

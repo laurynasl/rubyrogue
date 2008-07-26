@@ -342,7 +342,7 @@ class CursesUI
       else
         case c
         when 'f'[0]:
-          @game.output @game.player.ranged_attack(@game.map.find_monster(*square))
+          @game.output @game.player.ranged_attack(@game.map.find_monster(*square), @game.map)
           break
         when 'z'[0]
           break

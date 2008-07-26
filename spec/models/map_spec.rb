@@ -247,3 +247,10 @@ describe Map, "drop_items" do
     @game.map.find_square(1, 2).items.collect{|item| item.to_s}.should == ['15 darts', 'knife', 'short bow']
   end
 end
+
+describe Map, "inspect" do
+  it "should should not be so verbose and display just map name" do
+    @game = testgame
+    @game.map.inspect.should == '<Map cave-1>'
+  end
+end

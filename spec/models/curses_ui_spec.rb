@@ -421,7 +421,7 @@ describe CursesUI, "target_and_shoot" do
     Curses.should_receive(:curs_set).with(1)
     @map_win.should_receive(:refresh).exactly(13).times
     Curses.should_receive(:curs_set).with(0)
-    @game.player.should_receive(:ranged_attack).with(@orc).and_return("Kudlius misses orc")
+    @game.player.should_receive(:ranged_attack).with(@orc, @game.map).and_return("Kudlius misses orc")
 
     @ui.target_and_shoot(@scr)
     @game.read_message.should == "Kudlius misses orc"
