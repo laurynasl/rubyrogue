@@ -42,6 +42,12 @@ dart:
   symbol: /
   skill: dart
 
+rock:
+  ranged_damage: 2
+  accuracy: -1
+  symbol: /
+  skill: rock
+
 short bow:
   launcher_damage: 2
   accuracy: 4

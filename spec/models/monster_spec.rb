@@ -189,6 +189,26 @@ describe Monster, "melee_attack_rating" do
   end
 end
 
+describe Monster, "ranged_attack_rating" do
+  before(:each) do
+    orc
+    ItemClass.load_all
+  end
+
+  it "should return sum of perception, triple rock skill and triple accuracy" do
+    @orc.ammunition = Item.new('3 rocks')
+    @orc.skills['rock'] = 4 #2
+    @orc.ranged_attack_rating.should == 8
+  end
+
+  it "should work for darts" do
+    @orc.ammunition = Item.new('6 darts')
+    @orc.skills['dart'] = 9 #3
+    @orc.perception = 6
+    @orc.ranged_attack_rating.should == 18
+  end
+end
+
 describe Monster, "inflict_damage" do
   before(:each) do
     orc

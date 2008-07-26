@@ -71,6 +71,11 @@ class Monster < Constructable
     end
   end
 
+  def ranged_attack_rating
+    item_class = ItemClass.all[ammunition.name]
+    perception + (skill(item_class.skill) + item_class.accuracy) * 3
+  end
+
   def ranged_attack(defender, map)
     return "you should target monster" unless defender
     wait
