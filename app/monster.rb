@@ -79,8 +79,15 @@ class Monster < Constructable
   def ranged_attack(defender, map)
     return "you should target monster" unless defender
     wait
-    rand
-    "%s misses %s" % [fullname, defender.fullname]
+    attack = ranged_attack_rating
+    defense = (defender.perception + defender.dexterity + 4)
+    chance = attack / (attack + defense).to_f
+    if rand < chance
+      damage = inflict_damage(defender, ammunition.klass.ranged_damage)
+      "%s hits %s" % [fullname, defender.fullname]
+    else
+      "%s misses %s" % [fullname, defender.fullname]
+    end
   end
 
   def train(skill, chance, amount)
@@ -101,6 +108,7 @@ class Monster < Constructable
 
   # returns amount of damage inflicted
   def inflict_damage(defender, maxdamage)
+    raise "maxdamage should not be nil" unless maxdamage
     damage = rand(maxdamage) + 1
     damage -= defender.rand_armor
     return 0 unless damage > 0

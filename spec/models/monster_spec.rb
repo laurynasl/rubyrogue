@@ -233,6 +233,12 @@ describe Monster, "inflict_damage" do
     @kobold.should_receive(:rand_armor).and_return(3)
     @orc.inflict_damage(@kobold, 4).should == 0
   end
+
+  it "should raise exception when maxdamage is nil" do
+    lambda {
+      @orc.inflict_damage(@kobold, nil)
+    }.should raise_error("maxdamage should not be nil")
+  end
 end
 
 describe Monster, "rand_armor" do
@@ -365,13 +371,15 @@ end
 
 describe Monster, "ranged_attack" do
   before(:each) do
-    orc
-    kobold
+    orc(:x => 12, :y => 1)
+    @orc.ammunition = Item.new('15 darts')
+    @orc.skills['dart'] = 4 #2
+    kobold(:x => 16, :y => 1)
     @map = mock('map')
   end
 
   it "should miss" do
-    @orc.should_receive(:rand).and_return(0.5625)
+    @orc.should_receive(:rand).and_return(0.4376)
     @orc.ranged_attack(@kobold, @map).should == "orc misses kobold"
     @orc.energy.should == -100
   end
@@ -381,13 +389,15 @@ describe Monster, "ranged_attack" do
     @orc.energy.should == 0
   end
 
-=begin
   it "should hit" do
-    @orc.should_receive(:rand).and_return(0.5624, 1)
-    @orc.ranged_attack(@kobold).should == "orc hits kobold"
+    # attacker: perception 5 + dart skill 2 * 3 + dart modifier 1 * 3 = 14
+    # defender: perception 7 + dexterity 7 + range 4 = 18
+    @orc.should_receive(:rand).and_return(0.4374, 1)
+    @orc.ranged_attack(@kobold, @map).should == "orc hits kobold"
     @kobold.hp.should == 2
   end
 
+=begin
   it "should kill" do
     @kobold.hp = 2
     @orc.should_receive(:rand).and_return(0.5624, 1)
