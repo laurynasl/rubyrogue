@@ -44,16 +44,20 @@ class Monster < Constructable
       end
       damage = inflict_damage(defender, maxdamage)
       train(skill, chance, damage)
-      if damage == 0
-        "%s hits, but does not manage to hurt %s"
-      elsif defender.alive?
-        "%s hits %s"
-      else
-        "%s kills %s"
-      end % [fullname, defender.fullname]
+      damage_text(damage, defender)
     else
       "%s misses %s" % [fullname, defender.fullname]
     end
+  end
+
+  def damage_text(damage, defender)
+    if damage == 0
+      "%s hits, but does not manage to hurt %s"
+    elsif defender.alive?
+      "%s hits %s"
+    else
+      "%s kills %s"
+    end % [fullname, defender.fullname]
   end
 
   def melee_chance_to_hit(defender)
@@ -84,7 +88,7 @@ class Monster < Constructable
     chance = attack / (attack + defense).to_f
     if rand < chance
       damage = inflict_damage(defender, ammunition.klass.ranged_damage)
-      "%s hits %s" % [fullname, defender.fullname]
+      damage_text(damage, defender)
     else
       "%s misses %s" % [fullname, defender.fullname]
     end

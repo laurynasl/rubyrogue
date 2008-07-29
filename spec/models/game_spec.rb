@@ -341,3 +341,26 @@ describe Game, "kill_monster" do
     @game.map.find_square(11, 1).items.collect{|item| item.to_s}.should == ['long sword', 'chain mail', '15 darts']
   end
 end
+
+describe Game, "ranged_attack" do
+  before(:each) do
+    @game = testgame
+    @kobold = @game.map.find_monster(11, 1)
+    @game.player.x = 9
+    @game.player.ammunition = Item.new('7 darts')
+  end
+
+  it "should attack monster" do
+    @game.player.should_receive(:rand).and_return(0.01, 1)
+    @game.ranged_attack(@kobold).should == "Kudlius hits kobold"
+    @game.map.find_monster(11, 1).should == @kobold
+  end
+
+  it "should kill monster" do
+    @game.player.should_receive(:rand).and_return(0.01, 1)
+    @kobold.hp = 1
+
+    @game.ranged_attack(@kobold)
+    @game.map.find_monster(11, 1).should be_nil
+  end
+end

@@ -397,12 +397,10 @@ describe Monster, "ranged_attack" do
     @kobold.hp.should == 2
   end
 
-=begin
   it "should kill" do
     @kobold.hp = 2
-    @orc.should_receive(:rand).and_return(0.5624, 1)
-    @orc.ranged_attack(@kobold).should == "orc kills kobold"
+    @orc.should_receive(:rand).and_return(0.4374, 1)
+    @orc.ranged_attack(@kobold, @map).should == "orc kills kobold"
     @kobold.hp.should == 0
   end
-=end
 end

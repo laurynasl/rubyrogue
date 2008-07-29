@@ -153,4 +153,10 @@ class Game
     MonsterClass.load_all
     File.open(filename, 'r'){|f| YAML.load(f)}
   end
+
+  def ranged_attack(defender)
+    text = player.ranged_attack(defender, map)
+    kill_monster(defender) unless defender.alive?
+    text
+  end
 end
