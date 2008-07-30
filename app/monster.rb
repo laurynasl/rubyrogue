@@ -84,7 +84,7 @@ class Monster < Constructable
     return "you should target monster" unless defender
     wait
     attack = ranged_attack_rating
-    defense = (defender.perception + defender.dexterity + 4)
+    defense = (defender.perception + defender.dexterity + Math.sqrt(square_range_to(defender)).round)
     chance = attack / (attack + defense).to_f
     if rand < chance
       damage = inflict_damage(defender, ammunition.klass.ranged_damage)

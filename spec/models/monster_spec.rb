@@ -398,6 +398,17 @@ describe Monster, "ranged_attack" do
     @kobold.hp.should == 2
   end
 
+  it "should hit from point blank" do
+    # attacker: perception 6 + dart skill 2 * 3 + dart modifier 1 * 3 = 15
+    # defender: perception 7 + dexterity 7 + range 1 = 15
+    @orc.perception = 6
+    @orc.x = 17
+    @orc.should_receive(:rand).and_return(0.4999, 1)
+    @orc.should_receive(:train).with('dart', 0.5, 2)
+    @orc.ranged_attack(@kobold, @map)#.should == "orc hits kobold"
+    #@kobold.hp.should == 2
+  end
+
   it "should kill" do
     @kobold.hp = 2
     @orc.should_receive(:rand).and_return(0.4374, 1)
