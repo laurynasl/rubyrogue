@@ -393,6 +393,7 @@ describe Monster, "ranged_attack" do
     # attacker: perception 5 + dart skill 2 * 3 + dart modifier 1 * 3 = 14
     # defender: perception 7 + dexterity 7 + range 4 = 18
     @orc.should_receive(:rand).and_return(0.4374, 1)
+    @orc.should_receive(:train).with('dart', 0.4375, 2)
     @orc.ranged_attack(@kobold, @map).should == "orc hits kobold"
     @kobold.hp.should == 2
   end

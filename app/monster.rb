@@ -88,6 +88,7 @@ class Monster < Constructable
     chance = attack / (attack + defense).to_f
     if rand < chance
       damage = inflict_damage(defender, ammunition.klass.ranged_damage)
+      train(ammunition.name, chance, damage)
       damage_text(damage, defender)
     else
       "%s misses %s" % [fullname, defender.fullname]
