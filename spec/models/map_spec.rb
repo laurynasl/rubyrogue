@@ -220,16 +220,26 @@ describe Map, "Field of view (fov)" do
 end
 
 describe Map, "apply_lighting" do
-  it "should memorize square" do
+  before(:each) do
     @game = testgame
     @map = @game.map
 
     @map.lighting = Hash.new(true)
+    @map.spotted_monsters = []
+  end
+
+  it "should memorize square" do
     @map.memory[3][2].should == ' '[0]
 
     @map.apply_lighting(2, 3)
 
     @map.memory[3][2].should == '#'[0]
+  end
+
+  it "should memorize spotted monster" do
+    @kobold = @map.find_monster(11, 1)
+    @map.apply_lighting(11, 1)
+    @map.spotted_monsters.first.should == @kobold
   end
 end
 
@@ -237,6 +247,23 @@ describe Map, "find_nearest_visible_monster" do
   it "should return when no monster is visible" do
     @game = testgame
     @game.map.find_nearest_visible_monster.should be_nil
+  end
+
+  it "should find monster using monsters spotted during calculate_fov" do
+    @game = testgame
+    @map = @game.map
+    @kobold = @map.find_monster(11, 1)
+    @game.player.x = 6
+    @map.calculate_fov
+    @map.find_nearest_visible_monster.should == @kobold
+  end
+
+  it "should find nearest monster using square_range_to from spotted_monsters" do
+    @game = testgame
+    orc(:x => 3, :y => 1)
+    kobold(:x => 4, :y => 1)
+    @game.map.spotted_monsters << @kobold << @orc
+    @game.map.find_nearest_visible_monster.should == @orc
   end
 end
 

@@ -18,7 +18,12 @@
 
 class Map
   attr_reader :tiles
-  attr_accessor :name, :width, :height, :squares, :game, :monsters, :generate_monster_counter, :lighting, :memory
+  attr_accessor :name, :width, :height, :squares, :game, :monsters, :generate_monster_counter
+  attr_accessor :lighting, :memory, :spotted_monsters
+
+  def initialize
+    @spotted_monsters = []
+  end
 
   def self.load(filename)
     map = self.new
@@ -109,6 +114,7 @@ class Map
   end
 
   def calculate_fov
+    @spotted_monsters = []
     @lighting = Lighting.new(:map => self, :memorize => true)
     @lighting.calculate_fov
   end
@@ -118,11 +124,14 @@ class Map
   end
 
   def apply_lighting(x, y)
-    #@lighting[y * width + x] = true
     @memory[y][x] = square_symbol_at(x, y).last
+    if monster = find_monster(x, y)
+      @spotted_monsters << monster
+    end
   end
 
   def find_nearest_visible_monster
+    @spotted_monsters.min{|a, b| game.player.square_range_to(a) <=> game.player.square_range_to(b)}
   end
 
   def drop_items(x, y, items)
