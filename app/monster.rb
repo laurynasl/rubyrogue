@@ -163,7 +163,7 @@ class Monster < Constructable
   end
 
   def equip(slot, id)
-    send(slot + '=', inventory.take(id))
+    send(slot + '=', inventory.take(id, :slot => slot))
   end
 
   def unequip(slot)

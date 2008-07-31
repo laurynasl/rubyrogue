@@ -27,7 +27,7 @@ describe Inventory do
     @inventory.collect{|item| item}.should == []
     @inventory << 'short sword' << 'leather armor'
 
-    @inventory.collect{|item| item.to_s}.should == ['short sword', 'leather armor']
+    @inventory.invoke(:to_s).should == ['short sword', 'leather armor']
     @inventory.each do |item|
       item.should be_an_instance_of(Item)
     end
@@ -44,6 +44,12 @@ describe Inventory do
     @inventory << 'short sword'
     @inventory.should include('short sword')
   end
+end
+
+describe Inventory, "take" do
+  before(:each) do
+    @inventory = Inventory.new
+  end
 
   it "should take item from inventory and return it" do
     @inventory << 'short sword' << 'leather armor'
@@ -56,5 +62,30 @@ describe Inventory do
   it "should take nothing from inventory if index is negative" do
     @inventory << 'short sword' << 'leather armor'
     item = @inventory.take(-1).should be_nil
+  end
+
+  it "should take from inventory, filtered by slot" do
+    ItemClass.load_all
+    @inventory << 'short sword' << 'leather armor' << 'dagger'
+    item = @inventory.take(1, :slot => 'weapon')
+    item.to_s.should == 'dagger'
+  end
+
+  it "should take nothing, filtered by slot" do
+    ItemClass.load_all
+    @inventory << 'short sword' << 'leather armor' << 'dagger'
+    @inventory.take(2, :slot => 'weapon').should be_nil
+  end
+end
+
+describe Inventory, "filter" do
+  it "should filter items by slot they can be equipped to" do
+    ItemClass.load_all
+    @inventory = Inventory.new
+    @inventory << 'short sword' << 'leather armor' << 'dagger' << '15 darts'
+    @inventory.filter(:weapon).invoke(:to_s).should == ['short sword', 'dagger']
+    @inventory.filter(:armor).invoke(:to_s).should == ['leather armor']
+    @inventory.filter('ammunition').invoke(:to_s).should == ['15 darts']
+    @inventory.filter(nil).invoke(:to_s).should == ['short sword', 'leather armor', 'dagger', '15 darts']
   end
 end

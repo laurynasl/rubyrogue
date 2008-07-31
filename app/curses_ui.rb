@@ -266,12 +266,12 @@ class CursesUI
     @map_win.refresh
   end
 
-  def print_inventory
+  def print_inventory(slot = nil)
     @map_win.setpos 0, 0
     @map_win.clear
     @map_win.addstr "Inventory\n"
     @map_win.addstr "Press 'z' to exit\n\n"
-    @game.player.inventory.each_with_index do |item, i|
+    @game.player.inventory.filter(slot).each_with_index do |item, i|
       @map_win.addstr "".concat('A'[0] + i) + ' ' + item.to_s + "\n"
     end
     @map_win.refresh
@@ -284,7 +284,7 @@ class CursesUI
         if @game.player.send(slot)
           @game.player.unequip(slot)
         else
-          @game.player.equip(slot, select_item(scr))
+          @game.player.equip(slot, select_item(scr, slot.to_sym))
         end
       end
       print_equipment
@@ -305,8 +305,8 @@ class CursesUI
     @map_win.refresh
   end
 
-  def select_item(scr)
-    print_inventory
+  def select_item(scr, slot = nil)
+    print_inventory(slot)
     scr.getch - 'a'[0]
   end
 

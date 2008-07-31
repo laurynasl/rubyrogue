@@ -240,6 +240,22 @@ describe CursesUI, "show_inventory" do
 
     @ui.print_inventory
   end
+
+  it "should print filtered inventory" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.inventory << 'short sword' << 'leather armor'
+
+    map_win = mock('map_win')
+    @ui.instance_variable_set :@map_win, map_win
+    map_win.should_receive(:clear)
+    map_win.should_receive(:setpos).with(0, 0)
+    map_win.should_receive(:addstr).with("Inventory\n")
+    map_win.should_receive(:addstr).with("Press 'z' to exit\n\n")
+    map_win.should_receive(:addstr).with("A short sword\n")
+    map_win.should_receive(:refresh)
+
+    @ui.print_inventory('weapon')
+  end
 end
 
 describe CursesUI, "manage_equipment" do
@@ -268,7 +284,7 @@ describe CursesUI, "manage_equipment" do
     @ui.instance_variable_set :@map_win, map_win
     @ui.should_receive(:print_equipment).exactly(2).times
     @scr.should_receive(:getch).and_return(letter[0], 'z'[0])
-    @ui.should_receive(:select_item).with(@scr).and_return(0) # should be short sword
+    @ui.should_receive(:select_item).with(@scr, slot.to_sym).and_return(0) # should be short sword
     @ui.should_receive(:redraw_map)
     @ui.should_receive(:move_player)
     map_win.should_receive(:refresh)
@@ -292,6 +308,22 @@ describe CursesUI, "manage_equipment" do
     @ui.manage_equipment(@scr)
 
     @ui.game.player.send(slot).should be_nil
+  end
+
+  it "should display filtered by slot items and then player should select one" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.inventory << 'short sword' << 'leather armor' << 'dagger'
+    @scr = mock('scr')
+    @map_win = mock('map_win', :refresh => nil)
+    @ui.instance_variable_set :@map_win, @map_win
+    @ui.should_receive(:print_equipment).exactly(2).times
+    @ui.should_receive(:print_inventory).with(:weapon)
+    @ui.should_receive(:redraw_map)
+    @ui.should_receive(:move_player)
+    @scr.should_receive(:getch).and_return('a'[0], 'b'[0], 'z'[0])
+
+    @ui.manage_equipment(@scr)
+    @ui.game.player.weapon.to_s.should == 'dagger'
   end
 end
 

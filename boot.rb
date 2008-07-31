@@ -47,6 +47,12 @@ class Module
   end
 end
 
+module Enumerable
+  def invoke(method)
+    collect{|i| i.send(method)}
+  end
+end
+
 def min(a, b)
   a < b ? a : b
 end

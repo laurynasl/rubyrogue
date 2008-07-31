@@ -327,10 +327,10 @@ describe Monster, "regenerate" do
 end
 
 describe Monster, "equip" do
-  it "should equip dagger to weapon slot" do
+  it "should equip dagger to weapon slot (use filter by slot, so leather armor is skipped)" do
     orc
     @orc.inventory << 'short sword' << 'leather armor' << 'dagger'
-    @orc.equip('weapon', 2) #dagger
+    @orc.equip('weapon', 1) #dagger
     @orc.weapon.to_s.should == 'dagger'
     @orc.inventory.items.size.should == 2
   end

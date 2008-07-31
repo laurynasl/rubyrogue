@@ -18,6 +18,7 @@
 
 class Inventory
   include Enumerable
+  @@slots_map = {:weapon => :damage, :armor => :armor, :ammunition => :ranged_damage}
 
   attr_accessor :items
 
@@ -43,9 +44,32 @@ class Inventory
     false
   end
 
-  def take(i)
-    if i >= 0
-      @items.delete_at(i)
+  def take(i, options = {})
+    if options[:slot]
+      attribute = @@slots_map[options[:slot].to_sym]
+      matched_count = 0
+      @items.each_with_index do |item, index|
+        if item.klass.send(attribute)
+          matched_count += 1
+          if matched_count == (i+1)
+            return @items.delete_at(index)
+          end
+        end
+      end
+      nil
+    else
+      if i >= 0
+        @items.delete_at(i)
+      end
+    end
+  end
+
+  def filter(slot)
+    if slot
+      attribute = @@slots_map[slot.to_sym]
+      @items.find_all {|item| item.klass.send(attribute)}
+    else
+      @items
     end
   end
 end
