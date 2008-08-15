@@ -260,8 +260,8 @@ describe Map, "find_nearest_visible_monster" do
 
   it "should find nearest monster using square_range_to from spotted_monsters" do
     @game = testgame
-    orc(:x => 3, :y => 1)
-    kobold(:x => 4, :y => 1)
+    orc('x' => 3, 'y' => 1)
+    kobold('x' => 4, 'y' => 1)
     @game.map.spotted_monsters << @kobold << @orc
     @game.map.find_nearest_visible_monster.should == @orc
   end

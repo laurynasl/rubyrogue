@@ -371,10 +371,10 @@ end
 
 describe Monster, "ranged_attack" do
   before(:each) do
-    orc(:x => 12, :y => 1)
+    orc('x' => 12, 'y' => 1)
     @orc.ammunition = Item.new('15 darts')
     @orc.skills['dart'] = 4 #2
-    kobold(:x => 16, :y => 1)
+    kobold('x' => 16, 'y' => 1)
     @map = mock('map')
   end
 

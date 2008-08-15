@@ -441,8 +441,8 @@ describe CursesUI, "target_and_shoot" do
     @game = @ui.game
     @game.player.x = 24
     @game.player.y = 3
-    orc(:x => 27, :y => 8)
-    kobold(:x => 22, :y => 1)
+    orc('x' => 27, 'y' => 8)
+    kobold('x' => 22, 'y' => 1)
     @game.map.monsters << @orc
     @game.map.monsters << @kobold
     @game.player.ammunition = Item.new('15 darts')
