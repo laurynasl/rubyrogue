@@ -76,8 +76,11 @@ class Monster < Constructable
   end
 
   def ranged_attack_rating
-    item_class = ItemClass.all[ammunition.name]
-    perception + (skill(item_class.skill) + item_class.accuracy) * 3
+    accuracy = ammunition.klass.accuracy
+    if launcher
+      accuracy += launcher.klass.accuracy
+    end
+    perception + (skill(ammunition.klass.skill) + accuracy) * 3
   end
 
   def ranged_attack(defender, map)

@@ -207,6 +207,12 @@ describe Monster, "ranged_attack_rating" do
     @orc.perception = 6
     @orc.ranged_attack_rating.should == 18
   end
+
+  it "should work for short bow and arrows" do
+    @orc.ammunition = Item.new('8 arrows')
+    @orc.launcher = Item.new('short bow')
+    @orc.ranged_attack_rating.should == 11
+  end
 end
 
 describe Monster, "inflict_damage" do
