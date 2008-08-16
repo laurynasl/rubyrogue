@@ -52,12 +52,12 @@ short bow:
   launcher_damage: 2
   accuracy: 4
   symbol: )
-  ammunition: arrow
+  launches: arrow
   skill: bow
 
 arrow:
   ranged_damage: 2
   accuracy: -2
   symbol: /
-  ammunition_type: arrow
+  ammunition: arrow
   skill: arrow
