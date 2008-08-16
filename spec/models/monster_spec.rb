@@ -348,6 +348,13 @@ describe Monster, "equip" do
     @orc.equip('ammunition', 0)
     @orc.ammunition.to_s.should == '13 darts'
   end
+
+  it "should equip bow to launcher slot" do
+    orc
+    @orc.inventory << 'short bow'
+    @orc.equip('launcher', 0)
+    @orc.launcher.to_s.should == 'short bow'
+  end
 end
 
 describe Monster, "unequip" do

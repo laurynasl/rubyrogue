@@ -82,10 +82,11 @@ describe Inventory, "filter" do
   it "should filter items by slot they can be equipped to" do
     ItemClass.load_all
     @inventory = Inventory.new
-    @inventory << 'short sword' << 'leather armor' << 'dagger' << '15 darts'
+    @inventory << 'short sword' << 'leather armor' << 'dagger' << '15 darts' << 'short bow'
     @inventory.filter(:weapon).invoke(:to_s).should == ['short sword', 'dagger']
     @inventory.filter(:armor).invoke(:to_s).should == ['leather armor']
     @inventory.filter('ammunition').invoke(:to_s).should == ['15 darts']
-    @inventory.filter(nil).invoke(:to_s).should == ['short sword', 'leather armor', 'dagger', '15 darts']
+    @inventory.filter('launcher').invoke(:to_s).should == ['short bow']
+    @inventory.filter(nil).invoke(:to_s).should == ['short sword', 'leather armor', 'dagger', '15 darts', 'short bow']
   end
 end

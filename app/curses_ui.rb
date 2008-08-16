@@ -280,7 +280,7 @@ class CursesUI
   def manage_equipment(scr)
     print_equipment
     while (c = scr.getch) != 'z'[0]
-      if slot = {'a'[0] => 'weapon', 'b'[0] => 'armor', 'c'[0] => 'ammunition'}[c]
+      if slot = {'a'[0] => 'weapon', 'b'[0] => 'armor', 'c'[0] => 'launcher', 'd'[0] => 'ammunition'}[c]
         if @game.player.send(slot)
           @game.player.unequip(slot)
         else
@@ -301,7 +301,8 @@ class CursesUI
     @map_win.addstr "Press 'z' to exit\n\n"
     @map_win.addstr "A Weapon: #{@game.player.weapon}\n"
     @map_win.addstr "B Armor: #{@game.player.armor}\n"
-    @map_win.addstr "C Ammunition: #{@game.player.ammunition}\n"
+    @map_win.addstr "C Launcher: #{@game.player.launcher}\n"
+    @map_win.addstr "D Ammunition: #{@game.player.ammunition}\n"
     @map_win.refresh
   end
 

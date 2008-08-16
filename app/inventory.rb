@@ -18,7 +18,7 @@
 
 class Inventory
   include Enumerable
-  @@slots_map = {:weapon => :damage, :armor => :armor, :ammunition => :ranged_damage}
+  @@slots_map = {:weapon => :damage, :armor => :armor, :ammunition => :ranged_damage, :launcher => :launcher_damage}
 
   attr_accessor :items
 

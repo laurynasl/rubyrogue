@@ -36,7 +36,6 @@ describe Item do
     item.count.should == 22
     item.to_s.should == '22 darts'
   end
-
 end
 
 describe Item, "klass" do
