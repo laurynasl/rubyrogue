@@ -491,7 +491,36 @@ describe CursesUI, "target_and_shoot" do
     #@game = @ui.game
 
     @ui.target_and_shoot(@scr)
-    @ui.game.read_message.should == "you have no ammunition readied"
+    @ui.game.read_message.should == "You have no ammunition readied"
+  end
+
+  it "should refuse targeting if player has no ammunition readied" do
+    @ui = CursesUI.new(TESTGAME)
+    @ui.game.player.ammunition = Item.new('11 rocks')
+    @ui.game.player.launcher = Item.new('short bow')
+
+    @ui.target_and_shoot(@scr)
+    @ui.game.read_message.should == "You cannot shoot rocks using short bow"
+  end
+
+  it "should target and shoot using short bow and arrows" do
+    stubbed_ui
+    @game.player.x = 24
+    @game.player.y = 3
+    orc('x' => 27, 'y' => 8)
+    @game.map.monsters << @orc
+    @game.player.ammunition = Item.new('15 arrows')
+    @game.player.launcher = Item.new('short bow')
+
+    @scr = mock('scr')
+    @scr.should_receive(:getch).and_return('f'[0])
+    @game.map.should_receive(:find_nearest_visible_monster).and_return(@orc)
+    Curses.should_receive(:curs_set).with(1)
+    Curses.should_receive(:curs_set).with(0)
+    @game.player.should_receive(:ranged_attack).with(@orc, @game.map).and_return("Kudlius misses orc")
+
+    @ui.target_and_shoot(@scr)
+    @game.read_message.should == "Kudlius misses orc"
   end
 end
 

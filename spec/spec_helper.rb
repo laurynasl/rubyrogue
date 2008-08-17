@@ -70,3 +70,12 @@ def kobold(options = {})
     'monster_type' => 'kobold'
   }.merge(options))
 end
+
+def stubbed_ui
+  @ui = CursesUI.new(TESTGAME)
+  @map_win = mock('map_win')
+  @map_win.stub!(:setpos)
+  @map_win.stub!(:refresh)
+  @ui.instance_variable_set(:@map_win, @map_win)
+  @game = @ui.game
+end

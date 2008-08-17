@@ -329,7 +329,12 @@ class CursesUI
 
   def target_and_shoot(scr)
     if !@game.player.ammunition
-      @game.output "you have no ammunition readied"
+      @game.output "You have no ammunition readied"
+      return
+    end
+
+    if @game.player.launcher && @game.player.launcher.klass.launches != @game.player.ammunition.klass.ammunition
+      @game.output "You cannot shoot #{@game.player.ammunition.name}s using #{@game.player.launcher.name}"
       return
     end
     monster = @game.map.find_nearest_visible_monster || @game.player
