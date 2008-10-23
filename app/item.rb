@@ -39,4 +39,8 @@ class Item
   def klass
     ItemClass.all[name]
   end
+
+  def ==(other)
+    name == other.name && count == other.count
+  end
 end

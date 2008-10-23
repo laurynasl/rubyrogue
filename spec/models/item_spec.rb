@@ -45,3 +45,15 @@ describe Item, "klass" do
     item.klass.should == ItemClass.all['short sword']
   end
 end
+
+describe Item, "==" do
+  it "should return true when and only items are identical" do
+    dart1 = Item.new('dart')
+    dart2 = Item.new('dart')
+    sword = Item.new('short sword')
+    three_darts = Item.new('3 darts')
+    (dart1 == dart2).should be_true
+    (dart1 == sword).should be_false
+    (dart1 == three_darts).should be_false
+  end
+end

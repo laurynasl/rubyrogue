@@ -388,11 +388,12 @@ describe Monster, "ranged_attack" do
     @orc.ammunition = Item.new('15 darts')
     @orc.skills['dart'] = 4 #2
     kobold('x' => 16, 'y' => 1)
-    @map = mock('map')
+    @map = mock('map', :drop_items => nil)
   end
 
   it "should miss" do
     @orc.should_receive(:rand).and_return(0.4376)
+    @map.should_receive(:drop_items).with(16, 1, [Item.new('dart')])
     @orc.ranged_attack(@kobold, @map).should == "orc misses kobold"
     @orc.energy.should == -100
   end

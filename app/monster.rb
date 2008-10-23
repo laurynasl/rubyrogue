@@ -86,6 +86,7 @@ class Monster < Constructable
   def ranged_attack(defender, map)
     return "you should target monster" unless defender
     wait
+    map.drop_items(defender.x, defender.y, [Item.new(ammunition.name)])
     attack = ranged_attack_rating
     defense = (defender.perception + defender.dexterity + Math.sqrt(square_range_to(defender)).round)
     chance = attack / (attack + defense).to_f
