@@ -22,7 +22,7 @@ def square_with_items
   Square.new(
     'x' => 3,
     'y' => 17,
-    'items' => ['short sword', 'leather armor']
+    'inventory' => ['short sword', 'leather armor']
   )
 end
 
@@ -57,8 +57,8 @@ describe Square do
     @square = square_with_items
     @square.x.should == 3
     @square.y.should == 17
-    @square.items[0].name.should == 'short sword'
-    @square.items[1].name.should == 'leather armor'
+    @square.inventory.items[0].name.should == 'short sword'
+    @square.inventory.items[1].name.should == 'leather armor'
     @square.item_names.should == ['short sword', 'leather armor']
   end
 
@@ -73,7 +73,7 @@ describe Square do
         'down' => true
       }
     )
-    @square.items.should == []
+    @square.inventory.class.should == Inventory
   end
 end
 
@@ -101,7 +101,7 @@ describe Square, "empty?" do
   end
 
   it "should not be empty when has items" do
-    square = Square.new(:items => ['short sword', 'long sword'])
+    square = Square.new(:inventory => ['short sword', 'long sword'])
     square.should_not be_empty
   end
 

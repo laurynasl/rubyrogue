@@ -548,8 +548,8 @@ describe CursesUI, "drop_item" do
 
     @ui.game.player.inventory.items.size.should == 1
     square = @ui.game.map.find_square(2, 1)
-    square.items.size.should == 1
-    square.items[0].to_s.should == 'leather armor'
+    square.inventory.items.size.should == 1
+    square.inventory.items[0].to_s.should == 'leather armor'
   end
 
   it "should drop nothing if no item selected" do

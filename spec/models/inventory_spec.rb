@@ -44,6 +44,12 @@ describe Inventory do
     @inventory << 'short sword'
     @inventory.should include('short sword')
   end
+
+  it "should merge identic stacks" do
+    @inventory << '3 darts'
+    @inventory << '2 darts'
+    @inventory.items.should == [Item.new('5 darts')]
+  end
 end
 
 describe Inventory, "take" do

@@ -5,20 +5,20 @@ height: 21
 squares:
 - x: 1
   y: 1
-  items:
+  inventory:
   - short sword
 - x: 1
   y: 2
-  items:
+  inventory:
   - 15 darts
 - x: 2
   y: 14
-  items:
+  inventory:
   - dagger
   - long sword
 - x: 10
   y: 1
-  items:
+  inventory:
   - leather armor
 - x: 26
   y: 2

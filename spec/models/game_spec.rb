@@ -153,7 +153,7 @@ describe Game, 'player_square' do
     @game = testgame
     @game.player.x = 1
     @game.player.y = 1
-    @game.player_square.items.first.name.should == 'short sword'
+    @game.player_square.inventory.items.first.name.should == 'short sword'
   end
 end
 
@@ -330,7 +330,7 @@ describe Game, "kill_monster" do
     @kobold.inventory << 'short bow' << '5 arrows'
     @game.kill_monster(@kobold)
     @game.map.find_monster(11, 1).should be_nil
-    @game.map.find_square(11, 1).items.collect{|item| item.to_s}.should == ['short bow', '5 arrows']
+    @game.map.find_square(11, 1).inventory.collect{|item| item.to_s}.should == ['short bow', '5 arrows']
   end
 
   it "should drop all items it is wielding" do
@@ -338,7 +338,7 @@ describe Game, "kill_monster" do
     @kobold.armor = Item.new('chain mail')
     @kobold.ammunition = Item.new('15 darts')
     @game.kill_monster(@kobold)
-    @game.map.find_square(11, 1).items.collect{|item| item.to_s}.should == ['long sword', 'chain mail', '15 darts']
+    @game.map.find_square(11, 1).inventory.collect{|item| item.to_s}.should == ['long sword', 'chain mail', '15 darts']
   end
 end
 

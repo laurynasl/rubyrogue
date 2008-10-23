@@ -33,7 +33,12 @@ class Inventory
   end
 
   def <<(item)
-    @items << (item.is_a?(Item) ? item : Item.new(item))
+    item = (item.is_a?(Item) ? item : Item.new(item))
+    if found_item = @items.find {|i| i.name == item.name}
+      found_item.count += item.count
+    else
+      @items << item
+    end
     self
   end
 

@@ -74,8 +74,8 @@ class Map
         return :white, monster.klass.symbol[0]
       end
       if square = find_square(x, y)
-        if !square.items.empty?
-          return :white, ItemClass.all[square.items.first.name].symbol[0]
+        if !square.inventory.items.empty?
+          return :white, ItemClass.all[square.inventory.items.first.name].symbol[0]
         elsif square.stair
           return :white, (square.stair['down'] ? '>' : '<')[0]
         end
@@ -137,7 +137,7 @@ class Map
   def drop_items(x, y, items)
     square = find_square(x, y, :force => true)
     items.each do |item|
-      square.items << item if item
+      square.inventory << item if item
     end
   end
 

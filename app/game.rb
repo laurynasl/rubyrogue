@@ -79,11 +79,11 @@ class Game
   # player picks up all items from square he is standing at
   def pickup
     if square = player_square
-      output 'You pick up ' + square.items.collect{|item| item.to_s}.join(', ')
-      for item in square.items
+      output 'You pick up ' + square.inventory.collect{|item| item.to_s}.join(', ')
+      for item in square.inventory
         player.inventory << item
       end
-      square.items.clear
+      square.inventory.items.clear
     else
       output 'There is nothing to pick up'
     end

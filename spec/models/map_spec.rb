@@ -41,13 +41,13 @@ describe Map, 'find_square' do
     square.should be_instance_of(Square)
     square.x.should == 1
     square.y.should == 1
-    square.items.first.name.should == 'short sword'
+    square.inventory.items.first.name.should == 'short sword'
   end
 
   it "should return nil when square is empty and remove that square" do
     @map = Map.load(TESTMAP)
     square = @map.find_square(1, 1)
-    square.items.clear
+    square.inventory.items.clear
     square.should be_empty
     @map.find_square(1, 1).should be_nil
     @map.squares[@map.width + 1].should be_nil
@@ -60,7 +60,7 @@ describe Map, 'find_square' do
     square.should be_instance_of(Square)
     square.x.should == 2
     square.y.should == 1
-    square.items.should == []
+    square.inventory.items.should == []
   end
 end
 
@@ -91,7 +91,7 @@ describe Map, "square_symbol_at" do
     @map.square_symbol_at(2, 14).should be_char(:white, '(')
     @map.square_symbol_at(10, 1).should be_char(:white, '[')
 
-    @map.find_square(10, 1).items = []
+    @map.find_square(10, 1).inventory.items = []
     @map.square_symbol_at(10, 1).should be_char(:yellow, '.')
 
     @map.square_symbol_at(26, 2).should be_char(:white, '>')
@@ -271,7 +271,7 @@ describe Map, "drop_items" do
   it "should put items at specified coordinates" do
     @game = testgame
     @game.map.drop_items(1, 2, [Item.new('knife'), Item.new('short bow')])
-    @game.map.find_square(1, 2).items.collect{|item| item.to_s}.should == ['15 darts', 'knife', 'short bow']
+    @game.map.find_square(1, 2).inventory.collect{|item| item.to_s}.should == ['15 darts', 'knife', 'short bow']
   end
 end
 

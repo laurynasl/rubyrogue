@@ -17,32 +17,33 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 class Square < Constructable
-  attr_accessor :x, :y, :items, :stair
+  attr_accessor :x, :y, :inventory, :stair
 
   def initialize(attributes)
     super
-    @items ||= []
+    @inventory ||= Inventory.new
   end
 
-  def items=(data)
-    @items = data.collect do |item_name|
-      Item.new item_name
+  def inventory=(data)
+    @inventory = Inventory.new
+    data.each do |item_name|
+      @inventory << Item.new(item_name)
     end
   end
 
   def item_names
-    items.collect{|item| item.name}
+    inventory.collect{|item| item.name}
   end
 
   def look
     if stair
       "you see here: " + {true => "downstairs", false => "upstairs"}[stair['down']]
     else
-      "you see here: " + items.join(', ')
+      "you see here: " + inventory.items.join(', ')
     end
   end
 
   def empty?
-    items.empty? && !stair
+    inventory.items.empty? && !stair
   end
 end
