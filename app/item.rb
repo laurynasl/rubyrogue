@@ -25,11 +25,12 @@ class Item
       @count = matchdata[1].to_i
     else
       @name = name
+      @count = 1
     end
   end
 
   def to_s
-    if @count
+    if @count != 1
       "#{@count} #{@name}s"
     else
       @name

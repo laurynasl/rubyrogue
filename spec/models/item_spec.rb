@@ -26,6 +26,7 @@ describe Item do
 
   it "should have optional count" do
     item = Item.new('dart')
+    item.count.should == 1
     item.count = 3
     item.count.should == 3
   end

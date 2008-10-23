@@ -395,7 +395,15 @@ describe Monster, "ranged_attack" do
     @orc.should_receive(:rand).and_return(0.4376)
     @map.should_receive(:drop_items).with(16, 1, [Item.new('dart')])
     @orc.ranged_attack(@kobold, @map).should == "orc misses kobold"
+    @orc.ammunition.count.should == 14
     @orc.energy.should == -100
+  end
+
+  it "should shoot last dart" do
+    @orc.ammunition.count = 1
+    @orc.should_receive(:rand).and_return(0.4374, 1)
+    @orc.ranged_attack(@kobold, @map).should == "orc hits kobold"
+    @orc.ammunition.should be_nil
   end
 
   it "should say that attacking non-monster is not allowed" do
