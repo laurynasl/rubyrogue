@@ -90,10 +90,7 @@ class Monster < Constructable
     defense = (defender.perception + defender.dexterity + Math.sqrt(square_range_to(defender)).round)
     chance = attack / (attack + defense).to_f
 
-    map.drop_items(defender.x, defender.y, [Item.new(ammunition.name)])
-    ammunition.count -= 1
-    ammo = ammunition
-    self.ammunition = nil if ammunition.count == 0
+    ammo = drop_ammo(map, defender.x, defender.y)
 
     if rand < chance
       damage = inflict_damage(defender, ammo.klass.ranged_damage)
@@ -102,6 +99,14 @@ class Monster < Constructable
     else
       "%s misses %s" % [fullname, defender.fullname]
     end
+  end
+
+  def drop_ammo(map, x, y)
+    map.drop_items(x, y, [Item.new(ammunition.name)])
+    ammunition.count -= 1
+    ammo = ammunition
+    self.ammunition = nil if ammunition.count == 0
+    ammo
   end
 
   def train(skill, chance, amount)

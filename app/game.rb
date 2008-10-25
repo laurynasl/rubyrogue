@@ -144,7 +144,6 @@ class Game
   end
 
   def save(name)
-    #Dir.mkdir('games/' + name)
     File.open("savegames/#{name}.yaml", 'w') {|f| f.write self.to_yaml}
   end
 
@@ -154,9 +153,14 @@ class Game
     File.open(filename, 'r'){|f| YAML.load(f)}
   end
 
-  def ranged_attack(defender)
-    text = player.ranged_attack(defender, map)
-    kill_monster(defender) unless defender.alive?
-    text
+  def ranged_attack(x, y)
+    if defender = map.find_monster(x, y)
+      text = player.ranged_attack(defender, map)
+      kill_monster(defender) unless defender.alive?
+      text
+    else
+      ammo = player.drop_ammo(map, x, y)
+      "Your #{ammo.name} hits nobody"
+    end
   end
 end

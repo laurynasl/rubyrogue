@@ -352,7 +352,7 @@ describe Game, "ranged_attack" do
 
   it "should attack monster" do
     @game.player.should_receive(:rand).and_return(0.01, 1)
-    @game.ranged_attack(@kobold).should == "Kudlius hits kobold"
+    @game.ranged_attack(11, 1).should == "Kudlius hits kobold"
     @game.map.find_monster(11, 1).should == @kobold
   end
 
@@ -360,7 +360,12 @@ describe Game, "ranged_attack" do
     @game.player.should_receive(:rand).and_return(0.01, 1)
     @kobold.hp = 1
 
-    @game.ranged_attack(@kobold)
+    @game.ranged_attack(11, 1)
     @game.map.find_monster(11, 1).should be_nil
+  end
+
+  it "should attack nobody" do
+    @game.ranged_attack(9, 1).should == 'Your dart hits nobody'
+    @game.map.find_square(9, 1).inventory.items.should == [Item.new('dart')]
   end
 end
