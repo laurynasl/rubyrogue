@@ -158,16 +158,27 @@ class Map
     options[:rooms].times do
       room = map.generate_room
       if map.can_place_room?(room)
-        map.rooms << room
         map.place_room(room) 
-        if map.rooms.size > 1
-          room2 = map.rooms[rand(map.rooms.size-1)]
+        if map.rooms.size > 0
+          #room2 = map.rooms[rand(map.rooms.size)]
+          room2 = map.rooms.min do |r1, r2|
+            range_between_rooms(room, r1) <=> range_between_rooms(room, r2)
+          end
           map.join_rooms(room2, room)
         end
+        map.rooms << room
       end
     end
 
     map
+  end
+
+  def self.range_between_rooms(r1, r2)
+    x1 = r1[:x] + (r1[:width] - 1) / 2
+    x2 = r2[:x] + (r2[:width] - 1) / 2
+    y1 = r1[:y] + (r1[:height] - 1) / 2
+    y2 = r2[:y] + (r1[:height] - 1) / 2
+    (x1 - x2).abs + (y1 - y2).abs
   end
 
   def generate_room
@@ -210,7 +221,7 @@ class Map
       tiles[y][x1] = '.'
     end
     #tiles[y2][x1] = ' '
-    p [x1, y1]
-    p [x2, y2]
+    #p [x1, y1]
+    #p [x2, y2]
   end
 end

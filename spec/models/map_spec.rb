@@ -288,16 +288,16 @@ describe Map, "generate" do
     #Map.should_receive(:rand).with(7).and_return(5) # height will be 5 + 3
     #Map.should_receive(:rand).with(34).and_return(11) # x
     #Map.should_receive(:rand).with(13).and_return(2) # y
-    map = Map.generate :width => 60, :height => 21, :rooms => 50
-    map.width.should == 60
-    map.height.should == 21
-    map.tiles.size.should == 21
+    map = Map.generate :width => 120, :height => 45, :rooms => 50
+    map.width.should == 120
+    map.height.should == 45
+    map.tiles.size.should == 45
     puts
     map.tiles.each do |line| 
-      line.size.should == 60
+      line.size.should == 120
       puts line
     end
-    p map.rooms
+    #p map.rooms
   end
 end
 
@@ -378,7 +378,7 @@ describe Map, "connect_rooms" do
   [
     {:width => 5, :height => 4, :x => 2, :y => 1}
   ].each do |room|
-    it "should return true because there is enough space" do
+    it "should connect two rooms" do
       @map.place_room(room, ',')
       begin
         @map.join_rooms(@room, room)
