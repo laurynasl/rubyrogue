@@ -17,9 +17,11 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 class Map
-  attr_reader :tiles
-  attr_accessor :name, :width, :height, :squares, :game, :monsters, :generate_monster_counter
+  attr_accessor :name, :width, :height, :squares, :game, :monsters, :generate_monster_counter, :tiles
+  # lightning
   attr_accessor :lighting, :memory, :spotted_monsters
+  # map generation
+  attr_accessor :rooms
 
   def initialize
     @spotted_monsters = []
@@ -34,13 +36,9 @@ class Map
   end
 
   def load(filename)
-    f = File.open(filename)
-    data = YAML::load(f)
-    f.close
+    data = File.open(filename){|f| YAML::load(f)}
 
-    f = File.open(filename.gsub(/\.yaml$/, '.tile'))
-    @tiles = f.readlines
-    f.close
+    @tiles = File.open(filename.gsub(/\.yaml$/, '.tile')){|f| f.readlines}
     @width = data['width']
     @height = data['height']
     @squares = []
@@ -143,5 +141,76 @@ class Map
 
   def inspect
     "<Map #{@name}>"
+  end
+
+  # Map generation methods. hard to test because of current inability to mock <code>rand</code>
+
+  def self.generate(options)
+    map = Map.new
+    map.width = options[:width]
+    map.height = options[:height]
+    map.tiles = []
+    map.height.times do |i|
+      map.tiles << '#' * map.width
+    end
+
+    map.rooms = []
+    options[:rooms].times do
+      room = map.generate_room
+      if map.can_place_room?(room)
+        map.rooms << room
+        map.place_room(room) 
+        if map.rooms.size > 1
+          room2 = map.rooms[rand(map.rooms.size-1)]
+          map.join_rooms(room2, room)
+        end
+      end
+    end
+
+    map
+  end
+
+  def generate_room
+    room = {}
+    room[:width] = rand(5) + 4
+    room[:height] = rand(3) + 3
+    room[:x] = rand(width - room[:width] - 2) + 1
+    room[:y] = rand(height - room[:height] - 2) + 1
+    room
+  end
+
+  def place_room(room, symbol='.') #untested
+    (room[:y]..room[:y]+room[:height]-1).each do |y|
+      (room[:x]..room[:x]+room[:width]-1).each do |x|
+        tiles[y][x] = symbol
+      end
+    end
+  end
+
+  def can_place_room?(new_room)
+    rooms.each do |room|
+      next if new_room[:y] + new_room[:height] + 1 < room[:y]
+      next if new_room[:y] > room[:y] + room[:height]
+      next if new_room[:x] + new_room[:width] + 1 < room[:x]
+      next if new_room[:x] > room[:x] + room[:width]
+      return false
+    end
+    true
+  end
+
+  def join_rooms(room1, room2)
+    x1 = room1[:x] + (room1[:width] - 1) / 2
+    x2 = room2[:x] + (room2[:width] - 1) / 2
+    y1 = room1[:y] + (room1[:height] - 1) / 2
+    y2 = room2[:y] + (room2[:height] - 1) / 2
+    ([x1, x2].min..[x1, x2].max).each do |x|
+      tiles[y2][x] = '.'
+    end
+    ([y1, y2].min..[y1, y2].max).each do |y|
+      tiles[y][x1] = '.'
+    end
+    #tiles[y2][x1] = ' '
+    p [x1, y1]
+    p [x2, y2]
   end
 end

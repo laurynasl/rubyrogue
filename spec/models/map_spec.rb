@@ -276,8 +276,121 @@ describe Map, "drop_items" do
 end
 
 describe Map, "inspect" do
-  it "should should not be so verbose and display just map name" do
+  it "should not be so verbose and display just map name" do
     @game = testgame
     @game.map.inspect.should == '<Map cave-1>'
+  end
+end
+
+describe Map, "generate" do
+  it "should generate map" do
+    #Map.should_receive(:rand).with(7).and_return(3) # width will be 3 + 3
+    #Map.should_receive(:rand).with(7).and_return(5) # height will be 5 + 3
+    #Map.should_receive(:rand).with(34).and_return(11) # x
+    #Map.should_receive(:rand).with(13).and_return(2) # y
+    map = Map.generate :width => 60, :height => 21, :rooms => 50
+    map.width.should == 60
+    map.height.should == 21
+    map.tiles.size.should == 21
+    puts
+    map.tiles.each do |line| 
+      line.size.should == 60
+      puts line
+    end
+    p map.rooms
+  end
+end
+
+describe Map, "can_place_room?" do
+  before(:each) do
+    @map = Map.new
+    @map.width = 40
+    @map.height = 20
+    @map.tiles = (0..19).collect{ '#' * 40 }
+    @room = {:width => 5, :height => 4, :x => 12, :y => 9}
+    @map.rooms = [@room]
+    @map.place_room(@room)
+  end
+
+  [
+    {:width => 5, :height => 4, :x => 2, :y => 1},
+    {:width => 6, :height => 4, :x => 10, :y => 14},
+    {:width => 6, :height => 4, :x => 4, :y => 11},
+    {:width => 6, :height => 4, :x => 18, :y => 11}
+  ].each do |room|
+    it "should return true because there is enough space" do
+      @map.place_room(room, ',')
+      begin
+        @map.can_place_room?(room).should be_true
+      rescue
+        puts
+        puts @map.tiles
+        p room
+        raise
+      end
+    end
+  end
+
+  [
+    {:width => 6, :height => 4, :x => 10, :y => 5},
+    {:width => 6, :height => 4, :x => 10, :y => 13},
+    {:width => 6, :height => 4, :x => 5, :y => 11},
+    {:width => 6, :height => 4, :x => 17, :y => 11}
+  ].each do |room|
+    it "should return false because it touches existing room" do
+      @map.place_room(room, ',')
+      begin
+        @map.can_place_room?(room).should be_false
+      rescue
+        puts
+        puts @map.tiles
+        p room
+        raise
+      end
+    end
+  end
+
+  after(:each) do
+    #instance_variables.each do |i|
+      #value = instance_variable_get(i)
+      #printf "%s = %s\n", i, value
+    #end
+    #puts
+    #puts @_defined_description
+    #puts @map.tiles
+  end
+end
+
+describe Map, "connect_rooms" do
+  before(:each) do
+    @map = Map.new
+    @map.width = 40
+    @map.height = 20
+    @map.tiles = (0..19).collect{ '#' * 40 }
+    @room = {:width => 5, :height => 4, :x => 12, :y => 9}
+    @map.rooms = [@room]
+    @map.place_room(@room)
+    @map.lighting = mock('Lighting', :'[]' => true)
+    @map.monsters = []
+    @map.squares = []
+  end
+
+  [
+    {:width => 5, :height => 4, :x => 2, :y => 1}
+  ].each do |room|
+    it "should return true because there is enough space" do
+      @map.place_room(room, ',')
+      begin
+        @map.join_rooms(@room, room)
+        @map.square_symbol_at(14, 2).should be_char(:yellow, '.')
+        @map.square_symbol_at(13, 2).should be_char(:yellow, '.')
+        @map.square_symbol_at(14, 3).should be_char(:yellow, '.')
+      rescue
+        puts
+        puts @map.tiles
+        p room
+        raise
+      end
+    end
   end
 end
