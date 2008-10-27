@@ -23,7 +23,7 @@ describe Map, 'load' do
     @map = Map.load(TESTMAP)
     @map.name.should == 'cave-1'
     @map.tiles.size.should == 21
-    @map.tiles[1].should == "#...........................############\n"
+    @map.tiles[1].should == "#...........................############"
     @map.memory.size.should == 21
     @map.memory[1].should == "                                        "
 

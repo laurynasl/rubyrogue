@@ -38,7 +38,7 @@ class Map
   def load(filename)
     data = File.open(filename){|f| YAML::load(f)}
 
-    @tiles = File.open(filename.gsub(/\.yaml$/, '.tile')){|f| f.readlines}
+    @tiles = File.open(filename.gsub(/\.yaml$/, '.tile')){|f| f.readlines.collect{|line| line.gsub("\n", "")}}
     @width = data['width']
     @height = data['height']
     @squares = []
