@@ -25,14 +25,20 @@ class Map
 
   def initialize
     @spotted_monsters = []
+    @monsters = []
+    @squares = []
   end
 
   def self.load(filename)
     map = self.new
     map.load(filename)
     map.name = File.basename(filename, '.yaml')
-    map.memory = (1..map.height).collect{' ' * map.width}
+    map.after_initialize
     map
+  end
+
+  def after_initialize
+    self.memory = (1..height).collect{' ' * width}
   end
 
   def load(filename)
@@ -41,7 +47,6 @@ class Map
     @tiles = File.open(filename.gsub(/\.yaml$/, '.tile')){|f| f.readlines.collect{|line| line.gsub("\n", "")}}
     @width = data['width']
     @height = data['height']
-    @squares = []
     for value in data['squares']
       square = Square.new(value)
       @squares[square.y * width + square.x] = square
@@ -169,6 +174,7 @@ class Map
         map.rooms << room
       end
     end
+    map.after_initialize
 
     map
   end

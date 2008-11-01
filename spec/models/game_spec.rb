@@ -47,6 +47,19 @@ describe Game, 'load' do
   end
 end
 
+describe Game, 'load (infinite)' do
+  it "should load game from file" do
+    game = Game.new('games/infinite/game.yaml')
+    game.filename.should == 'games/infinite/game.yaml'
+    game.player.name.should == 'Tourist'
+    game.dungeons.size.should == 2
+    game.map.name.should == 'dungeons of doom-1'
+    game.map.calculate_fov
+    game.player.x.should_not be_nil
+    game.player.y.should_not be_nil
+  end
+end
+
 describe Game, 'load_map' do
   it "should load map by name" do
     game = testgame
@@ -62,6 +75,12 @@ describe Game, 'load_map' do
     game.maps['fake_map'] = fake_map
     game.load_map('fake_map')
     game.map.should == fake_map
+  end
+
+  it "should generate map because it belongs to infinite dungeon" do
+    game = infinite_game
+    game.load_map('dungeons of doom-2')
+    game.map.name.should == 'dungeons of doom-2'
   end
 end
 

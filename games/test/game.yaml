@@ -5,7 +5,7 @@ player:
   name: Kudlius
   x: 2
   y: 1
-  map: testmap
+  map: cave-1
   hp: 10
   maxhp: 10
   dexterity: 11

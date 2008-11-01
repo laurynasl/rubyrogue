@@ -20,7 +20,7 @@ require 'yaml'
 
 class Game
   attr_reader :map
-  attr_accessor :player, :ui, :filename, :maps
+  attr_accessor :player, :ui, :filename, :maps, :dungeons
 
   def initialize(filename = nil)
     @messages = []
@@ -32,14 +32,26 @@ class Game
       f = File.open(filename)
       @data = YAML::load(f)
       f.close
-      load_map @data['maps'].first
       @player = Player.new(@data['player'])
+      if @player.map
+        load_map @player.map
+      elsif @player.dungeon
+        @dungeons = @data['dungeons']
+        load_map(@player.dungeon + '-1')
+        @player.x, @player.y = *@map.find_random_passable_square
+      end
     end
   end
 
   def load_map(name)
     unless @map = @maps[name]
-      @map = Map.load(File.dirname(filename) + '/' + name + '.yaml')
+      static_filename = File.dirname(filename) + '/' + name + '.yaml'
+      if File.exists?(static_filename)
+        @map = Map.load(static_filename)
+      else
+        @map = Map.generate(:width => 120, :height => 45, :rooms => 50)
+        @map.name = name
+      end
       @maps[name] = @map
       @map.game = self
     end

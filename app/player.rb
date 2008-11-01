@@ -17,6 +17,6 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 class Player < Monster
-  attr_accessor :map
+  attr_accessor :map, :dungeon
 
 end

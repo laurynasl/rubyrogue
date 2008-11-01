@@ -1,0 +1,13 @@
+dungeons:
+  nowhere: {}
+  dungeons of doom:
+    infinite: true
+player:
+  monster_type: player
+  name: Tourist
+  dungeon: dungeons of doom
+  hp: 10
+  maxhp: 10
+  dexterity: 11
+  perception: 7
+  health: 10

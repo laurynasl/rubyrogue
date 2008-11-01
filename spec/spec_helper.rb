@@ -32,6 +32,15 @@ def testgame
   game
 end
 
+def infinite_game
+  ItemClass.load_all
+  MonsterClass.load_all
+  game = Game.new('games/infinite/game.yaml')
+  @ui = mock('ui')
+  game.ui = @ui
+  game
+end
+
 TESTGAME = 'games/test/game.yaml'
 TESTMAP = 'games/test/cave-1.yaml'
 
