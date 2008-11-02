@@ -57,6 +57,8 @@ describe Game, 'load (infinite)' do
     game.map.calculate_fov
     game.player.x.should_not be_nil
     game.player.y.should_not be_nil
+    stair_square = game.map.squares.find{|square| square && square.stair && square.stair['down'] }
+    stair_square.stair.should == {'map' => 'dungeons of doom-2', 'down' => true}
   end
 end
 

@@ -39,6 +39,8 @@ class Game
         @dungeons = @data['dungeons']
         load_map(@player.dungeon + '-1')
         @player.x, @player.y = *@map.find_random_passable_square
+        x, y = @map.find_random_passable_square
+        @map.find_square(x, y, :force => true).stair = {'down' => true, 'map' => @player.dungeon + '-2'}
       end
     end
   end
