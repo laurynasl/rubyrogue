@@ -51,7 +51,7 @@ class Game
       if File.exists?(static_filename)
         @map = Map.load(static_filename)
       else
-        @map = Map.generate(:width => 120, :height => 45, :rooms => 50)
+        @map = Map.generate(:width => 100, :height => 40, :rooms => 50)
         @map.name = name
       end
       @maps[name] = @map
@@ -111,6 +111,16 @@ class Game
   def go_stairs(down)
     if (square = player_square) && (stair = square.stair) && (stair['down'] == down)
       load_map stair['map']
+      unless stair['x']
+        x, y = @map.find_random_passable_square
+        upstair_square = @map.find_square(x, y, :force => true)
+        upstair_square.stair = {'down' => false, 'x' => square.x, 'y' => square.y, 'map' => @player.dungeon + '-' + (@map.index-1).to_s}
+        x, y = @map.find_random_passable_square
+        downstair_square = @map.find_square(x, y, :force => true)
+        downstair_square.stair = {'down' => true, 'map' => @player.dungeon + '-' + (@map.index+1).to_s}
+        stair['x'] = upstair_square.x
+        stair['y'] = upstair_square.y
+      end
       player.x = stair['x']
       player.y = stair['y']
       output "You go #{down ? 'down' : 'up'}stairs"

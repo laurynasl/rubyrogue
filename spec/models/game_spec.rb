@@ -228,6 +228,26 @@ describe Game, 'go_stairs' do
   end
 end
 
+describe Game, "go_stairs (infinite)" do
+  it "should add up and down stairs for new map and link current stairs with upstairs when downstair has no specified coordinates" do
+    @game = infinite_game
+    stair_square = @game.map.squares.find{|square| square && square.stair && square.stair['down'] }
+    # put player on stairs:
+    @game.player.x = stair_square.x
+    @game.player.y = stair_square.y
+    @game.go_stairs(true)
+    # should generate upstairs
+    upstair_square = @game.map.squares.find{|square| square && square.stair && !square.stair['down'] }
+    upstair_square.stair.should == {'down' => false, 'map' => 'dungeons of doom-1', 'x' => stair_square.x, 'y' => stair_square.y}
+    # should link current stairs with upstairs
+    stair_square.stair['x'].should == upstair_square.x
+    stair_square.stair['y'].should == upstair_square.y
+    # it should also create downstairs
+    downstair_square = @game.map.squares.find{|square| square && square.stair && square.stair['down'] }
+    downstair_square.stair.should == {'down' => true, 'map' => 'dungeons of doom-3'}
+  end
+end
+
 describe Game, "iterate" do
   it "should increase energy for player and monsters until player's energy reaches zero, regenerate all monsters and player and try to generate monster" do
     @game = testgame

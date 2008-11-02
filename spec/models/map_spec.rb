@@ -75,6 +75,15 @@ describe Map, 'find_monster' do
   end
 end
 
+describe Map, "index" do
+  it "should return last number from name" do
+    @map = Map.load(TESTMAP)
+    @map.index.should == 1
+    @map.name = 'cave-5'
+    @map.index.should == 5
+  end
+end
+
 describe Map, "square_symbol_at" do
   before(:each) do
     @game = testgame

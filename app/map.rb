@@ -70,6 +70,11 @@ class Map
     monsters.find{|m| m.x == x && m.y == y}
   end
 
+  def index
+    /^(.*)-(\d+)$/ === name
+    $2.to_i
+  end
+
   def square_symbol_at(x, y)
     return [:black, ' '[0]] if x >= @width || y >= @height
     if visible_at?(x, y)
