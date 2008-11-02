@@ -80,6 +80,19 @@ def kobold(options = {})
   }.merge(options))
 end
 
+def player(options = {})
+  @player = Player.new({
+    'x' => 3,
+    'y' => 1,
+    'hp' => 11,
+    'maxhp' => 11,
+    'health' => 10,
+    'dexterity' => 11,
+    'perception' => 7,
+    'monster_type' => 'player'
+  }.merge(options))
+end
+
 def stubbed_ui
   @ui = CursesUI.new(TESTGAME)
   @map_win = mock('map_win')

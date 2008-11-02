@@ -145,26 +145,29 @@ class CursesUI
     # Loop controller
     playing = true
 
-    # Real game loop
-    while playing do
-      # First, we show all queued messages
-      messages  = ''
-      while m = @game.read_message do
-        messages << m << '. '
+    result = catch(:player_death) do
+      # Real game loop
+      while playing do
+        # First, we show all queued messages
+        messages  = ''
+        while m = @game.read_message do
+          messages << m << '. '
+        end
+        draw_message(@mess_win, messages) unless messages.empty?
+        @mess_win.refresh
+
+        playing = handle_input(@scr)
+
+        # Launches the game logics
+        @game.iterate
+        redraw_map
+        move_player
+        draw_attributes
       end
-      draw_message(@mess_win, messages) unless messages.empty?
-      @mess_win.refresh
-
-      playing = handle_input(@scr)
-
-      # Launches the game logics
-      @game.iterate
-      redraw_map
-      move_player
-      draw_attributes
     end
   ensure
     close_screen
+    $stdout << result if result
   end
 
 

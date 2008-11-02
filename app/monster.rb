@@ -56,6 +56,7 @@ class Monster < Constructable
     elsif defender.alive?
       "%s hits %s"
     else
+      throw :player_death, "You die!\n" if defender.is_a?(Player)
       "%s kills %s"
     end % [fullname, defender.fullname]
   end

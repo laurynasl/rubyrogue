@@ -438,3 +438,13 @@ describe Monster, "ranged_attack" do
     @kobold.hp.should == 0
   end
 end
+
+describe Monster, "damage_text" do
+  it "should throw player_death" do
+    player('hp' => 0)
+    kobold
+    lambda {
+      kobold.damage_text(1, @player)
+    }.should throw_symbol(:player_death)
+  end
+end
