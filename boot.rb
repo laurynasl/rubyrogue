@@ -41,7 +41,7 @@ end
 class Module
   def const_missing(name)
     filename = name.to_s.underscore
-    puts 'requiring: ' + filename
+    log 'requiring: ' + filename
     require filename
     eval name.to_s
   end
@@ -51,6 +51,12 @@ module Enumerable
   def invoke(method)
     collect{|i| i.send(method)}
   end
+end
+
+def log(text)
+  $logfile ||= File.new('log/stdout.log', 'a')
+  $logfile << text.to_s + "\n"
+  $logfile.flush
 end
 
 def min(a, b)
