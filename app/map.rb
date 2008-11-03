@@ -17,7 +17,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 class Map
-  attr_accessor :name, :width, :height, :squares, :game, :monsters, :generate_monster_counter, :tiles
+  attr_accessor :name, :index, :width, :height, :squares, :game, :monsters, :generate_monster_counter, :tiles
   # lightning
   attr_accessor :lighting, :memory, :spotted_monsters
   # map generation
@@ -27,6 +27,10 @@ class Map
     @spotted_monsters = []
     @monsters = []
     @squares = []
+  end
+
+  def name
+    @index ? "#{@name}-#{@index}" : @name
   end
 
   def self.load(filename)
@@ -68,11 +72,6 @@ class Map
 
   def find_monster(x, y)
     monsters.find{|m| m.x == x && m.y == y}
-  end
-
-  def index
-    /^(.*)-(\d+)$/ === name
-    $2.to_i
   end
 
   def square_symbol_at(x, y)
@@ -151,6 +150,14 @@ class Map
 
   def inspect
     "<Map #{@name}>"
+  end
+
+  def dungeon
+    game.dungeons[@name]
+  end
+
+  def danger
+    dungeon['danger_multiplier'] * index + dungeon['danger_summand']
   end
 
   # Map generation methods. hard to test because of current inability to mock <code>rand</code>

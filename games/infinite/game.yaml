@@ -2,6 +2,8 @@ dungeons:
   nowhere: {}
   dungeons of doom:
     infinite: true
+    danger_multiplier: 5
+    danger_summand: 2
 player:
   monster_type: player
   name: Tourist

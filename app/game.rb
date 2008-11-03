@@ -52,7 +52,9 @@ class Game
         @map = Map.load(static_filename)
       else
         @map = Map.generate(:width => 100, :height => 40, :rooms => 50)
-        @map.name = name
+        /^(.*)-(\d+)$/ === name
+        @map.name = $1
+        @map.index = $2.to_i
       end
       @maps[name] = @map
       @map.game = self

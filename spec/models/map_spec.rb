@@ -18,6 +18,22 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe Map, "name" do
+  before(:each) do
+    @map = Map.load(TESTMAP)
+    @map.name = 'cave'
+  end
+
+  it "should return map name" do
+    @map.name.should == 'cave'
+  end
+
+  it "should return map name with index" do
+    @map.index = 3
+    @map.name.should == 'cave-3'
+  end
+end
+
 describe Map, 'load' do
   it "should load map from file" do
     @map = Map.load(TESTMAP)
@@ -72,15 +88,6 @@ describe Map, 'find_monster' do
     monster.x.should == 11
     monster.y.should == 1
     monster.monster_type.should == 'kobold'
-  end
-end
-
-describe Map, "index" do
-  it "should return last number from name" do
-    @map = Map.load(TESTMAP)
-    @map.index.should == 1
-    @map.name = 'cave-5'
-    @map.index.should == 5
   end
 end
 
@@ -401,5 +408,24 @@ describe Map, "connect_rooms" do
         raise
       end
     end
+  end
+end
+
+describe Map, "dungeon" do
+  it "should return dungeon" do
+    game = infinite_game
+    game.load_map('dungeons of doom-3')
+    map = game.map
+    map.dungeon.should == {'infinite' => true, 'danger_multiplier' => 5, 'danger_summand' => 2}
+  end
+end
+
+describe Map, "danger" do
+  it "should return danger level" do
+    #(map index multiplied by dungeon danger multiplier and summed with dungeon danger summand)
+    game = infinite_game
+    game.load_map('dungeons of doom-3')
+    map = game.map
+    map.danger.should == 17
   end
 end

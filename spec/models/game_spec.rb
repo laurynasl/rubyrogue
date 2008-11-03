@@ -83,6 +83,7 @@ describe Game, 'load_map' do
     game = infinite_game
     game.load_map('dungeons of doom-2')
     game.map.name.should == 'dungeons of doom-2'
+    game.map.index.should == 2
   end
 end
 
