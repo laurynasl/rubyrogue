@@ -321,7 +321,7 @@ describe Game, "move_monster (just move)" do
     @monster.y = 1
 
     @game.move_monster(@monster)
-    @monster.x.should == 23
+    @monster.x.should == 24
     @monster.y.should == 2
   end
 
@@ -333,7 +333,7 @@ describe Game, "move_monster (just move)" do
 
     @game.move_monster(@monster)
     @monster.x.should == 1
-    @monster.y.should == 1
+    @monster.y.should == 2
   end
 
   it "should not move, just wait if monster cannot move anywhere" do

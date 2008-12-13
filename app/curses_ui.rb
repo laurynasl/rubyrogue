@@ -373,6 +373,14 @@ class CursesUI
     when KEY_UP: [0, -1]
     when KEY_LEFT: [-1, 0]
     when KEY_RIGHT: [1, 0]
+    when ?1: [-1, 1]
+    when ?2: [0, 1]
+    when ?3: [1, 1]
+    when ?4: [-1, 0]
+    when ?6: [1, 0]
+    when ?7: [-1, -1]
+    when ?8: [0, -1]
+    when ?9: [1, -1]
     else
       key
     end

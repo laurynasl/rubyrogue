@@ -151,7 +151,7 @@ class Game
       output monster.attack(player)
     elsif monster.perception * monster.perception >= (range = monster.square_range_to(player))
       pair = nil
-      [[1, 0], [0, 1], [-1, 0], [0, -1]].each do |dx, dy|
+      [[1, 0], [0, 1], [-1, 0], [0, -1], [-1, -1], [-1, 1], [1, -1], [1, 1]].each do |dx, dy|
         r = player.square_range_to([monster.x + dx, monster.y + dy])
         if r < range && map.passable_at?(monster.x + dx, monster.y + dy)
           range = r
