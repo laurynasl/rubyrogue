@@ -42,6 +42,7 @@ describe MonsterClass, "self.generate" do
   before(:each) do
     MonsterClass.load_all
     MonsterClass.all.should_receive(:keys).and_return(['elf', 'goblin', 'ogre', 'kobold']) # monster levels: 4, 1, 5, 1
+    MonsterClass.should_receive(:generate_inventory)
   end
   
   it "should generate kobold" do
@@ -60,5 +61,17 @@ describe MonsterClass, "self.generate" do
     MonsterClass.should_receive(:rand).with(4).and_return(0, 1, 3)
     monster = MonsterClass.generate(:monster_level => 1000)
     monster.monster_type.should == 'elf'
+  end
+end
+
+describe MonsterClass, "self.generate_inventory" do
+  it "should create dagger for kobold" do
+    ItemClass.load_all
+    ItemClass.all.should_receive(:keys).and_return(['short sword', 'dagger', 'leather armor', 'dart'])
+
+    kobold
+    MonsterClass.should_receive(:rand).with(4).and_return(1)
+    MonsterClass.generate_inventory(kobold)
+    @kobold.inventory.should include('dagger')
   end
 end

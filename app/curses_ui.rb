@@ -198,7 +198,7 @@ class CursesUI
         when '<'[0]
           game.go_stairs(false)
         when 'c'[0]
-          game.output("%s is at %d, %d" % [game.player.fullname, game.player.x, game.player.y])
+          game.output("%s is at %d, %d. danger level is %d" % [game.player.fullname, game.player.x, game.player.y, game.map.danger])
         when 'S'[0]
           game.save(game.player.fullname)
           keep_playing = false

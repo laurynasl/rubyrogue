@@ -53,5 +53,13 @@ class MonsterClass < Constructable
       :perception => prototype.perception,
       :health => prototype.health
     })
+    generate_inventory(monster)
+    monster
+  end
+
+  def self.generate_inventory(monster)
+    candidates = ItemClass.all.keys
+    item_name = candidates[rand(candidates.size)]
+    monster.inventory << item_name
   end
 end

@@ -182,7 +182,7 @@ describe CursesUI, "handle_input" do
     @ui = CursesUI.new(TESTGAME)
     scr = mock('scr', :getch => 'c'[0])
 
-    @ui.game.should_receive(:output).with('Kudlius is at 2, 1')
+    @ui.game.should_receive(:output).with('Kudlius is at 2, 1. danger level is 1')
 
     @ui.handle_input(scr)
   end
