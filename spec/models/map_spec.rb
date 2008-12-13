@@ -308,11 +308,11 @@ describe Map, "generate" do
     map.width.should == 120
     map.height.should == 45
     map.tiles.size.should == 45
-    puts
-    map.tiles.each do |line| 
-      line.size.should == 120
-      puts line
-    end
+    #puts
+    #map.tiles.each do |line| 
+      #line.size.should == 120
+      #puts line
+    #end
     #p map.rooms
   end
 end
@@ -427,5 +427,10 @@ describe Map, "danger" do
     game.load_map('dungeons of doom-3')
     map = game.map
     map.danger.should == 17
+  end
+  
+  it "should return 1 if dungeon is undefined" do
+    map = Map.load(TESTMAP)
+    map.danger.should == 1
   end
 end

@@ -16,8 +16,11 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+require 'app/constructable'
+require 'app/mass_loadable'
+
 class MonsterClass < Constructable
-  attr_accessor :strength, :dexterity, :intelligence, :health, :perception, :danger, :symbol
+  attr_accessor :strength, :dexterity, :intelligence, :health, :perception, :beauty, :will, :danger, :symbol
 
   class << self
     include MassLoadable
@@ -27,10 +30,21 @@ class MonsterClass < Constructable
     load_all_from 'data/monsters.yaml'
   end
 
-  def self.generate
+  def self.generate(options)
     candidates = all.keys
-    name = candidates[rand(candidates.size)]
-    prototype = all[name]
+    prototype = nil
+    diff = 10000
+    name = nil
+    3.times do
+      index = rand(candidates.size)
+      potential_name = candidates[index]
+      if (new_diff = (all[potential_name].danger * 10 - options[:monster_level]).abs) < diff
+        name = potential_name
+        prototype = all[name] 
+        diff = new_diff if new_diff
+        break if diff == 0
+      end
+    end
     monster = Monster.new({
       :monster_type => name,
       :hp => prototype.health,

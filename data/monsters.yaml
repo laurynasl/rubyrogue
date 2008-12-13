@@ -4,6 +4,8 @@ kobold:
   perception: 5
   health: 5
   intelligence: 6
+  beauty: 4
+  will: 9
   danger: 1
   symbol: k
 
@@ -13,6 +15,8 @@ goblin:
   perception: 5
   health: 5
   intelligence: 7
+  beauty: 6
+  will: 7
   danger: 1
   symbol: g
 
@@ -22,6 +26,8 @@ dog:
   perception: 6
   health: 5
   intelligence: 3
+  beauty: 8
+  will: 11
   danger: 2
   symbol: d
 
@@ -31,6 +37,8 @@ orc:
   perception: 6
   health: 11
   intelligence: 5
+  beauty: 4
+  will: 5
   danger: 3
   symbol: o
 
@@ -40,6 +48,8 @@ elf:
   perception: 9
   health: 6
   intelligence: 11
+  beauty: 15
+  will: 12
   danger: 4
   symbol: E
 
@@ -49,6 +59,8 @@ ogre:
   perception: 7
   health: 15
   intelligence: 4
+  beauty: 3
+  will: 4
   danger: 5
   symbol: O
 
@@ -58,5 +70,7 @@ fey:
   perception: 11
   health: 4
   intelligence: 12
+  beauty: 16
+  will: 14
   danger: 4
   symbol: i

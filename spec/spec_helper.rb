@@ -16,8 +16,9 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-require File.expand_path(File.dirname(__FILE__) + "/../boot")
+require 'rubygems'
 require 'spec'
+require File.expand_path(File.dirname(__FILE__) + "/../boot")
 require 'lib/rspec_matchers'
 
 Spec::Runner.configure do |config|

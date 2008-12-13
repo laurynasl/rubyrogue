@@ -39,12 +39,26 @@ describe MonsterClass do
 end
 
 describe MonsterClass, "self.generate" do
-  it "should generate ogre" do
+  before(:each) do
     MonsterClass.load_all
-    MonsterClass.all.should_receive(:keys).and_return(['elf', 'goblin', 'ogre', 'kobold'])
-    MonsterClass.should_receive(:rand).with(4).and_return(2)
-    monster = MonsterClass.generate
-    monster.class.should == Monster
-    monster.monster_type.should == 'ogre'
+    MonsterClass.all.should_receive(:keys).and_return(['elf', 'goblin', 'ogre', 'kobold']) # monster levels: 4, 1, 5, 1
+  end
+  
+  it "should generate kobold" do
+    MonsterClass.should_receive(:rand).with(4).and_return(3)
+    monster = MonsterClass.generate(:monster_level => 10)
+    monster.monster_type.should == 'kobold'
+  end
+
+  it "should try 3 times to generate weakest monster" do
+    MonsterClass.should_receive(:rand).with(4).and_return(2, 1, 3)
+    monster = MonsterClass.generate(:monster_level => 0)
+    monster.monster_type.should == 'goblin'
+  end
+
+  it "should try 3 times to generate strongest monster" do
+    MonsterClass.should_receive(:rand).with(4).and_return(0, 1, 3)
+    monster = MonsterClass.generate(:monster_level => 1000)
+    monster.monster_type.should == 'elf'
   end
 end

@@ -1,8 +1,12 @@
-# vim: set filetype=ruby 
+# vim: set filetype=ruby :
 
 puts 'I am inside of autotest!'
 
 Autotest.add_hook :initialize do |autotest|
+  ['log', '.git', 'savegames', 'examples'].each do |exception|
+    autotest.add_exception exception
+  end
+
   autotest.add_mapping %r{app/(\w+).rb$} do |filename, matchdata|
     name =  matchdata.captures[0]
     autotest.files_matching %r{spec/models/#{name}_spec.rb}

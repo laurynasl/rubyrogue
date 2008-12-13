@@ -108,7 +108,7 @@ class Map
       @generate_monster_counter -= 1
     else
       @generate_monster_counter = (monsters.size + 1) * 100
-      monster = MonsterClass.generate
+      monster = MonsterClass.generate(:monster_level => danger)
       monster.x, monster.y = find_random_passable_square
       monsters << monster
     end
@@ -153,11 +153,15 @@ class Map
   end
 
   def dungeon
-    game.dungeons[@name]
+    game.dungeons[@name] if game && game.dungeons
   end
 
   def danger
-    dungeon['danger_multiplier'] * index + dungeon['danger_summand']
+    if dungeon
+      dungeon['danger_multiplier'] * index + dungeon['danger_summand']
+    else
+      1
+    end
   end
 
   # Map generation methods. hard to test because of current inability to mock <code>rand</code>
