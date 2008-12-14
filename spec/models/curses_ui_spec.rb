@@ -205,6 +205,16 @@ describe CursesUI, "handle_input" do
 
     @ui.handle_input(scr)
   end
+
+  it "should walk when clicked 'w' and direction" do
+    @ui = CursesUI.new(TESTGAME)
+    scr = mock('scr')
+    scr.should_receive(:getch).and_return(?w, ?3)
+
+    @ui.game.should_receive(:walk).with([1, 1])
+
+    @ui.handle_input(scr)
+  end
 end
 
 describe CursesUI, "show_inventory" do

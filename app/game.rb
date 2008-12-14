@@ -22,6 +22,8 @@ class Game
   attr_reader :map
   attr_accessor :player, :ui, :filename, :maps, :dungeons
 
+  DIRECTIONS = [[1, 0], [0, 1], [-1, 0], [0, -1], [-1, -1], [-1, 1], [1, -1], [1, 1]]
+
   def initialize(filename = nil)
     @messages = []
     @maps = {}
@@ -151,7 +153,7 @@ class Game
       output monster.attack(player)
     elsif monster.perception * monster.perception >= (range = monster.square_range_to(player))
       pair = nil
-      [[1, 0], [0, 1], [-1, 0], [0, -1], [-1, -1], [-1, 1], [1, -1], [1, 1]].each do |dx, dy|
+      DIRECTIONS.each do |dx, dy|
         r = player.square_range_to([monster.x + dx, monster.y + dy])
         if r < range && map.passable_at?(monster.x + dx, monster.y + dy)
           range = r
@@ -188,5 +190,29 @@ class Game
       ammo = player.drop_ammo(map, x, y)
       "Your #{ammo.name} hits nobody"
     end
+  end
+
+  def walk(direction)
+    #print_trace
+    return unless direction.is_a?(Array)
+
+    # find perpendicular directions
+    perpendicular = DIRECTIONS.find_all {|dx, dy| (direction.first * dx + direction.last * dy) == 0 }
+    # record current emptiness/fullness
+    emptiness = perpendicular.collect {|dir| empty_to?(dir.vector_add(direction)) }
+    begin
+      move_by(*direction)
+      iterate
+      map.calculate_fov
+    end while empty_to?(direction) &&
+        (empty_to?(perpendicular.first) == emptiness.first) &&
+        (empty_to?(perpendicular.last) == emptiness.last) &&
+        @map.spotted_monsters.empty?
+  end
+
+  def empty_to?(direction)
+    x = player.x + direction.first
+    y = player.y + direction.last
+    map.passable_at?(x, y)
   end
 end

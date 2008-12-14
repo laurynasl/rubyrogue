@@ -411,3 +411,38 @@ describe Game, "ranged_attack" do
     @game.map.find_square(9, 1).inventory.items.should == [Item.new('dart')]
   end
 end
+
+describe Game, "move" do
+  before(:each) do
+    @game = testgame
+    @kobold = @game.map.find_monster(11, 1)
+  end
+
+  it "should walk 3 times to the right, until monster is spotted" do
+    @game.walk([1, 0])
+    @game.player.x.should == 5
+  end
+  
+  it "should walk 4 times to the right, until monster is spotted" do
+    @kobold.x = 12
+    @game.walk([1, 0])
+    @game.player.x.should == 6
+  end
+
+  it "should not move when no direction given" do
+    @game.walk(?n)
+    @game.player.x.should == 2
+  end
+
+  it "should walk until wall" do
+    @game.walk([-1, 0])
+    @game.player.x.should == 1
+  end
+
+  it "should walk until tunnel branch" do
+    @game.player.x = 1
+    @game.player.y = 1
+    @game.walk([0, 1])
+    @game.player.y.should == 14
+  end
+end

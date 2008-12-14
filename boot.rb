@@ -21,6 +21,7 @@ require 'rubygems'
 require 'rdoc/ri/ri_paths'
 require 'rdoc/usage'
 require 'lib/fov/ruby_fov'
+require 'lib/vector'
 require 'app/array'
 
 class String

@@ -102,3 +102,12 @@ def stubbed_ui
   @ui.instance_variable_set(:@map_win, @map_win)
   @game = @ui.game
 end
+
+def print_trace
+  e = begin
+    raise 'aaa'
+  rescue
+    $!.clone
+  end
+  puts e.backtrace
+end

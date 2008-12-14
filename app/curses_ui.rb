@@ -204,6 +204,8 @@ class CursesUI
           keep_playing = false
         when 'f'[0]
           target_and_shoot(scr)
+        when ?w
+          game.walk(recognize_move(scr.getch))
         else
           @game.output((key.is_a?(Fixnum) ? keyname(key) : key.to_s) || key.to_s)
         end
