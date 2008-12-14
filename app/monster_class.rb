@@ -60,6 +60,15 @@ class MonsterClass < Constructable
   def self.generate_inventory(monster)
     candidates = ItemClass.all.keys
     item_name = candidates[rand(candidates.size)]
-    monster.inventory << item_name if rand(100) < ItemClass.all[item_name].chance
+    klass = ItemClass.all[item_name]
+    if rand(100) < klass.chance
+      if klass.count
+        item = Item.new(item_name)
+        item.count = rand(klass.count.last - klass.count.first + 1) + klass.count.first
+        monster.inventory << item
+      else
+        monster.inventory << item_name 
+      end
+    end
   end
 end

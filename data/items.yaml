@@ -48,6 +48,7 @@ dart:
   symbol: /
   skill: dart
   chance: 40
+  count: !ruby/range 10..30
 
 rock:
   ranged_damage: 2
@@ -55,6 +56,7 @@ rock:
   symbol: /
   skill: rock
   chance: 60
+  count: !ruby/range 3..7
 
 short bow:
   launcher_damage: 2
@@ -71,3 +73,4 @@ arrow:
   ammunition: arrow
   skill: arrow
   chance: 77
+  count: !ruby/range 5..20

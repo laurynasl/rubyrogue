@@ -86,4 +86,16 @@ describe MonsterClass, "self.generate_inventory" do
     MonsterClass.generate_inventory(kobold)
     @kobold.inventory.should_not include('dagger')
   end
+
+  it "should generate 13 darts" do
+    ItemClass.load_all
+    ItemClass.all.should_receive(:keys).and_return(['short sword', 'dagger', 'leather armor', 'dart'])
+
+    kobold
+    MonsterClass.should_receive(:rand).with(4).and_return(3)
+    MonsterClass.should_receive(:rand).with(100).and_return(39)
+    MonsterClass.should_receive(:rand).with(21).and_return(3)
+    MonsterClass.generate_inventory(kobold)
+    @kobold.inventory.should include('dart')
+  end
 end

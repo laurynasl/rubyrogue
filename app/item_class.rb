@@ -21,7 +21,7 @@ class ItemClass < Constructable
   #ranged
   attr_accessor :launches, :ranged_damage, :ammunition, :launcher_damage
   #generation
-  attr_accessor :chance
+  attr_accessor :chance, :count
 
   class << self
     include MassLoadable

@@ -24,7 +24,7 @@ describe MassLoadable do
     @klass.class_eval "class << self; include MassLoadable; end"
     @klass.class_eval('attr_accessor :damage, :accuracy, :symbol, :skill, :armor, :evasion, :damage_type')
     @klass.class_eval('attr_accessor :launches, :ranged_damage, :ammunition, :launcher_damage')
-    @klass.class_eval('attr_accessor :chance')
+    @klass.class_eval('attr_accessor :chance, :count')
   end
 
   it "should create short sword" do
