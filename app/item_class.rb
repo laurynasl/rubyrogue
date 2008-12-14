@@ -18,7 +18,10 @@
 
 class ItemClass < Constructable
   attr_accessor :damage, :accuracy, :symbol, :skill, :armor, :evasion, :damage_type
+  #ranged
   attr_accessor :launches, :ranged_damage, :ammunition, :launcher_damage
+  #generation
+  attr_accessor :chance
 
   class << self
     include MassLoadable

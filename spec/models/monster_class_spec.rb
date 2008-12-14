@@ -71,7 +71,19 @@ describe MonsterClass, "self.generate_inventory" do
 
     kobold
     MonsterClass.should_receive(:rand).with(4).and_return(1)
+    MonsterClass.should_receive(:rand).with(100).and_return(39)
     MonsterClass.generate_inventory(kobold)
     @kobold.inventory.should include('dagger')
+  end
+
+  it "should generate no item because roll is unsuccessful" do
+    ItemClass.load_all
+    ItemClass.all.should_receive(:keys).and_return(['short sword', 'dagger', 'leather armor', 'dart'])
+
+    kobold
+    MonsterClass.should_receive(:rand).with(4).and_return(1)
+    MonsterClass.should_receive(:rand).with(100).and_return(40)
+    MonsterClass.generate_inventory(kobold)
+    @kobold.inventory.should_not include('dagger')
   end
 end
