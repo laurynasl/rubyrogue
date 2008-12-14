@@ -204,6 +204,9 @@ class Game
       move_by(*direction)
       iterate
       map.calculate_fov
+      if square = player_square
+        break unless square.empty?
+      end
     end while empty_to?(direction) &&
         (empty_to?(perpendicular.first) == emptiness.first) &&
         (empty_to?(perpendicular.last) == emptiness.last) &&

@@ -416,6 +416,7 @@ describe Game, "move" do
   before(:each) do
     @game = testgame
     @kobold = @game.map.find_monster(11, 1)
+    @game.map.lighting = mock('Lighting', :'[]' => true)
   end
 
   it "should walk 3 times to the right, until monster is spotted" do
@@ -441,8 +442,15 @@ describe Game, "move" do
 
   it "should walk until tunnel branch" do
     @game.player.x = 1
-    @game.player.y = 1
+    @game.player.y = 2
     @game.walk([0, 1])
     @game.player.y.should == 14
+  end
+
+  it "should walk until item" do
+    @game.player.x = 1
+    @game.player.y = 1
+    @game.walk([0, 1])
+    @game.player.y.should == 2
   end
 end
