@@ -149,7 +149,7 @@ class Game
 
   # primitive AI for moving monster
   def move_monster(monster)
-    if monster.square_range_to(player) == 1
+    if monster.square_range_to(player) <= 2
       output monster.attack(player)
     elsif monster.perception * monster.perception >= (range = monster.square_range_to(player))
       pair = nil

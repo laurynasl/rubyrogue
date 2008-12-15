@@ -91,8 +91,6 @@ class Map
     else
       [:white, memory[y][x]]
     end
-  #rescue
-    #raise $!.class.new($!.to_s + " and x = #{x}, y = #{y} monster is #{monster.monster_type}")
   end
 
   def opaque_at?(x, y)

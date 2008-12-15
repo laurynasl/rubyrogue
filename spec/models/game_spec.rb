@@ -279,21 +279,28 @@ end
 describe Game, "move_monster" do
   before(:each) do
     @game = testgame
-    @monster = @game.map.find_monster(11, 1)
+    @kobold = @game.map.find_monster(11, 1)
   end
 
   it "should wait if there's nothing else to do" do
-    @monster.should_receive(:wait)
-    @game.move_monster(@monster)
+    @kobold.should_receive(:wait)
+    @game.move_monster(@kobold)
   end
 
   [-1, 1].each do |dx|
     it "should attack player when it is near (at #{11+dx})" do
       @game.player.x = 11 + dx
-      @monster.should_receive(:attack).with(@game.player).and_return('kobold misses Kudlius')
-      @game.move_monster(@monster)
+      @kobold.should_receive(:attack).with(@game.player).and_return('kobold misses Kudlius')
+      @game.move_monster(@kobold)
       @game.read_message.should == 'kobold misses Kudlius'
     end
+  end
+
+  it "should attack player diagonally" do
+    @kobold.x = 1
+    @kobold.y = 2
+    @kobold.should_receive(:attack).with(@game.player).and_return('kobold misses Kudlius')
+    @game.move_monster(@kobold)
   end
 end
 
@@ -417,6 +424,7 @@ describe Game, "move" do
     @game = testgame
     @kobold = @game.map.find_monster(11, 1)
     @game.map.lighting = mock('Lighting', :'[]' => true)
+    @game.map.generate_monster_counter = -1 # disable monster generation
   end
 
   it "should walk 3 times to the right, until monster is spotted" do
